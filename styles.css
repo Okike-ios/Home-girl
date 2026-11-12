@@ -129,3 +129,57 @@
   .app-shell.sidebar-collapsed .sidebar{width:54px}
   .app-shell.sidebar-collapsed .sidebar-scroll{padding-inline:4px}
 }
+
+/* HG-UX-005 — Welcome text, weekly copy and unobtrusive touch scrolling. */
+.intro{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+}
+.intro h1,
+.intro > p:last-child{
+  align-self:flex-start;
+  padding-left:0;
+  margin-left:0;
+  text-indent:0;
+}
+.weekly-banner{
+  align-items:center;
+}
+.weekly-banner .weekly-copy{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-self:stretch;
+  gap:6px;
+}
+.weekly-banner .weekly-copy h2{
+  margin:0;
+  line-height:1.12;
+}
+.weekly-banner .weekly-copy p{
+  margin:0;
+  font-size:13px;
+  line-height:1.45;
+  color:#856475;
+}
+@media(max-width:1020px){
+  /* The page remains scrollable: only the scrollbar indicator is hidden. */
+  html,body,.main-content,.sidebar-scroll{
+    scrollbar-width:none;
+    -ms-overflow-style:none;
+  }
+  html::-webkit-scrollbar,
+  body::-webkit-scrollbar,
+  .main-content::-webkit-scrollbar,
+  .sidebar-scroll::-webkit-scrollbar{
+    width:0;
+    height:0;
+    display:none;
+  }
+}
+@media(max-width:759px){
+  .intro h1,.intro > p:last-child{margin-left:0;padding-left:0}
+  .weekly-banner .weekly-copy{gap:5px}
+  .weekly-banner .weekly-copy p{font-size:11px}
+}
