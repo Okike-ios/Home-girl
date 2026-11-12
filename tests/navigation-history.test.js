@@ -39,17 +39,17 @@ function harness(){
     main.listeners.touchstart({touches:[{clientX:180,clientY:100}],target});
     main.listeners.touchend({changedTouches:[{clientX:180+dx,clientY:100+dy}]});
   };
-  return {context,window,document,node,swipe};
+  return {context,window,document,node,swipe,view:()=>vm.runInContext('currentView',context)};
 }
 
 test('empty history does not navigate away from Home',()=>{
-  const {context,swipe}=harness();
-  assert.equal(context.currentView,'home');
+  const {context,swipe,view}=harness();
+  assert.equal(view(),'home');
   swipe(-120);
-  assert.equal(context.currentView,'home');
+  assert.equal(view(),'home');
 });
 test('returns from date-filtered Tasks to exact Calendar month and scroll position',()=>{
-  const {context,window,swipe}=harness();
+  const {context,window,swipe,view}=harness();
   window.scrollY=140;
   context.showView('calendar');
   window.scrollY=320;
@@ -57,33 +57,33 @@ test('returns from date-filtered Tasks to exact Calendar month and scroll positi
   window.HomeGirlPlanner.state.selectedDate='2026-12-23';
   window.HomeGirlPlanner.state.calendarMonth='2026-12-01';
   swipe(-130);
-  assert.equal(context.currentView,'calendar');
+  assert.equal(view(),'calendar');
   assert.equal(window.HomeGirlPlanner.state.selectedDate,'2026-11-18');
   assert.equal(window.HomeGirlPlanner.state.calendarMonth,'2026-11-01');
   assert.equal(window.scrollY,320);
   swipe(-110);
-  assert.equal(context.currentView,'home');
+  assert.equal(view(),'home');
   assert.equal(window.scrollY,140);
 });
 test('right swipe shortcut stays; left swipe returns to actual previous page',()=>{
-  const {context,swipe}=harness();
-  swipe(115);assert.equal(context.currentView,'calendar');
+  const {context,swipe,view}=harness();
+  swipe(115);assert.equal(view(),'calendar');
   context.showView('reminders');
-  swipe(-110);assert.equal(context.currentView,'calendar');
-  swipe(-110);assert.equal(context.currentView,'home');
+  swipe(-110);assert.equal(view(),'calendar');
+  swipe(-110);assert.equal(view(),'home');
 });
 test('vertical movement and inputs do not trigger back',()=>{
-  const {context,swipe}=harness();
+  const {context,swipe,view}=harness();
   context.showView('calendar');
   swipe(-120,170);
-  assert.equal(context.currentView,'calendar');
+  assert.equal(view(),'calendar');
   swipe(-130,0,{closest(){return {tagName:'INPUT'}}});
-  assert.equal(context.currentView,'calendar');
+  assert.equal(view(),'calendar');
 });
 test('desktop touch gestures do not navigate',()=>{
-  const {context,window,swipe}=harness();
+  const {context,window,swipe,view}=harness();
   context.showView('calendar');
   window.innerWidth=1024;
   swipe(-150);
-  assert.equal(context.currentView,'calendar');
+  assert.equal(view(),'calendar');
 });
