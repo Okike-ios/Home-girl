@@ -318,3 +318,27 @@ body[data-hg-section="landing"] .system-grid .card .icon svg{
 @media(min-width:760px){
   .hg-mobile-system-kicker{display:none}
 }
+
+/* HG-NAV-004: force identical Home-style icon centring in Nourishment phone header.
+   Older .hg-mobile-shell a:first-child declarations must not shift the bell. */
+@media(max-width:759px){
+  .hg-mobile-shell .hg-mobile-header-actions{
+    display:flex!important;align-items:center;justify-content:center;gap:9px;
+  }
+  .hg-mobile-shell .hg-mobile-header-actions a.hg-mobile-action,
+  .hg-mobile-shell .hg-mobile-header-actions a.hg-mobile-action:first-child{
+    display:flex!important;align-items:center!important;justify-content:center!important;
+    flex:0 0 43px!important;width:43px!important;height:43px!important;
+    padding:0!important;margin:0!important;line-height:1!important;
+    font-family:Inter,ui-sans-serif,system-ui,sans-serif!important;
+  }
+  .hg-mobile-shell .hg-mobile-header-actions .hg-mobile-action svg{
+    display:block!important;position:static!important;
+    width:21px!important;height:21px!important;
+    flex:none!important;margin:0!important;
+    fill:none!important;stroke:currentColor!important;stroke-width:1.8!important;
+  }
+  .hg-mobile-shell .hg-mobile-header-actions .hg-mobile-action .hg-mobile-notification-dot{
+    display:none!important;
+  }
+}

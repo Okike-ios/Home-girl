@@ -36,8 +36,11 @@ function harness(){
   const context={document,window,localStorage:{getItem:()=>null,setItem(){}},sessionStorage:{getItem:()=>null,setItem(){}},innerWidth:390,Math,console};
   vm.createContext(context);vm.runInContext(source,context);
   const swipe=(dx,dy=0,target={closest(){return null}})=>{
+    let blocked=false;
     document.listeners.touchstart({touches:[{clientX:180,clientY:100}],target});
+    document.listeners.touchmove({touches:[{clientX:180+dx,clientY:100+dy}],cancelable:true,preventDefault(){blocked=true}});
     document.listeners.touchend({changedTouches:[{clientX:180+dx,clientY:100+dy}]});
+    return blocked;
   };
   return {context,window,document,node,swipe,view:()=>vm.runInContext('currentView',context)};
 }
@@ -93,5 +96,16 @@ test('desktop touch gestures do not navigate',()=>{
 test('short gestures do not change pages',()=>{
   const {swipe,view}=harness();
   swipe(30,4);
+  assert.equal(view(),'home');
+});
+
+test('left swipe across a clickable Nourishment card claims touch and opens household Shopping List',()=>{
+  const {swipe,view}=harness();
+  assert.equal(swipe(-120,0,{closest(){return null}}),true);
+  assert.equal(view(),'shopping');
+});
+test('vertical scrolling does not prevent default touch behavior',()=>{
+  const {swipe,view}=harness();
+  assert.equal(swipe(12,130),false);
   assert.equal(view(),'home');
 });
