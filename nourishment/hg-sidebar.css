@@ -1,0 +1,132 @@
+/* HG-NOUR-002. Matched to the Home Girl desktop sidebar and system-card rhythm.
+   Existing Nourishment navigation, scripts and section accent colours are preserved. */
+:root{--plum:#632342;--shadow:0 12px 32px rgba(98,35,66,.08),0 2px 6px rgba(98,35,66,.03)}
+body{padding-left:244px!important}
+.svg-defs{position:absolute;width:0;height:0;overflow:hidden}
+.sidebar,.sidebar *{box-sizing:border-box}
+.sidebar{
+  position:fixed;inset:0 auto 0 0;z-index:60;
+  display:flex;flex-direction:column;width:244px;height:100dvh;min-height:0;
+  padding:0;overflow:visible;color:#fff8f8;
+  background:linear-gradient(160deg,#632342,#4e1c34);
+  transition:width .22s ease;
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif
+}
+.sidebar-scroll{display:flex;flex-direction:column;gap:0;min-height:0;height:100%;width:100%;
+ padding:25px 16px 18px;overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;
+ scrollbar-color:#b78b9d transparent;overscroll-behavior:contain}
+.sidebar-brand{display:flex;align-items:center;flex-direction:column;gap:0;margin-bottom:18px;
+ font:19px Georgia,serif;letter-spacing:.02em}
+.sidebar-brand img{width:78px;height:78px;object-fit:cover;border-radius:50%;mix-blend-mode:screen;
+ filter:drop-shadow(0 4px 12px #29071d40)}
+.sidebar-section-label{font:750 10px Inter,ui-sans-serif,system-ui,sans-serif;letter-spacing:.15em;
+ color:#d9adc1;padding:6px 14px 10px;margin-top:4px;white-space:nowrap;overflow:hidden}
+.sidebar-section-label.secondary-label{margin-top:20px;padding-top:20px;border-top:1px solid #ffffff26}
+.sidebar .side-links{display:flex!important;flex-direction:column!important;align-items:stretch!important;
+ gap:5px!important;width:100%;font-size:14px!important}
+.sidebar .nav-item{display:flex;align-items:center;gap:14px;min-height:44px;flex-shrink:0;
+ padding:0 16px;border:0;border-radius:14px;background:transparent;
+ color:#fbeef4;text-decoration:none;text-align:left;white-space:nowrap;
+ font:400 14px Inter,ui-sans-serif,system-ui,sans-serif;transition:background .15s;transform:none!important}
+.sidebar .nav-item svg{height:20px;width:20px;flex:none;stroke:currentColor;stroke-width:1.8}
+.sidebar .nav-item:hover,.sidebar .nav-item:focus-visible{background:#ffffff17;color:#fbeef4}
+.sidebar .nav-item.active{background:linear-gradient(120deg,#fff8f6,#f4dfe4);
+ color:var(--plum);box-shadow:0 7px 18px #340d2530;font-weight:700}
+.sidebar .nav-text{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sidebar .soon{font-size:10px;opacity:.68;border:1px solid currentColor;border-radius:20px;
+ padding:1px 6px;margin-left:auto}
+.sidebar-foot{margin-top:auto;padding-top:15px;border-top:1px solid #ffffff30;flex-shrink:0}
+.sidebar-foot .sidebar-section-label{padding-top:0}
+.sidebar .tiny-dot{width:6px;height:6px;border-radius:50%;background:#e7a6b9;margin-left:auto}
+.sidebar-edge-toggle{position:absolute;top:112px;right:-14px;width:28px;height:44px;
+ display:flex;align-items:center;justify-content:center;border:1px solid #e6d2dc;
+ border-radius:20px;background:#fff7fa;color:var(--plum);box-shadow:0 4px 13px #4b173628;
+ opacity:0;pointer-events:auto;transform:translateX(-5px);
+ transition:opacity .18s,transform .18s;z-index:8;cursor:pointer}
+.sidebar:hover .sidebar-edge-toggle,.sidebar-edge-toggle:hover,.sidebar-edge-toggle:focus-visible{
+ opacity:1;transform:translateX(0)}
+.sidebar-edge-toggle svg{width:17px;height:17px;transform:rotate(180deg);
+ stroke:currentColor;fill:none;stroke-width:1.8}
+body.sidebar-collapsed{padding-left:58px!important}
+body.sidebar-collapsed .sidebar{width:58px}
+body.sidebar-collapsed .sidebar-scroll{padding:17px 6px 14px}
+body.sidebar-collapsed .sidebar-brand{margin:0 0 13px;min-height:40px}
+body.sidebar-collapsed .sidebar-brand img{width:38px;height:38px}
+body.sidebar-collapsed .sidebar-brand-title,body.sidebar-collapsed .sidebar-section-label,
+body.sidebar-collapsed .sidebar .nav-text,body.sidebar-collapsed .sidebar .soon,
+body.sidebar-collapsed .sidebar .tiny-dot{display:none}
+body.sidebar-collapsed .sidebar .side-links{gap:7px!important}
+body.sidebar-collapsed .sidebar .nav-item{min-height:43px;width:46px;
+ margin-inline:auto;justify-content:center;padding:0;gap:0}
+body.sidebar-collapsed .sidebar .nav-item svg{height:20px;width:20px}
+body.sidebar-collapsed .sidebar-edge-toggle{opacity:1}
+body.sidebar-collapsed .sidebar-edge-toggle svg{transform:none}
+/* Match Home Girl's exact system-card size, text placement, border and radius. */
+body[data-hg-section="landing"] .system-grid{gap:17px;grid-template-columns:repeat(3,minmax(0,1fr))}
+body[data-hg-section="landing"] .system-grid .card{
+ position:relative;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;
+ text-align:left;min-height:178px;padding:21px;gap:0;
+ border:1px solid rgba(96,43,72,.12)!important;border-radius:22px;
+ box-shadow:0 7px 23px #62314A18;
+ text-decoration:none;transition:transform .16s,box-shadow .16s; 
+}
+body[data-hg-section="landing"] .system-grid .card:hover,
+body[data-hg-section="landing"] .system-grid .card:focus-visible{
+ transform:translateY(-4px);box-shadow:0 16px 31px #62314A29;filter:none;
+}
+body[data-hg-section="landing"] .system-grid .card .icon{
+ display:grid;place-items:center;flex:none;
+ width:56px;height:57px;margin:0 0 19px;
+}
+body[data-hg-section="landing"] .system-grid .card .icon svg{
+ width:35px;height:35px;stroke-width:1.8;
+}
+body[data-hg-section="landing"] .system-grid .card strong{
+ display:block;text-align:left;
+ font:730 16px/1.2 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+ letter-spacing:-.025em;color:#54283E;
+}
+body[data-hg-section="landing"] .system-grid .card.hg-pending::after{
+ position:absolute;right:12px;bottom:12px;margin:0;font-size:8px;
+}
+/* Keep a balanced centered seventh card while following the Home card grid. */
+body[data-hg-section="landing"] .system-grid .card.history{grid-column:2;width:auto;justify-self:stretch}
+@media(min-width:1600px){
+ .sidebar{width:275px}body{padding-left:275px!important}
+ body[data-hg-section="landing"] .system-grid .card{min-height:205px;padding:25px}
+}
+@media(min-width:760px) and (max-width:1020px){
+ .sidebar{width:196px}.sidebar-scroll{padding:22px 10px 16px}
+ body{padding-left:196px!important}
+ body.sidebar-collapsed{padding-left:54px!important}
+ body.sidebar-collapsed .sidebar{width:54px}
+ body.sidebar-collapsed .sidebar-scroll{padding-inline:4px}
+ body[data-hg-section="landing"] .system-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ body[data-hg-section="landing"] .system-grid .card{min-height:160px}
+ body[data-hg-section="landing"] .system-grid .card.history{grid-column:1/-1;
+ width:calc((100% - 17px)/2);justify-self:center}
+}
+@media(max-width:759px){
+ body,body.sidebar-collapsed{padding-left:0!important}
+ .sidebar{display:none}
+ body[data-hg-section="landing"] .system-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+ body[data-hg-section="landing"] .system-grid .card{
+   min-height:153px;padding:15px;border-radius:20px
+ }
+ body[data-hg-section="landing"] .system-grid .card .icon{
+   width:48px;height:49px;margin-bottom:13px
+ }
+ body[data-hg-section="landing"] .system-grid .card .icon svg{width:31px;height:31px}
+ body[data-hg-section="landing"] .system-grid .card strong{
+   font-size:14px;line-height:1.2;text-align:left
+ }
+ body[data-hg-section="landing"] .system-grid .card.history{
+   grid-column:1/-1;width:calc((100% - 12px)/2);justify-self:center
+ }
+}
+@media(max-width:380px){
+ body[data-hg-section="landing"] .system-grid .card{min-height:143px}
+}
+@media(prefers-reduced-motion:reduce){
+ .sidebar,.sidebar-edge-toggle,body[data-hg-section="landing"] .system-grid .card{transition:none}
+}
