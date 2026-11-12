@@ -138,3 +138,6 @@ body[data-hg-section="form"]{--menu-blue:#5b7897}
  .hg-mobile-shell a:first-child{font-size:18px}
  body[data-hg-section="landing"] .system-grid .card{min-height:143px}
 }
+/* Landing uses the Home Girl rail or mobile brand strip as its single header. */
+body[data-hg-section="landing"] > .site-header{display:none}
+body[data-hg-section="landing"] .system-grid .card.history{width:auto}
