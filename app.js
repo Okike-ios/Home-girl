@@ -91,9 +91,9 @@ function goBack(){
  return false;
 }
 document.addEventListener('click',e=>{const nav=e.target.closest('[data-view]');if(nav){showView(nav.dataset.view);return}const os=e.target.closest('[data-os]');if(os)showView(os.dataset.os)});
-// HG-NAV-003: predictable mobile gestures. Home is a fixed navigation hub:
-// swipe right -> Calendar; swipe left -> Shopping List.
-// Everywhere else, swipe right -> the actual previous screen.
+// HG-NAV-004: Home gestures are internal application navigation, never OS navigation.
+// A non-passive touchmove claims deliberate horizontal movement so a swipe
+// across the Nourishment card cannot activate its link or trigger browser history.
 let touchStart=null;
 let suppressSwipeClickUntil=0;
 function gestureBlocked(target){
@@ -103,19 +103,33 @@ function gestureBlocked(target){
 document.addEventListener('touchstart',e=>{
  touchStart=null;
  if(e.touches.length!==1||window.innerWidth>=760||gestureBlocked(e.target))return;
- touchStart={x:e.touches[0].clientX,y:e.touches[0].clientY};
+ touchStart={x:e.touches[0].clientX,y:e.touches[0].clientY,axis:null,claimed:false};
 },{passive:true});
 document.addEventListener('touchcancel',()=>{touchStart=null;},{passive:true});
+document.addEventListener('touchmove',e=>{
+ if(!touchStart||window.innerWidth>=760||e.touches.length!==1)return;
+ const dx=e.touches[0].clientX-touchStart.x;
+ const dy=e.touches[0].clientY-touchStart.y;
+ if(touchStart.axis===null&&Math.hypot(dx,dy)>=12){
+   touchStart.axis=Math.abs(dx)>Math.abs(dy)*1.2?'horizontal':'vertical';
+ }
+ if(touchStart.axis==='horizontal'){
+   touchStart.claimed=true;
+   // iOS Safari otherwise may navigate forward to a previously visited
+   // Nourishment page instead of allowing the Home -> Shopping List gesture.
+   if(e.cancelable)e.preventDefault();
+ }
+},{passive:false});
 document.addEventListener('touchend',e=>{
  if(!touchStart||window.innerWidth>=760||e.changedTouches.length!==1){touchStart=null;return;}
- const dx=e.changedTouches[0].clientX-touchStart.x;
- const dy=e.changedTouches[0].clientY-touchStart.y;
+ const gesture=touchStart;
  touchStart=null;
- // A 55px horizontal move is enough; reject vertical scrolls and diagonals.
- if(Math.abs(dx)<55||Math.abs(dx)<Math.abs(dy)*1.2)return;
- // Avoid a synthesized post-touch click accidentally opening a card or page.
- suppressSwipeClickUntil=Date.now()+450;
+ const dx=e.changedTouches[0].clientX-gesture.x;
+ const dy=e.changedTouches[0].clientY-gesture.y;
+ if(Math.abs(dx)<55||Math.abs(dx)<Math.abs(dy)*1.2||gesture.axis==='vertical')return;
+ suppressSwipeClickUntil=Date.now()+600;
  if(currentView==='home'){
+   // Home -> Shopping List is the household workspace, not Nourishment OS.
    showView(dx>0?'calendar':'shopping');
  }else if(dx>0){
    goBack();
