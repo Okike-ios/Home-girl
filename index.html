@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="theme-color" content="#fffaf7"><title>Home Girl · Welcome Home</title><link rel="stylesheet" href="styles.css"></head>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="theme-color" content="#fffaf7"><title>Home Girl · Welcome Home</title><link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="planner.css"></head>
 <body>
 <svg class="svg-defs" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
 <symbol id="i-home" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-6v-7h-4v7H4a1 1 0 0 1-1-1z"/></symbol>
@@ -58,8 +58,31 @@
   <div class="home-footnote"><svg><use href="#i-spark"/></svg> A happier home, a fuller life.</div>
  </section>
  <nav class="mobile-page-dots" id="mobile-page-dots" aria-label="Swipe pages"><button type="button" class="page-dot" data-view="calendar" aria-label="Open Calendar"></button><button type="button" class="page-dot is-current" data-view="home" aria-label="Open Home" aria-current="page"></button><button type="button" class="page-dot" data-view="shopping" aria-label="Open Shopping List"></button></nav>
+ <section class="planner-view view" id="view-planner" aria-label="Home Girl planning workspace">
+  <header class="planner-header">
+   <div><p class="eyebrow" id="planner-eyebrow">DAILY LIFE</p><h1 id="planner-heading">Calendar</h1><p class="planner-lead" id="planner-lead">Your household, thoughtfully organized.</p></div>
+   <button class="planner-primary" type="button" id="planner-new"><svg><use href="#i-check"/></svg><span id="planner-new-label">New task</span></button>
+  </header>
+  <div id="planner-content" aria-live="polite"></div>
+ </section>
+ <dialog id="planner-dialog" class="planner-dialog" aria-labelledby="planner-dialog-title">
+  <form method="dialog" id="planner-form">
+   <div class="planner-dialog-top"><div><p class="eyebrow">HOME GIRL</p><h2 id="planner-dialog-title">New task</h2></div><button class="planner-icon-action" type="button" id="planner-close" aria-label="Close form">×</button></div>
+   <input type="hidden" id="planner-kind" name="kind" value="task">
+   <input type="hidden" id="planner-id" name="id">
+   <label class="planner-field">Title <input type="text" name="title" id="planner-title" maxlength="120" required placeholder="What needs doing?"></label>
+   <div class="planner-form-grid"><label class="planner-field"><span id="planner-date-label">Due date</span><input type="date" name="date" id="planner-date" required></label>
+   <label class="planner-field" id="planner-time-field">Time <input type="time" name="time" id="planner-time"></label></div>
+   <label class="planner-field" id="planner-category-field">Related area<select name="area" id="planner-area"><option value="General">General</option><option value="Nourishment">Nourishment</option><option value="Home Care">Home Care</option><option value="Personal & Well-being">Personal & Well-being</option><option value="Home Improvement">Home Improvement</option><option value="Events">Events</option><option value="Financial System">Financial System</option></select></label>
+   <label class="planner-field" id="planner-linked-field" hidden>Linked task (optional)<select name="taskId" id="planner-task-link"><option value="">Standalone reminder</option></select></label>
+   <label class="planner-field" id="planner-repeat-field" hidden>Repeat<select name="repeat" id="planner-repeat"><option value="none">Does not repeat</option><option value="daily">Daily</option><option value="weekly">Weekly</option><option value="monthly">Monthly</option></select></label>
+   <label class="planner-field" id="planner-notes-field">Notes (optional)<textarea name="notes" id="planner-notes" maxlength="500" rows="3" placeholder="A little extra detail..."></textarea></label>
+   <p class="planner-form-note" id="planner-form-note"></p>
+   <div class="planner-dialog-actions"><button type="button" class="planner-quiet" id="planner-cancel">Cancel</button><button type="submit" class="planner-primary" id="planner-save">Save</button></div>
+  </form>
+ </dialog>
  <section class="sub-view view" id="view-generic" aria-live="polite"><button class="back-button" data-view="home"><svg><use href="#i-back"/></svg> Back home</button><div class="placeholder-card"><div class="placeholder-icon" id="placeholder-icon"><svg><use href="#i-grid"/></svg></div><p class="eyebrow" id="placeholder-overline">HOME GIRL</p><h1 id="placeholder-title">Coming together beautifully</h1><p id="placeholder-description">This workspace belongs to the next development milestone. The Home Screen is our focus today.</p><button class="primary-button" data-view="home">Return to Home <svg><use href="#i-arrow"/></svg></button></div></section>
 </main>
 <nav class="mobile-bottom-nav" aria-label="Primary navigation"><button data-view="dashboard"><svg><use href="#i-grid"/></svg><span>Dashboard</span></button><button class="selected" data-view="home"><svg><use href="#i-home"/></svg><span>Home</span></button><button data-view="shop"><svg><use href="#i-store"/></svg><span>Shop</span></button></nav>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
-</div><script src="app.js" defer></script></body></html>
+</div><script src="app.js" defer></script><script src="planner.js" defer></script></body></html>

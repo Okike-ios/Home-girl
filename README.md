@@ -46,3 +46,28 @@ The Product Owner explicitly authorized this revision directly on `main` (except
 - All non-Home operating-system destinations remain placeholders; this is a visual/navigation refinement, not implementation of Calendar, Tasks, Reminders, or OS business logic.
 
 Validation: connector readback confirmed the HTML, CSS, and JS files; JavaScript parsed successfully and targeted static checks passed. Live browser visual testing is **not yet verified**, so the updated layout needs Product Owner review.
+
+## Proposed feature branch: Calendar, My Tasks & Reminders (HG-CAL-001 / HG-TASK-001 / HG-REM-001 / HG-INT-001)
+
+**Branch:** `feature/calendar-tasks-reminders` (not merged into `main`). Design follows the established Soft Premium theme and retains the existing Home Screen and sidebar.
+
+### Implemented in the review branch
+- Responsive month calendar with month navigation, Today shortcut and task/reminder indicators; selecting a date **directly opens My Tasks filtered to that date** with Reminders and Events shortcuts.
+- Select a Calendar date, then **View day’s tasks** to open My Tasks filtered to that date. Shortcuts for Reminders and Events are included; Events remains an existing placeholder.
+- Task creation/editing, area assignment, notes, due date, completion/undo, deletion, Today/Upcoming/Overdue/Completed filters.
+- Completed tasks remain visible on their completion day and can be found in Completed/history afterward. Overdue tasks offer explicit **Reschedule** and **Dismiss** actions; they are not silently erased.
+- Standalone or task-linked reminders; one-time, daily, weekly or monthly recurrence; edit/delete; in-app due list and acknowledgement. Linked reminders stop alerting when their task is completed/dismissed.
+- The household-wide This Week overview summarizes tasks and reminder schedules for the current Monday–Sunday week. It does **not** change the Nourishment meal-planning workflow.
+- Data is saved only in this browser's localStorage under `homegirl-planner-v1`, not in Supabase. No sample household tasks or reminders are seeded automatically.
+
+### Limitations and exclusions
+- No Supabase persistence, accounts, cross-device sync, push notifications, native phone alarms, or background notifications when the app/browser is closed.
+- No working Events OS integration; its existing placeholder is preserved.
+- Browser-local data can disappear if site storage is cleared; do not treat this prototype as a durable records system.
+- Due reminders are checked while the app is open or returns to the foreground; they are not guaranteed at exact minute resolution with suspended browser tabs.
+
+### Review and tests
+- Syntax and static integration checks completed using GitHub file readback.
+- Interactions exercised with a mocked DOM: new task, completing tasks, overdue reschedule/dismiss, one-time and recurring reminder acknowledgements, calendar and weekly render.
+- Repeatable Node tests: `node --test tests/planner.test.js` (requires Node.js; no packages/frameworks).
+- **Pending:** visual and real-browser interaction tests on phone, tablet and laptop, keyboard/accessibility review, persistence tests with actual browser localStorage, and Product Owner acceptance. Do not merge until reviewed.
