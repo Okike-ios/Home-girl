@@ -71,3 +71,13 @@ Validation: connector readback confirmed the HTML, CSS, and JS files; JavaScript
 - Interactions exercised with a mocked DOM: new task, completing tasks, overdue reschedule/dismiss, one-time and recurring reminder acknowledgements, calendar and weekly render.
 - Repeatable Node tests: `node --test tests/planner.test.js` (requires Node.js; no packages/frameworks).
 - **Pending:** visual and real-browser interaction tests on phone, tablet and laptop, keyboard/accessibility review, persistence tests with actual browser localStorage, and Product Owner acceptance. Do not merge until reviewed.
+
+## HG-NAV-001 — Phone swipe-back history (proposed)
+- On phone widths (below 760px), swipe **left** on the main workspace to return to the **actual previously visited screen**, rather than always going Home or opening Shopping List.
+- Returning to Calendar retains its month and selected date; returning to filtered Tasks/Reminders retains the chosen filter; previous vertical scroll position is also restored.
+- Back history is per open app session. At the first screen, swiping left does nothing.
+- A right swipe from Home still opens Calendar; the three phone page dots still provide access to Calendar, Home and Shopping List.
+- Vertical scrolls, form controls and open dialogs are not intended to activate swipe-back. Sidebar and other desktop/tablet navigation remain unchanged.
+- Browser reload resets the in-app navigation stack; it does **not** delete locally saved task/reminder records.
+- Regression tests: `node --test tests/navigation-history.test.js`.
+- Requires real-device visual/touch testing and Product Owner review before acceptance.
