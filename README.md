@@ -87,3 +87,19 @@ Validation: connector readback confirmed the HTML, CSS, and JS files; JavaScript
 - **Swiping left from Home** opens Shopping List; page dots remain available for direct navigation. A right swipe on Home when there is no prior page does nothing.
 - The formerly described left-swipe Back and Home right-swipe Calendar behavior are superseded by this correction.
 - Gesture regression tests were updated; actual-device testing remains pending.
+
+## HG-NOUR-001 — Nourishment OS integration (merged baseline once accepted)
+
+**Scope:** Connect the Home Screen Nourishment card to an integrated five-screen Nourishment workspace while keeping the current Rich Soft Premium Home Girl identity. Individual section accents remain: Menu blue, Cook Ahead wine, Nourishment This Week sage, Meal Maker ochre, Shopping coral, Pantry teal and History mauve.
+
+**Source fidelity:** Imported the supplied HTML, CSS, and JavaScript for Nourishment landing, The Menu, Add New Dish, Cook Ahead, and Nourishment This Week. The original section JavaScript modules and section styles were preserved; an additional shared `nourishment/homegirl-integration.css` provides the Home Girl dark plum rail, compact mobile header, typography, background, cards and spacing. Missing legacy back links were corrected and the Nourishment card links to `nourishment/nourishment-os.html`.
+
+**What works in the prototype:** Landing navigation to Menu/Cook Ahead/Nourishment This Week; existing form controls, Cook Ahead table and filtering, and weekly meal-plan controls. Each section remains separate from Home Girl's household-wide This Week.
+
+**Not implemented in uploaded code:** Meal Maker, Nourishment Shopping List, Pantry, History destinations (shown as Coming Later); saved Cook Ahead and weekly plans. Do not mistake existing placeholders for functioning integrations.
+
+**Data/security caveats:** Menu and Add Dish retain their existing Supabase client (publishable key, not a server secret). Live network access, authentication, row-level-security policies, ingredient persistence, image uploads, and multi-user data separation remain **unverified**. The original Menu source constructs HTML from returned dish data; sanitize/validate this before public multi-user release. The supplied image selector only previews an image; do not assume the image is uploaded.
+
+**Validation evidence:** Original JS syntax checks passed. At 1280×900 and 390×844, local Chromium rendering showed no JavaScript exceptions when Supabase was mocked and all five sections had no horizontal document overflow. Cook Ahead Add Dish and search, This Week Add Meal Component and seven-day rows, and Add New Dish ingredient/category controls were exercised. A mock was used for Supabase, so no real database write/read was verified. Navigation relative links were checked locally. Repeatable static checks: `node --test tests/nourishment-integration.test.js`.
+
+**Remaining acceptance:** Test all navigation and actual phone/tablet/laptop layouts on the deployed GitHub Pages site, verify live Supabase with safe test records and RLS, then obtain Product Owner feedback. The integration does not imply those tests have passed.
