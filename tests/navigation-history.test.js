@@ -42,11 +42,12 @@ function harness(){
   return {context,window,document,node,swipe,view:()=>vm.runInContext('currentView',context)};
 }
 
-test('empty history does not navigate away from Home',()=>{
+test('Home swipe right always opens Calendar even with previous history',()=>{
   const {context,swipe,view}=harness();
-  assert.equal(view(),'home');
+  context.showView('tasks');
+  context.showView('home');
   swipe(120);
-  assert.equal(view(),'home');
+  assert.equal(view(),'calendar');
 });
 test('returns from date-filtered Tasks to exact Calendar month and scroll position',()=>{
   const {context,window,swipe,view}=harness();
@@ -65,14 +66,15 @@ test('returns from date-filtered Tasks to exact Calendar month and scroll positi
   assert.equal(view(),'home');
   assert.equal(window.scrollY,140);
 });
-test('left swipe from Home opens Shopping List; right swipe returns through history',()=>{
+test('left swipe from Home opens Shopping List; elsewhere right swipe returns through history',()=>{
   const {context,swipe,view}=harness();
   swipe(-115);assert.equal(view(),'shopping');
   context.showView('reminders');
   swipe(110);assert.equal(view(),'shopping');
   swipe(110);assert.equal(view(),'home');
+  swipe(110);assert.equal(view(),'calendar');
 });
-test('vertical movement and inputs do not trigger back',()=>{
+test('vertical movement and inputs do not trigger navigation',()=>{
   const {context,swipe,view}=harness();
   context.showView('calendar');
   swipe(120,170);
@@ -86,4 +88,10 @@ test('desktop touch gestures do not navigate',()=>{
   window.innerWidth=1024;
   swipe(150);
   assert.equal(view(),'calendar');
+});
+
+test('short gestures do not change pages',()=>{
+  const {swipe,view}=harness();
+  swipe(30,4);
+  assert.equal(view(),'home');
 });
