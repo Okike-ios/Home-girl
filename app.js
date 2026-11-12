@@ -91,16 +91,18 @@ function goBack(){
  return false;
 }
 document.addEventListener('click',e=>{const nav=e.target.closest('[data-view]');if(nav){showView(nav.dataset.view);return}const os=e.target.closest('[data-os]');if(os)showView(os.dataset.os)});
-// Phone gesture: right swipe = previous visited screen, left swipe from Home = Shopping List.
-// Listen across the app rather than only <main>, so navigation works on the header
-// and other non-form surfaces. Ignore form fields and modal dialogs.
+// HG-NAV-003: predictable mobile gestures. Home is a fixed navigation hub:
+// swipe right -> Calendar; swipe left -> Shopping List.
+// Everywhere else, swipe right -> the actual previous screen.
 let touchStart=null;
+let suppressSwipeClickUntil=0;
 function gestureBlocked(target){
  return !!(document.querySelector('#planner-dialog[open]') ||
    (target&&target.closest&&target.closest('input,textarea,select,[contenteditable],dialog,[data-gesture-ignore]')));
 }
 document.addEventListener('touchstart',e=>{
- if(e.touches.length!==1||window.innerWidth>=760||gestureBlocked(e.target)){touchStart=null;return;}
+ touchStart=null;
+ if(e.touches.length!==1||window.innerWidth>=760||gestureBlocked(e.target))return;
  touchStart={x:e.touches[0].clientX,y:e.touches[0].clientY};
 },{passive:true});
 document.addEventListener('touchcancel',()=>{touchStart=null;},{passive:true});
@@ -109,10 +111,23 @@ document.addEventListener('touchend',e=>{
  const dx=e.changedTouches[0].clientX-touchStart.x;
  const dy=e.changedTouches[0].clientY-touchStart.y;
  touchStart=null;
- if(Math.abs(dx)<70||Math.abs(dy)>Math.abs(dx)*.55)return;
- if(dx>0){goBack();return;}
- if(currentView==='home')showView('shopping');
+ // A 55px horizontal move is enough; reject vertical scrolls and diagonals.
+ if(Math.abs(dx)<55||Math.abs(dx)<Math.abs(dy)*1.2)return;
+ // Avoid a synthesized post-touch click accidentally opening a card or page.
+ suppressSwipeClickUntil=Date.now()+450;
+ if(currentView==='home'){
+   showView(dx>0?'calendar':'shopping');
+ }else if(dx>0){
+   goBack();
+ }
 },{passive:true});
+document.addEventListener('click',e=>{
+ if(window.innerWidth<760&&Date.now()<suppressSwipeClickUntil){
+   suppressSwipeClickUntil=0;
+   e.preventDefault();
+   e.stopImmediatePropagation();
+ }
+},true);
 // Desktop sidebar: visible toggle button and an edge-reveal chevron.
 // Preserve the last choice locally and leave mobile navigation unchanged.
 const shell=document.querySelector('.app-shell');
