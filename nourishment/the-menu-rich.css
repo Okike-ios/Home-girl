@@ -1,0 +1,296 @@
+/* HG-MENU-001 — Rich Soft Premium / The Menu visual treatment.
+   Presentation only. The Menu's existing markup hooks, Supabase connection,
+   search/filter buttons and Add New Dish actions are untouched. */
+body[data-hg-section="menu"]{
+  --menu-blue:#607b9b;
+  --menu-blue-deep:#45617e;
+  --menu-blue-soft:#d9e5f0;
+  --menu-blue-edge:#bfcedc;
+  --menu-ink:#54283e;
+  --menu-muted:#765669;
+  --menu-surface:#fffaf8;
+}
+body[data-hg-section="menu"] .ambient{
+  display:none;
+}
+/* Laptop content follows the same centered, restrained width as Home. */
+body[data-hg-section="menu"] > .site-header,
+body[data-hg-section="menu"] > main{
+  width:min(100% - 64px,1090px);
+  max-width:1090px;
+  margin-inline:auto;
+  box-sizing:border-box;
+}
+/* Legacy header previously stretched across a three-column grid with
+   unequal contents; center the title independently of left/right actions. */
+body[data-hg-section="menu"] > .site-header{
+  display:flex!important;
+  align-items:center;
+  justify-content:space-between;
+  min-height:100px;
+  padding:25px 0 14px!important;
+  position:relative;
+  background:transparent!important;
+  backdrop-filter:none!important;
+  border:0!important;
+  box-shadow:none!important;
+  gap:18px;
+}
+body[data-hg-section="menu"] .site-header .home-link{
+  flex:0 0 auto;
+  min-height:42px;
+  display:inline-flex;
+  align-items:center;
+  gap:9px;
+  padding:0 12px;
+  border:1px solid #e9d8df;
+  border-radius:13px;
+  background:#fffaf8d9;
+  color:var(--menu-ink);
+  font:650 13px/1.2 Inter,ui-sans-serif,system-ui,sans-serif;
+  text-decoration:none;
+}
+body[data-hg-section="menu"] .site-header .home-arrow{
+  font:normal 20px/1 Inter,ui-sans-serif,system-ui,sans-serif;
+}
+body[data-hg-section="menu"] .site-header .menu-title{
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%);
+  min-width:0;
+  margin:0;
+  color:var(--menu-blue-deep);
+  font:750 11px/1.2 Inter,ui-sans-serif,system-ui,sans-serif;
+  letter-spacing:.2em;
+  text-align:center;
+  white-space:nowrap;
+}
+body[data-hg-section="menu"] .site-header .menu-actions{
+  display:flex;align-items:center;justify-content:flex-end;
+  flex:0 0 auto;gap:9px;margin-left:auto;
+}
+body[data-hg-section="menu"] .site-header .icon-button,
+body[data-hg-section="menu"] .site-header .filter-button{
+  display:grid;place-items:center;
+  width:43px;height:43px;
+  border:1px solid #d8dce4;
+  border-radius:14px;
+  background:#fffaf8;
+  box-shadow:0 4px 15px #45617e12;
+  transition:background .15s,box-shadow .15s;
+}
+body[data-hg-section="menu"] .site-header .icon-button:hover,
+body[data-hg-section="menu"] .site-header .filter-button:hover{
+  transform:none;
+  background:#eaf1f7;
+  box-shadow:0 5px 18px #45617e20;
+}
+body[data-hg-section="menu"] .search-icon{border-color:var(--menu-blue-deep)}
+body[data-hg-section="menu"] .search-icon::after,
+body[data-hg-section="menu"] .filter-icon i{background:var(--menu-blue-deep)}
+body[data-hg-section="menu"] .site-header .add-dish-button{
+  display:inline-flex;justify-content:center;
+  height:43px;min-width:0;padding:0 18px;
+  border:1px solid var(--menu-blue-deep);
+  border-radius:14px;
+  background:var(--menu-blue-deep);
+  box-shadow:0 5px 16px #45617e1f;
+  color:white;
+  font:700 13px/1.1 Inter,ui-sans-serif,system-ui,sans-serif;
+  white-space:nowrap;
+}
+body[data-hg-section="menu"] .site-header .add-dish-button:hover{
+  background:#354f6c;box-shadow:0 8px 20px #45617e2d;
+  transform:translateY(-1px);
+}
+/* Main content explicitly centered: fixes the old laptop empty state, which
+   was only width-constrained but had no automatic horizontal margins. */
+body[data-hg-section="menu"] > main{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  min-height:calc(100dvh - 145px);
+  padding:24px 0 96px!important;
+}
+body[data-hg-section="menu"] .empty-menu{
+  width:min(100%,790px);
+  min-height:375px;
+  margin:22px auto 0;
+  padding:56px clamp(20px,5vw,60px) 54px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  background:linear-gradient(150deg,#edf3f8 0%,#f8fafc 57%,#fffaf8 100%);
+  border:1px solid var(--menu-blue-edge);
+  border-radius:26px;
+  box-shadow:0 12px 33px #45617e14,0 2px 7px #54283e08;
+}
+body[data-hg-section="menu"] .empty-menu .empty-ornament{
+  gap:17px;margin:0 0 22px;
+}
+body[data-hg-section="menu"] .empty-menu .empty-ornament span{
+  width:55px;background:#bacddd;
+}
+body[data-hg-section="menu"] .empty-menu .empty-ornament b{
+  color:var(--menu-blue-deep);font-size:22px;
+}
+body[data-hg-section="menu"] .empty-menu h1{
+  max-width:600px;
+  margin:0;
+  font:400 clamp(32px,3.9vw,50px)/1.14 Georgia,"Times New Roman",serif;
+  letter-spacing:-.025em;
+  color:#632342;
+}
+body[data-hg-section="menu"] .empty-menu .empty-message{
+  max-width:580px;
+  margin:13px 0 0;
+  color:var(--menu-muted);
+  font:400 15px/1.5 Inter,ui-sans-serif,system-ui,sans-serif;
+}
+body[data-hg-section="menu"] .empty-menu .primary-action{
+  margin:26px 0 0;
+  display:inline-flex;
+  align-items:center;justify-content:center;
+  gap:9px;min-height:44px;
+  padding:10px 20px;
+  border:1px solid var(--menu-blue-deep);
+  border-radius:13px;
+  background:var(--menu-blue-deep);
+  color:white;
+  font:700 13px/1.2 Inter,ui-sans-serif,system-ui,sans-serif;
+  text-decoration:none;
+}
+body[data-hg-section="menu"] .empty-menu .primary-action:hover{
+  color:white;background:#354f6c;
+  transform:translateY(-1px);
+  box-shadow:0 7px 17px #45617e25;
+}
+/* Existing Supabase-rendered rows: modern Home Girl surface and compact text. */
+body[data-hg-section="menu"] .dish-list{
+  width:min(100%,900px);
+  margin:16px auto 0;
+  gap:13px;
+}
+body[data-hg-section="menu"] .dish-row{
+  display:flex;
+  align-items:center;
+  gap:19px;
+  min-width:0;
+  padding:15px 17px;
+  border:1px solid #e0dde2;
+  border-radius:20px;
+  background:#fffaf8;
+  box-shadow:0 9px 25px #63234210;
+}
+body[data-hg-section="menu"] .dish-row:hover{
+  border:1px solid var(--menu-blue-edge);
+  transform:translateY(-2px);
+  box-shadow:0 12px 26px #45617e20;
+}
+body[data-hg-section="menu"] .dish-image-placeholder{
+  flex:0 0 86px;
+  width:86px;height:86px;
+  overflow:hidden;
+  border-radius:15px;
+  border:1px solid #c6d6e2;
+  background:var(--menu-blue-soft);
+  color:var(--menu-blue-deep);
+}
+body[data-hg-section="menu"] .dish-info{min-width:0;flex:1}
+body[data-hg-section="menu"] .dish-info h2{
+  margin:0;
+  color:var(--menu-ink);
+  font:400 clamp(20px,2.2vw,26px)/1.2 Georgia,"Times New Roman",serif;
+  overflow-wrap:anywhere;
+}
+body[data-hg-section="menu"] .dish-info p{
+  margin:7px 0 0;
+  color:var(--menu-muted);
+  font:400 13px/1.5 Inter,ui-sans-serif,system-ui,sans-serif;
+}
+body[data-hg-section="menu"] .utility-button{
+  left:auto;right:26px;bottom:24px;
+  background:#fffaf8;
+  border-color:#d1dce5;
+  box-shadow:0 5px 18px #45617e19;
+}
+/* Ensure the legacy menu header never overlays / rescales the Home Girl
+   logo+notifications+settings header or the global mobile bottom navigation. */
+@media(max-width:1050px){
+  body[data-hg-section="menu"] > .site-header,
+  body[data-hg-section="menu"] > main{width:min(100% - 42px,850px)}
+  body[data-hg-section="menu"] .site-header .home-link{padding-inline:10px}
+  body[data-hg-section="menu"] .site-header .add-dish-button{padding-inline:12px}
+}
+@media(max-width:759px){
+  body[data-hg-section="menu"] > .site-header,
+  body[data-hg-section="menu"] > main{width:calc(100% - 36px)}
+  body[data-hg-section="menu"] > .site-header{
+    min-height:63px;
+    padding:9px 0 5px!important;
+    gap:8px;
+    display:flex!important;
+  }
+  body[data-hg-section="menu"] .site-header .home-link{
+    width:40px;min-width:40px;height:40px;
+    justify-content:center;padding:0;
+    font-size:0;
+  }
+  body[data-hg-section="menu"] .site-header .home-link .home-arrow{font-size:22px}
+  body[data-hg-section="menu"] .site-header .menu-title{
+    font-size:10px;
+    letter-spacing:.13em;
+  }
+  body[data-hg-section="menu"] .site-header .menu-actions{gap:6px}
+  body[data-hg-section="menu"] .site-header .icon-button,
+  body[data-hg-section="menu"] .site-header .filter-button{
+    width:39px;height:39px;border-radius:12px;
+  }
+  body[data-hg-section="menu"] .site-header .add-dish-button{
+    width:39px;height:39px;
+    min-width:39px;
+    padding:0;
+    border-radius:12px;
+    font-size:0;
+  }
+  body[data-hg-section="menu"] .site-header .add-dish-button span{font-size:23px}
+  body[data-hg-section="menu"] > main{
+    min-height:calc(100dvh - 290px);
+    padding:12px 0 calc(120px + env(safe-area-inset-bottom))!important;
+  }
+  body[data-hg-section="menu"] .empty-menu{
+    min-height:330px;
+    margin:10px auto 0;
+    padding:42px 19px;
+    border-radius:22px;
+  }
+  body[data-hg-section="menu"] .empty-menu h1{
+    font-size:clamp(29px,8vw,39px);
+  }
+  body[data-hg-section="menu"] .empty-menu .empty-message{font-size:13px}
+  body[data-hg-section="menu"] .dish-list{margin-top:10px}
+  body[data-hg-section="menu"] .dish-row{padding:12px;gap:12px;border-radius:17px}
+  body[data-hg-section="menu"] .dish-image-placeholder{
+    width:65px;height:65px;flex-basis:65px;border-radius:12px;
+  }
+  body[data-hg-section="menu"] .dish-info h2{font-size:20px}
+  body[data-hg-section="menu"] .dish-info p{font-size:12px}
+  body[data-hg-section="menu"] .utility-button{right:17px;bottom:calc(100px + env(safe-area-inset-bottom));}
+}
+@media(max-width:390px){
+  body[data-hg-section="menu"] .site-header .menu-title{font-size:9px;letter-spacing:.06em}
+  body[data-hg-section="menu"] > .site-header,
+  body[data-hg-section="menu"] > main{width:calc(100% - 26px)}
+  body[data-hg-section="menu"] .site-header .menu-actions{gap:4px}
+  body[data-hg-section="menu"] .site-header .icon-button,
+  body[data-hg-section="menu"] .site-header .filter-button,
+  body[data-hg-section="menu"] .site-header .add-dish-button{
+    width:35px;min-width:35px;height:35px;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  body[data-hg-section="menu"] .dish-row,
+  body[data-hg-section="menu"] .primary-action{transition:none}
+}
