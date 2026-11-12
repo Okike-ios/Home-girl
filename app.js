@@ -91,26 +91,25 @@ function goBack(){
  return false;
 }
 document.addEventListener('click',e=>{const nav=e.target.closest('[data-view]');if(nav){showView(nav.dataset.view);return}const os=e.target.closest('[data-os]');if(os)showView(os.dataset.os)});
-// Phone-only gesture: a right swipe retraces the actual visited-screen history.
-// From Home, a left swipe opens Shopping List; the page dots remain available.
-// When history is empty, a right swipe does nothing.
+// Phone gesture: right swipe = previous visited screen, left swipe from Home = Shopping List.
+// Listen across the app rather than only <main>, so navigation works on the header
+// and other non-form surfaces. Ignore form fields and modal dialogs.
 let touchStart=null;
-const main=document.querySelector('#main-content');
-main.addEventListener('touchstart',e=>{
- if(e.touches.length!==1||window.innerWidth>=760){touchStart=null;return;}
- // Do not navigate while editing, in a dialog, or inside a horizontally scrolling area.
- if(document.querySelector('#planner-dialog[open]')||e.target.closest('input,textarea,select,[contenteditable],dialog,[data-gesture-ignore]')){
-   touchStart=null;return;
- }
+function gestureBlocked(target){
+ return !!(document.querySelector('#planner-dialog[open]') ||
+   (target&&target.closest&&target.closest('input,textarea,select,[contenteditable],dialog,[data-gesture-ignore]')));
+}
+document.addEventListener('touchstart',e=>{
+ if(e.touches.length!==1||window.innerWidth>=760||gestureBlocked(e.target)){touchStart=null;return;}
  touchStart={x:e.touches[0].clientX,y:e.touches[0].clientY};
 },{passive:true});
-main.addEventListener('touchcancel',()=>{touchStart=null;},{passive:true});
-main.addEventListener('touchend',e=>{
+document.addEventListener('touchcancel',()=>{touchStart=null;},{passive:true});
+document.addEventListener('touchend',e=>{
  if(!touchStart||window.innerWidth>=760||e.changedTouches.length!==1){touchStart=null;return;}
  const dx=e.changedTouches[0].clientX-touchStart.x;
  const dy=e.changedTouches[0].clientY-touchStart.y;
  touchStart=null;
- if(Math.abs(dx)<90||Math.abs(dy)>Math.abs(dx)*.65)return;
+ if(Math.abs(dx)<70||Math.abs(dy)>Math.abs(dx)*.55)return;
  if(dx>0){goBack();return;}
  if(currentView==='home')showView('shopping');
 },{passive:true});
