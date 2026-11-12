@@ -68,3 +68,64 @@
  .page-dot:focus-visible{outline-offset:5px}
 }
 @media(prefers-reduced-motion:reduce){.sidebar,.sidebar-edge-toggle,.os-card,.weekly-banner,.page-dot{transition:none}}
+
+/* HG-UX-004: independent sidebar scrolling and slimmer icon-only rail. */
+@media(min-width:760px){
+  .sidebar{
+    height:100dvh;
+    min-height:0;
+    overflow:visible;
+    padding:0;
+    width:244px;
+  }
+  .sidebar-scroll{
+    display:flex;
+    flex-direction:column;
+    gap:0;
+    min-height:0;
+    height:100%;
+    width:100%;
+    padding:25px 16px 18px;
+    overflow-y:auto;
+    overflow-x:hidden;
+    scrollbar-width:thin;
+    scrollbar-color:#b78b9d transparent;
+    overscroll-behavior:contain;
+  }
+  .sidebar-scroll::-webkit-scrollbar{width:5px}
+  .sidebar-scroll::-webkit-scrollbar-thumb{background:#9f6d85;border-radius:6px}
+  .sidebar-scroll::-webkit-scrollbar-track{background:transparent}
+  .sidebar-foot{flex-shrink:0}
+  .sidebar .nav-item{flex-shrink:0;min-height:44px}
+  .sidebar-edge-toggle{
+    top:112px;
+    right:-14px;
+    width:28px;
+    height:44px;
+    transform:translateX(-5px);
+    opacity:0;
+    pointer-events:auto;
+    z-index:8;
+  }
+  .sidebar:hover .sidebar-edge-toggle,
+  .sidebar-edge-toggle:hover,
+  .sidebar-edge-toggle:focus-visible{opacity:1;transform:translateX(0)}
+  .app-shell.sidebar-collapsed .sidebar{width:58px;padding:0}
+  .app-shell.sidebar-collapsed .sidebar-scroll{padding:17px 6px 14px}
+  .app-shell.sidebar-collapsed .sidebar-brand{margin:0 0 13px;min-height:40px}
+  .app-shell.sidebar-collapsed .sidebar-brand img{width:38px;height:38px}
+  .app-shell.sidebar-collapsed .sidebar .nav-item{min-height:43px;width:46px;margin-inline:auto;flex-shrink:0}
+  .app-shell.sidebar-collapsed .sidebar .nav-item svg{width:20px;height:20px}
+  .app-shell.sidebar-collapsed .sidebar-section-label{display:none}
+  .app-shell.sidebar-collapsed .sidebar .side-links{gap:7px}
+  .app-shell.sidebar-collapsed .sidebar-foot{margin-top:auto}
+  .app-shell.sidebar-collapsed .sidebar-edge-toggle{opacity:1;pointer-events:auto}
+  .app-shell.sidebar-collapsed .sidebar-edge-toggle svg{transform:none}
+  .app-shell.sidebar-collapsed .sidebar .nav-item.active{box-shadow:0 4px 12px #320b262b}
+}
+@media(min-width:760px) and (max-width:1020px){
+  .sidebar{width:196px}
+  .sidebar-scroll{padding:22px 10px 16px}
+  .app-shell.sidebar-collapsed .sidebar{width:54px}
+  .app-shell.sidebar-collapsed .sidebar-scroll{padding-inline:4px}
+}
