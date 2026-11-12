@@ -52,7 +52,7 @@ Validation: connector readback confirmed the HTML, CSS, and JS files; JavaScript
 **Branch:** `feature/calendar-tasks-reminders` (not merged into `main`). Design follows the established Soft Premium theme and retains the existing Home Screen and sidebar.
 
 ### Implemented in the review branch
-- Responsive month calendar with month navigation, Today shortcut and task/reminder indicators; selecting a date gives daily details.
+- Responsive month calendar with month navigation, Today shortcut and task/reminder indicators; selecting a date **directly opens My Tasks filtered to that date** with Reminders and Events shortcuts.
 - Select a Calendar date, then **View day’s tasks** to open My Tasks filtered to that date. Shortcuts for Reminders and Events are included; Events remains an existing placeholder.
 - Task creation/editing, area assignment, notes, due date, completion/undo, deletion, Today/Upcoming/Overdue/Completed filters.
 - Completed tasks remain visible on their completion day and can be found in Completed/history afterward. Overdue tasks offer explicit **Reschedule** and **Dismiss** actions; they are not silently erased.
