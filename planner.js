@@ -145,7 +145,7 @@
     else {list=completed;title='Completed & history';}
     const tabs=['today','upcoming','overdue','completed'].map(x=>'<button class="planner-tab'+(taskTab===x&&!taskDateFilter?' is-active':'')+'" type="button" data-plan-action="task-tab" data-tab="'+x+'">'+({today:'Today',upcoming:'Upcoming',overdue:'Overdue ('+late.length+')',completed:'Completed'}[x])+'</button>').join('');
     root.innerHTML='<div class="planner-stats"><div class="planner-stat"><div class="num">'+active.length+'</div><div class="label">Open tasks</div></div><div class="planner-stat"><div class="num">'+completed.length+'</div><div class="label">Completed</div></div><div class="planner-stat"><div class="num">'+late.length+'</div><div class="label">Need attention</div></div></div>'+
-      (taskDateFilter?'<div class="planner-filter-notice"><span>Showing '+escapeHTML(niceDate(taskDateFilter))+' from Calendar</span><button class="planner-small-button" data-plan-action="clear-task-filter">All tasks</button></div>':'')+
+      (taskDateFilter?'<div class="planner-filter-notice"><span>Showing '+escapeHTML(niceDate(taskDateFilter))+' from Calendar</span><div class="planner-jump-links"><button class="planner-small-button" data-plan-action="date-reminders">Reminders</button><button class="planner-small-button" data-view="Events OS">Events</button><button class="planner-small-button" data-view="calendar">Calendar</button><button class="planner-small-button" data-plan-action="clear-task-filter">All tasks</button></div></div>':'')+
       (late.length?'<div class="planner-soft-banner"><strong>'+late.length+' overdue '+(late.length===1?'task needs':'tasks need')+' attention.</strong> Choose Reschedule or Dismiss for tasks you no longer plan to do.</div>':'')+
       '<div class="planner-tabs">'+tabs+'</div>'+surface('<div class="planner-toolbar"><h2>'+escapeHTML(title)+'</h2><span class="planner-muted">'+list.length+' task'+(list.length===1?'':'s')+'</span></div>'+
       (list.length?allTasksSorted(list).map(taskRow).join(''):empty('Nothing here yet',taskTab==='today'&&!taskDateFilter?'A peaceful day, or a perfect time to add your first task.':'Tasks will appear here as you plan your days.'))+
@@ -251,9 +251,9 @@
     const task=data.tasks.find(x=>x.id===id), reminder=data.reminders.find(x=>x.id===id);
     if(action==='today'){selectedDate=today();calendarMonth=new Date(new Date().getFullYear(),new Date().getMonth(),1);}
     else if(action==='prev-month'||action==='next-month')calendarMonth=new Date(calendarMonth.getFullYear(),calendarMonth.getMonth()+(action==='prev-month'?-1:1),1);
-    else if(action==='select-date'){selectedDate=date;const d=dateParts(date);calendarMonth=new Date(d.getFullYear(),d.getMonth(),1);}
+    else if(action==='select-date'){selectedDate=date;const d=dateParts(date);calendarMonth=new Date(d.getFullYear(),d.getMonth(),1);taskDateFilter=date;taskTab='today';window.showView('tasks');return;}
     else if(action==='tasks-for-date'){taskDateFilter=selectedDate;taskTab='today';window.showView('tasks');return;}
-    else if(action==='reminders-for-date'){reminderDateFilter=selectedDate;reminderTab='all';window.showView('reminders');return;}
+    else if(action==='reminders-for-date'||action==='date-reminders'){reminderDateFilter=selectedDate;reminderTab='all';window.showView('reminders');return;}
     else if(action==='week-day'){selectedDate=date;calendarMonth=new Date(dateParts(date).getFullYear(),dateParts(date).getMonth(),1);window.showView('calendar');return;}
     else if(action==='add-reminder-date'){openForm('reminder',null,selectedDate);return;}
     else if(action==='task-tab'){taskTab=button.dataset.tab;taskDateFilter='';}
