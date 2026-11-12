@@ -81,3 +81,9 @@ Validation: connector readback confirmed the HTML, CSS, and JS files; JavaScript
 - Browser reload resets the in-app navigation stack; it does **not** delete locally saved task/reminder records.
 - Regression tests: `node --test tests/navigation-history.test.js`.
 - Requires real-device visual/touch testing and Product Owner review before acceptance.
+
+## HG-NAV-001 direction correction (2026-11-12)
+- On phones, **swiping right** returns to the previously visited page, restoring the saved planner filter/calendar state and scroll position.
+- **Swiping left from Home** opens Shopping List; page dots remain available for direct navigation. A right swipe on Home when there is no prior page does nothing.
+- The formerly described left-swipe Back and Home right-swipe Calendar behavior are superseded by this correction.
+- Gesture regression tests were updated; actual-device testing remains pending.
