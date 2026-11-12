@@ -91,9 +91,9 @@ function goBack(){
  return false;
 }
 document.addEventListener('click',e=>{const nav=e.target.closest('[data-view]');if(nav){showView(nav.dataset.view);return}const os=e.target.closest('[data-os]');if(os)showView(os.dataset.os)});
-// Phone-only gesture: a left swipe retraces the actual visited-screen history.
-// The original swipe-right Home -> Calendar shortcut remains. Shopping List
-// is still accessible from the three page dots; left is reserved for Back.
+// Phone-only gesture: a right swipe retraces the actual visited-screen history.
+// From Home, a left swipe opens Shopping List; the page dots remain available.
+// When history is empty, a right swipe does nothing.
 let touchStart=null;
 const main=document.querySelector('#main-content');
 main.addEventListener('touchstart',e=>{
@@ -111,8 +111,8 @@ main.addEventListener('touchend',e=>{
  const dy=e.changedTouches[0].clientY-touchStart.y;
  touchStart=null;
  if(Math.abs(dx)<90||Math.abs(dy)>Math.abs(dx)*.65)return;
- if(dx<0){goBack();return;}
- if(currentView==='home')showView('calendar');
+ if(dx>0){goBack();return;}
+ if(currentView==='home')showView('shopping');
 },{passive:true});
 // Desktop sidebar: visible toggle button and an edge-reveal chevron.
 // Preserve the last choice locally and leave mobile navigation unchanged.
