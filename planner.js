@@ -284,6 +284,27 @@
   window.addEventListener('focus',()=>updateReminderCount());
   document.addEventListener('visibilitychange',()=>{if(!document.hidden)updateReminderCount();});
   setInterval(()=>{if(!document.hidden)updateReminderCount();},60000);
-  window.HomeGirlPlanner={render,selectDate(date){if(dateParts(date)){selectedDate=date;calendarMonth=new Date(dateParts(date).getFullYear(),dateParts(date).getMonth(),1);}},getState:()=>({tasks:data.tasks.length,reminders:data.reminders.length}),refresh:()=>render(current)};
+  window.HomeGirlPlanner={
+    render,
+    snapshot(){
+      return {
+        calendarMonth:toISO(calendarMonth),selectedDate,taskTab,taskDateFilter,
+        reminderTab,reminderDateFilter
+      };
+    },
+    restore(state){
+      if(!state||typeof state!=='object')return;
+      const month=dateParts(state.calendarMonth);
+      if(month)calendarMonth=new Date(month.getFullYear(),month.getMonth(),1);
+      if(dateParts(state.selectedDate))selectedDate=state.selectedDate;
+      if(['today','upcoming','overdue','completed'].includes(state.taskTab))taskTab=state.taskTab;
+      taskDateFilter=dateParts(state.taskDateFilter)?state.taskDateFilter:'';
+      if(['upcoming','due','all'].includes(state.reminderTab))reminderTab=state.reminderTab;
+      reminderDateFilter=dateParts(state.reminderDateFilter)?state.reminderDateFilter:'';
+    },
+    selectDate(date){if(dateParts(date)){selectedDate=date;calendarMonth=new Date(dateParts(date).getFullYear(),dateParts(date).getMonth(),1);}},
+    getState:()=>({tasks:data.tasks.length,reminders:data.reminders.length}),
+    refresh:()=>render(current)
+  };
   updateReminderCount();
 })();

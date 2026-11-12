@@ -29,11 +29,91 @@ const views={
 };
 function getName(){try{return (localStorage.getItem('homegirl-preferred-name')||'Friend').trim().slice(0,32)||'Friend'}catch{return 'Friend'}}
 function setWelcome(){let index=0;try{const prev=Number(sessionStorage.getItem('homegirl-last-welcome'));index=(Number.isInteger(prev)&&prev>=0&&prev<welcomeLines.length)?(prev+1+Math.floor(Math.random()*(welcomeLines.length-1)))%welcomeLines.length:Math.floor(Math.random()*welcomeLines.length);sessionStorage.setItem('homegirl-last-welcome',String(index))}catch{index=Math.floor(Math.random()*welcomeLines.length)}const [title,sub]=welcomeLines[index];document.querySelector('#welcome-title').textContent='Welcome back, '+getName()+'.';document.querySelector('#welcome-subtitle').textContent=sub}
-function showView(view){const home=view==='home';const detail=views[view];if(!home&&!detail)return;const planner=['calendar','tasks','reminders','week'].includes(view);document.querySelector('#view-home').classList.toggle('is-active',home);document.querySelector('#view-planner').classList.toggle('is-active',planner);document.querySelector('#view-generic').classList.toggle('is-active',!home&&!planner);if(planner&&window.HomeGirlPlanner)window.HomeGirlPlanner.render(view);if(!home&&!planner){document.querySelector('#placeholder-title').textContent=detail.title;document.querySelector('#placeholder-description').textContent=detail.desc;document.querySelector('#placeholder-overline').textContent=view.endsWith('OS')||view==='Financial System'?'OPERATING SYSTEM':'HOME GIRL WORKSPACE';document.querySelector('#placeholder-icon use').setAttribute('href','#i-'+detail.icon)}document.querySelectorAll('[data-view]').forEach(b=>{const isActive=b.dataset.view===view;b.classList.toggle('active',isActive&&b.classList.contains('nav-item'));b.classList.toggle('selected',isActive&&b.parentElement.classList.contains('mobile-bottom-nav'));if(isActive)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current')});const dots=document.querySelector('#mobile-page-dots');if(dots){dots.hidden=!['home','calendar','shopping'].includes(view);dots.querySelectorAll('.page-dot').forEach(b=>{const selected=b.dataset.view===view;b.classList.toggle('is-current',selected);if(selected)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current')})}document.title=(home?'Welcome Home':detail.title)+' · Home Girl';window.scrollTo({top:0,behavior:'instant'})}
+// A history entry captures the previous screen and its exact planning state.
+const navigationHistory=[];
+let currentView=null;
+function captureScreen(){
+  return {view:currentView, scrollY:window.scrollY||0,
+    planner:window.HomeGirlPlanner&&window.HomeGirlPlanner.snapshot?window.HomeGirlPlanner.snapshot():null};
+}
+function showView(view,options={}){
+ const home=view==='home',detail=views[view];
+ if(!home&&!detail)return;
+ const goingBack=options.back===true;
+ if(!goingBack&&currentView&&currentView!==view){
+   navigationHistory.push(captureScreen());
+   // A bounded history avoids unlimited growth during long phone sessions.
+   if(navigationHistory.length>80)navigationHistory.shift();
+ }
+ currentView=view;
+ const planner=['calendar','tasks','reminders','week'].includes(view);
+ document.querySelector('#view-home').classList.toggle('is-active',home);
+ document.querySelector('#view-planner').classList.toggle('is-active',planner);
+ document.querySelector('#view-generic').classList.toggle('is-active',!home&&!planner);
+ if(planner&&window.HomeGirlPlanner){
+   if(goingBack&&options.restore&&options.restore.planner&&window.HomeGirlPlanner.restore){
+     window.HomeGirlPlanner.restore(options.restore.planner);
+   }
+   window.HomeGirlPlanner.render(view);
+ }
+ if(!home&&!planner){
+   document.querySelector('#placeholder-title').textContent=detail.title;
+   document.querySelector('#placeholder-description').textContent=detail.desc;
+   document.querySelector('#placeholder-overline').textContent=view.endsWith('OS')||view==='Financial System'?'OPERATING SYSTEM':'HOME GIRL WORKSPACE';
+   document.querySelector('#placeholder-icon use').setAttribute('href','#i-'+detail.icon);
+ }
+ document.querySelectorAll('[data-view]').forEach(b=>{
+   const active=b.dataset.view===view;
+   b.classList.toggle('active',active&&b.classList.contains('nav-item'));
+   b.classList.toggle('selected',active&&b.parentElement.classList.contains('mobile-bottom-nav'));
+   if(active)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current');
+ });
+ const dots=document.querySelector('#mobile-page-dots');
+ if(dots){
+   dots.hidden=!['home','calendar','shopping'].includes(view);
+   dots.querySelectorAll('.page-dot').forEach(b=>{
+     const selected=b.dataset.view===view;
+     b.classList.toggle('is-current',selected);
+     if(selected)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current');
+   });
+ }
+ document.title=(home?'Welcome Home':detail.title)+' · Home Girl';
+ window.scrollTo({top:goingBack&&options.restore?options.restore.scrollY:0,behavior:'instant'});
+}
+function goBack(){
+ while(navigationHistory.length){
+   const entry=navigationHistory.pop();
+   if(entry.view&&entry.view!==currentView){
+     showView(entry.view,{back:true,restore:entry});
+     return true;
+   }
+ }
+ return false;
+}
 document.addEventListener('click',e=>{const nav=e.target.closest('[data-view]');if(nav){showView(nav.dataset.view);return}const os=e.target.closest('[data-os]');if(os)showView(os.dataset.os)});
-// Mobile swipe: Home center, Calendar to the left and Shopping List to the right.
-// Swiping left from Home opens Shopping List; swiping right opens Calendar.
-let startX=null,startY=null;const main=document.querySelector('#main-content');main.addEventListener('touchstart',e=>{if(e.touches.length!==1)return;startX=e.touches[0].clientX;startY=e.touches[0].clientY},{passive:true});main.addEventListener('touchend',e=>{if(startX===null||innerWidth>=760)return;const dx=e.changedTouches[0].clientX-startX;const dy=e.changedTouches[0].clientY-startY;startX=null;startY=null;if(Math.abs(dx)<90||Math.abs(dy)>Math.abs(dx)*.65)return;if(document.querySelector('#view-home').classList.contains('is-active'))showView(dx>0?'calendar':'shopping');else if(document.querySelector('#view-generic').classList.contains('is-active'))showView('home')},{passive:true});
+// Phone-only gesture: a left swipe retraces the actual visited-screen history.
+// The original swipe-right Home -> Calendar shortcut remains. Shopping List
+// is still accessible from the three page dots; left is reserved for Back.
+let touchStart=null;
+const main=document.querySelector('#main-content');
+main.addEventListener('touchstart',e=>{
+ if(e.touches.length!==1||window.innerWidth>=760){touchStart=null;return;}
+ // Do not navigate while editing, in a dialog, or inside a horizontally scrolling area.
+ if(document.querySelector('#planner-dialog[open]')||e.target.closest('input,textarea,select,[contenteditable],dialog,[data-gesture-ignore]')){
+   touchStart=null;return;
+ }
+ touchStart={x:e.touches[0].clientX,y:e.touches[0].clientY};
+},{passive:true});
+main.addEventListener('touchcancel',()=>{touchStart=null;},{passive:true});
+main.addEventListener('touchend',e=>{
+ if(!touchStart||window.innerWidth>=760||e.changedTouches.length!==1){touchStart=null;return;}
+ const dx=e.changedTouches[0].clientX-touchStart.x;
+ const dy=e.changedTouches[0].clientY-touchStart.y;
+ touchStart=null;
+ if(Math.abs(dx)<90||Math.abs(dy)>Math.abs(dx)*.65)return;
+ if(dx<0){goBack();return;}
+ if(currentView==='home')showView('calendar');
+},{passive:true});
 // Desktop sidebar: visible toggle button and an edge-reveal chevron.
 // Preserve the last choice locally and leave mobile navigation unchanged.
 const shell=document.querySelector('.app-shell');
