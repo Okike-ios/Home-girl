@@ -40,6 +40,7 @@
   let taskTab = 'today';
   let taskDateFilter = '';
   let reminderTab = 'upcoming';
+  let reminderDateFilter = '';
   let formKind = 'task';
   const root = document.getElementById('planner-content');
   const dlg = document.getElementById('planner-dialog');
@@ -161,8 +162,10 @@
   function renderReminders() {
     const due=dueReminders(), active=data.reminders.filter(linkedTaskIsOpen);
     let list=reminderTab==='due'?due:reminderTab==='all'?data.reminders:active;
+    if(reminderDateFilter) list=list.filter(r=>occurrence(r,reminderDateFilter)===reminderDateFilter);
     list=list.slice().sort((a,b)=>(a.date+'T'+a.time).localeCompare(b.date+'T'+b.time));
     root.innerHTML='<div class="planner-soft-banner"><strong>Reminders are always your choice.</strong> This preview checks schedules while Home Girl is open. It cannot send notifications when the app or browser is closed.</div>'+
+      (reminderDateFilter?'<div class="planner-filter-notice"><span>Reminders scheduled for '+escapeHTML(niceDate(reminderDateFilter))+'</span><button class="planner-small-button" data-plan-action="clear-reminder-filter">All reminders</button></div>':'')+
       '<div class="planner-tabs">'+[['upcoming','Scheduled'],['due','Due now ('+due.length+')'],['all','All reminders']].map(([key,label])=>'<button class="planner-tab'+(reminderTab===key?' is-active':'')+'" data-plan-action="reminder-tab" data-tab="'+key+'">'+label+'</button>').join('')+'</div>'+
       surface('<div class="planner-toolbar"><h2>'+escapeHTML(reminderTab==='due'?'Due reminders':'Your reminders')+'</h2><span class="planner-muted">'+list.length+' reminder'+(list.length===1?'':'s')+'</span></div>'+
         (list.length?list.map(reminderRow).join(''):empty('No reminders here','Create a reminder for anything you would like to remember.')));
@@ -250,12 +253,13 @@
     else if(action==='prev-month'||action==='next-month')calendarMonth=new Date(calendarMonth.getFullYear(),calendarMonth.getMonth()+(action==='prev-month'?-1:1),1);
     else if(action==='select-date'){selectedDate=date;const d=dateParts(date);calendarMonth=new Date(d.getFullYear(),d.getMonth(),1);}
     else if(action==='tasks-for-date'){taskDateFilter=selectedDate;taskTab='today';window.showView('tasks');return;}
-    else if(action==='reminders-for-date'){window.showView('reminders');return;}
+    else if(action==='reminders-for-date'){reminderDateFilter=selectedDate;reminderTab='all';window.showView('reminders');return;}
     else if(action==='week-day'){selectedDate=date;calendarMonth=new Date(dateParts(date).getFullYear(),dateParts(date).getMonth(),1);window.showView('calendar');return;}
     else if(action==='add-reminder-date'){openForm('reminder',null,selectedDate);return;}
     else if(action==='task-tab'){taskTab=button.dataset.tab;taskDateFilter='';}
     else if(action==='clear-task-filter'){taskDateFilter='';taskTab='today';}
-    else if(action==='reminder-tab')reminderTab=button.dataset.tab;
+    else if(action==='reminder-tab'){reminderTab=button.dataset.tab;reminderDateFilter='';}
+    else if(action==='clear-reminder-filter'){reminderDateFilter='';reminderTab='upcoming';}
     else if(action==='edit-task'&&task){openForm('task',task);return;}
     else if(action==='reschedule-task'&&task){openForm('task',task);return;}
     else if(action==='edit-reminder'&&reminder){openForm('reminder',reminder);return;}
@@ -272,7 +276,7 @@
   }
   root.addEventListener('click',e=>{const target=e.target.closest('[data-plan-action]');if(target&&target.dataset.planAction!=='toggle-task')resolveAction(target);});
   root.addEventListener('change',e=>{const target=e.target.closest('[data-plan-action="toggle-task"]');if(target)resolveAction(target);});
-  newButton.addEventListener('click',()=>openForm(current==='reminders'?'reminder':'task'));
+  newButton.addEventListener('click',()=>openForm(current==='reminders'?'reminder':'task',null,current==='calendar'?selectedDate:current==='tasks'&&taskDateFilter?taskDateFilter:current==='reminders'&&reminderDateFilter?reminderDateFilter:today()));
   document.getElementById('planner-close').addEventListener('click',closeForm);
   document.getElementById('planner-cancel').addEventListener('click',closeForm);
   form.addEventListener('submit',submit);
