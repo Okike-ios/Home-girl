@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Add New Dish | My Home Girl</title>
+
+  <link rel="stylesheet" href="menu-form.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Allura&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="homegirl-integration.css?v=hg-nourishment-001">
+</head>
+
+<body data-hg-section="form">
+<aside class="hg-shell-nav" aria-label="Home Girl navigation"><div class="hg-shell-brand"><img src="../assets/home-girl-logo.png" alt=""><span>Home Girl</span></div><nav aria-label="Nourishment"><a href="../index.html">⌂ <span>Home</span></a><a href="nourishment-os.html">♡ <span>Nourishment OS</span></a><a href="the-menu.html" aria-current="page">✧ <span>The Menu</span></a><a href="cook-ahead.html">♨ <span>Cook Ahead</span></a><a href="this-week.html">▦ <span>This Week · Meals</span></a></nav><p class="hg-shell-tagline">A happier home, a fuller life.</p></aside><div class="hg-mobile-shell"><a href="../index.html" aria-label="Go to Home Girl Home"><img src="../assets/home-girl-logo.png" alt="">Home Girl</a><a href="nourishment-os.html">Nourishment OS</a></div>
+
+  <!-- Background atmosphere -->
+  <div class="ambient ambient-one">❧</div>
+  <div class="ambient ambient-two">✦</div>
+  <div class="ambient ambient-three">—</div>
+
+
+  <!-- Header -->
+  <header class="site-header">
+
+    <a href="the-menu.html" class="back-link">
+      <span>←</span>
+      <span>The Menu</span>
+    </a>
+
+    <div class="brand">
+      My Home Girl
+    </div>
+
+    <div class="header-title">
+      ADD NEW DISH
+    </div>
+
+  </header>
+
+
+  <main>
+
+    <!-- Introduction -->
+    <section class="form-intro">
+
+      <div class="intro-ornament">
+        <span></span>
+        <b>✦</b>
+        <span></span>
+      </div>
+
+      <h1>Let's add something delicious.</h1>
+
+      <p>Tell me a little about this dish.</p>
+
+    </section>
+
+
+    <!-- Form -->
+    <form id="dish-form">
+
+
+      <!-- ==========================
+           SECTION 1 — THE DISH
+      =========================== -->
+
+      <section class="form-section">
+
+        <div class="section-heading">
+          <span class="section-number">01</span>
+
+          <div>
+            <h2>The Dish</h2>
+            <p>Start with the dish itself.</p>
+          </div>
+        </div>
+
+
+        <!-- Image -->
+        <div class="field image-field">
+
+          <label>Dish Image</label>
+
+          <div class="image-upload" id="image-upload">
+
+            <input
+              type="file"
+              id="dish-image"
+              accept="image/*"
+              hidden
+            >
+
+            <div class="image-placeholder" id="image-placeholder">
+
+              <div class="camera-mark">+</div>
+
+              <strong>Add a photo of your dish</strong>
+
+              <span>Tap to choose an image</span>
+
+              <small>Optional</small>
+
+            </div>
+
+            <img
+              id="image-preview"
+              class="image-preview"
+              alt="Dish preview"
+            >
+
+          </div>
+
+        </div>
+
+
+        <!-- Dish name -->
+        <div class="field">
+
+          <label for="dish-name">Dish Name</label>
+
+          <span class="field-hint">
+            What do you call this dish?
+          </span>
+
+          <input
+            type="text"
+            id="dish-name"
+            name="dishName"
+            placeholder="Egusi Soup"
+            autocomplete="off"
+          >
+
+        </div>
+
+      </section>
+
+
+      <!-- ==========================
+           SECTION 2 — ABOUT IT
+      =========================== -->
+
+      <section class="form-section">
+
+        <div class="section-heading">
+
+          <span class="section-number">02</span>
+
+          <div>
+            <h2>Tell Me About It</h2>
+            <p>A few little details about this dish.</p>
+          </div>
+
+        </div>
+
+
+        <!-- Category -->
+        <div class="field">
+
+          <label>Category</label>
+
+          <span class="field-hint">
+            Where does this dish belong?
+          </span>
+
+          <div class="choice-group" id="category-group">
+
+            <button type="button" class="choice" data-value="Staple Meal">
+              Staple Meal
+            </button>
+
+            <button type="button" class="choice" data-value="Snack">
+              Snack
+            </button>
+
+            <button type="button" class="choice" data-value="Special Meal">
+              Special Meal
+            </button>
+
+            <button type="button" class="choice" data-value="Busy Day">
+              Busy Day
+            </button>
+
+            <button type="button" class="choice" data-value="Family Favorite">
+              Family Favorite
+            </button>
+
+          </div>
+
+          <input type="hidden" id="category" name="category">
+
+        </div>
+
+
+        <!-- Best time -->
+        <div class="field">
+
+          <label>Best Time</label>
+
+          <span class="field-hint">
+            When do you usually enjoy it?
+          </span>
+
+          <div class="choice-group" id="time-group">
+
+            <button type="button" class="choice" data-value="Breakfast">
+              Breakfast
+            </button>
+
+            <button type="button" class="choice" data-value="Lunch">
+              Lunch
+            </button>
+
+            <button type="button" class="choice" data-value="Brunch">
+              Brunch
+            </button>
+
+            <button type="button" class="choice" data-value="Dinner">
+              Dinner
+            </button>
+
+          </div>
+
+          <input type="hidden" id="best-time" name="bestTime">
+
+        </div>
+
+
+        <!-- Servings -->
+        <div class="field servings-field">
+
+          <label for="servings">Serves</label>
+
+          <span class="field-hint">
+            How many people does this recipe usually serve?
+          </span>
+
+          <div class="number-wrap">
+
+            <input
+              type="number"
+              id="servings"
+              name="servings"
+              value="4"
+              min="1"
+            >
+
+            <span>people</span>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- ==========================
+           SECTION 3 — INGREDIENTS
+      =========================== -->
+
+      <section class="form-section">
+
+        <div class="section-heading">
+
+          <span class="section-number">03</span>
+
+          <div>
+            <h2>What Goes Into It?</h2>
+            <p>Add the ingredients and quantities you use.</p>
+          </div>
+
+        </div>
+
+
+        <div class="ingredients-box">
+
+          <div class="ingredient-header">
+            <span>Ingredient</span>
+            <span>Quantity</span>
+            <span>Unit</span>
+            <span></span>
+          </div>
+
+
+          <div id="ingredients-list">
+
+            <!-- First ingredient -->
+            <div class="ingredient-row">
+
+              <input
+                type="text"
+                class="ingredient-name"
+                placeholder="Egusi"
+              >
+
+              <input
+                type="text"
+                class="ingredient-quantity"
+                placeholder="2"
+              >
+
+              <input
+                type="text"
+                class="ingredient-unit"
+                placeholder="cups"
+              >
+
+              <button
+                type="button"
+                class="remove-ingredient"
+                aria-label="Remove ingredient"
+              >
+                ×
+              </button>
+
+            </div>
+
+          </div>
+
+
+          <button
+            type="button"
+            id="add-ingredient"
+            class="add-ingredient"
+          >
+            <span>+</span>
+            Add Ingredient
+          </button>
+
+        </div>
+
+      </section>
+
+
+      <!-- ==========================
+           SECTION 4 — RECIPE
+      =========================== -->
+
+      <section class="form-section">
+
+        <div class="section-heading">
+
+          <span class="section-number">04</span>
+
+          <div>
+            <h2>How Do You Make It?</h2>
+            <p>Write the steps the way you normally cook it.</p>
+          </div>
+
+        </div>
+
+
+        <div class="field">
+
+          <label for="recipe">Recipe</label>
+
+          <textarea
+            id="recipe"
+            name="recipe"
+            placeholder="Start with the first step..."
+          ></textarea>
+
+        </div>
+
+      </section>
+
+
+      <!-- ==========================
+           SAVE
+      =========================== -->
+
+      <section class="save-section">
+
+        <div class="save-ornament">
+          <span></span>
+          <b>✦</b>
+          <span></span>
+        </div>
+
+        <p>Another dish for the table.</p>
+
+        <div class="form-actions">
+
+          <button
+            type="button"
+            class="cancel-button"
+            id="cancel-button"
+          >
+            Cancel
+          </button>
+
+          <button
+            type="submit"
+            class="save-button"
+          >
+            Add to Menu
+          </button>
+
+        </div>
+
+      </section>
+
+
+    </form>
+
+  </main>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase.js"></script>
+  <script src="menu-form.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#74143f">
+  <title>Cook Ahead | Home Girl</title>
+  <link rel="stylesheet" href="cook-ahead.css">
+<link rel="stylesheet" href="homegirl-integration.css?v=hg-nourishment-001">
+</head>
+<body data-hg-section="cook">
+<aside class="hg-shell-nav" aria-label="Home Girl navigation"><div class="hg-shell-brand"><img src="../assets/home-girl-logo.png" alt=""><span>Home Girl</span></div><nav aria-label="Nourishment"><a href="../index.html">⌂ <span>Home</span></a><a href="nourishment-os.html">♡ <span>Nourishment OS</span></a><a href="the-menu.html">✧ <span>The Menu</span></a><a href="cook-ahead.html" aria-current="page">♨ <span>Cook Ahead</span></a><a href="this-week.html">▦ <span>This Week · Meals</span></a></nav><p class="hg-shell-tagline">A happier home, a fuller life.</p></aside><div class="hg-mobile-shell"><a href="../index.html" aria-label="Go to Home Girl Home"><img src="../assets/home-girl-logo.png" alt="">Home Girl</a><a href="nourishment-os.html">Nourishment OS</a></div>
+  <header class="app-header">
+    <nav class="header-side" aria-label="Page navigation">
+      <a class="icon-button" href="nourishment-os.html" aria-label="Back to Nourishment OS">←</a>
+      <button class="icon-button" id="searchToggle" type="button" aria-label="Search" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"></circle><path d="m15.5 15.5 5 5"></path></svg>
+      </button>
+    </nav>
+    <div class="header-title">Cook Ahead</div>
+    <nav class="header-side right" aria-label="Page tools">
+      <button class="icon-button" id="filterToggle" type="button" aria-label="Filter" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"></path><circle cx="9" cy="6" r="1.5"></circle><circle cx="15" cy="12" r="1.5"></circle><circle cx="11" cy="18" r="1.5"></circle></svg>
+      </button>
+      <button class="icon-button" id="moreToggle" type="button" aria-label="More options" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="5" r="1.5"></circle><circle cx="12" cy="12" r="1.5"></circle><circle cx="12" cy="19" r="1.5"></circle></svg>
+      </button>
+    </nav>
+  </header>
+
+  <div class="popover search-panel" id="searchPanel" hidden>
+    <label class="sr-only" for="dishSearch">Search dishes</label>
+    <input id="dishSearch" type="search" placeholder="Search dishes…">
+  </div>
+  <div class="popover filter-panel" id="filterPanel" hidden>
+    <label for="dishFilter">Show</label>
+    <select id="dishFilter">
+      <option value="all">All dishes</option>
+      <option value="selected">Selected for shopping</option>
+      <option value="unselected">Not selected</option>
+    </select>
+  </div>
+  <div class="popover more-panel" id="morePanel" hidden>
+    <button type="button" id="addDishFromMenu">Add a dish</button>
+    <button type="button" id="clearFilters">Clear search and filters</button>
+  </div>
+
+  <main class="main-content">
+
+    <section class="plan-section" aria-label="Cook Ahead plan details">
+
+      <div class="name-field">
+        <label class="name-prompt" for="planName">
+          Give your Cook Ahead a name
+        </label>
+        <div class="name-input-wrap">
+          <input
+            id="planName"
+            type="text"
+            maxlength="70"
+            placeholder="Give your Cook Ahead a name"
+            aria-label="Cook Ahead name"
+          >
+        </div>
+      </div>
+
+      <section class="intro">
+        <p>Plan the dishes that will carry you through your cooking window.</p>
+      </section>
+
+      <div class="date-fields">
+        <div class="date-field">
+          <label for="startDate">From</label>
+          <input id="startDate" type="date" aria-label="Start date">
+        </div>
+        <span class="date-arrow" aria-hidden="true">→</span>
+        <div class="date-field">
+          <label for="endDate">To</label>
+          <input id="endDate" type="date" aria-label="End date">
+        </div>
+      </div>
+
+    </section>
+
+    <section class="countdown-section" aria-label="Countdown">
+      <button class="text-action" id="archiveButton" type="button">Archive</button>
+      <div class="countdown-card" aria-live="polite">
+        <span id="countdownNumber">—</span>
+        <span id="countdownLabel">DAYS LEFT</span>
+      </div>
+      <button class="text-action reset-action" id="resetButton" type="button">Reset</button>
+    </section>
+
+    <section class="table-section" aria-label="Cook Ahead dishes">
+      <div class="table-toolbar">
+        <p>Select the dishes you want to add to your shopping list.</p>
+        <button class="add-row-button" id="addDishButton" type="button">
+          <span>+</span> Add dish
+        </button>
+      </div>
+
+      <div class="table-scroll" tabindex="0" aria-label="Cook Ahead table; swipe horizontally on smaller screens">
+        <table class="cook-table">
+          <thead>
+            <tr>
+              <th class="dish-column sticky-dish">Dish</th>
+              <th class="plan-column">Plan</th>
+              <th class="serving-column">Current<br>serving</th>
+              <th class="cook-column">To cook</th>
+              <th class="updated-column">Last updated</th>
+              <th class="cooked-column">Cooked on</th>
+              <th class="shopping-column sticky-shopping">
+                <label class="master-label">
+                  <input id="masterShoppingCheck" type="checkbox" aria-label="Select all dishes for shopping list">
+                  <span class="shopping-heading-full">Add to<br>shopping list</span>
+                  <span class="shopping-heading-short" aria-hidden="true">ATS</span>
+                </label>
+              </th>
+            </tr>
+          </thead>
+
+          <tbody id="cookTableBody">
+            <tr data-dish-row>
+              <td class="dish-column sticky-dish"><input class="cell-input dish-input" value="Egusi Soup" aria-label="Dish name"></td>
+              <td><input class="cell-input" type="number" min="0" value="4" aria-label="Plan"></td>
+              <td><input class="cell-input" type="number" min="0" value="2" aria-label="Current serving"></td>
+              <td><input class="cell-input" type="number" min="0" value="2" aria-label="To cook"></td>
+              <td><input class="cell-input" placeholder="—" aria-label="Last updated"></td>
+              <td><input class="cell-input" type="date" aria-label="Cooked on"></td>
+              <td class="shopping-column sticky-shopping"><input class="shopping-check" type="checkbox" aria-label="Add Egusi Soup to shopping list"></td>
+            </tr>
+            <tr data-dish-row>
+              <td class="dish-column sticky-dish"><input class="cell-input dish-input" value="Tomato Stew" aria-label="Dish name"></td>
+              <td><input class="cell-input" type="number" min="0" value="4" aria-label="Plan"></td>
+              <td><input class="cell-input" type="number" min="0" value="1" aria-label="Current serving"></td>
+              <td><input class="cell-input" type="number" min="0" value="3" aria-label="To cook"></td>
+              <td><input class="cell-input" placeholder="—" aria-label="Last updated"></td>
+              <td><input class="cell-input" type="date" aria-label="Cooked on"></td>
+              <td class="shopping-column sticky-shopping"><input class="shopping-check" type="checkbox" aria-label="Add Tomato Stew to shopping list"></td>
+            </tr>
+            <tr data-dish-row>
+              <td class="dish-column sticky-dish"><input class="cell-input dish-input" value="Chicken Curry" aria-label="Dish name"></td>
+              <td><input class="cell-input" type="number" min="0" value="4" aria-label="Plan"></td>
+              <td><input class="cell-input" type="number" min="0" value="0" aria-label="Current serving"></td>
+              <td><input class="cell-input" type="number" min="0" value="4" aria-label="To cook"></td>
+              <td><input class="cell-input" placeholder="—" aria-label="Last updated"></td>
+              <td><input class="cell-input" type="date" aria-label="Cooked on"></td>
+              <td class="shopping-column sticky-shopping"><input class="shopping-check" type="checkbox" aria-label="Add Chicken Curry to shopping list"></td>
+            </tr>
+            <tr data-dish-row>
+              <td class="dish-column sticky-dish"><input class="cell-input dish-input" value="Jollof Rice" aria-label="Dish name"></td>
+              <td><input class="cell-input" type="number" min="0" value="4" aria-label="Plan"></td>
+              <td><input class="cell-input" type="number" min="0" value="2" aria-label="Current serving"></td>
+              <td><input class="cell-input" type="number" min="0" value="2" aria-label="To cook"></td>
+              <td><input class="cell-input" placeholder="—" aria-label="Last updated"></td>
+              <td><input class="cell-input" type="date" aria-label="Cooked on"></td>
+              <td class="shopping-column sticky-shopping"><input class="shopping-check" type="checkbox" aria-label="Add Jollof Rice to shopping list"></td>
+            </tr>
+            <tr data-dish-row>
+              <td class="dish-column sticky-dish"><input class="cell-input dish-input" value="Beans &amp; Plantain" aria-label="Dish name"></td>
+              <td><input class="cell-input" type="number" min="0" value="4" aria-label="Plan"></td>
+              <td><input class="cell-input" type="number" min="0" value="0" aria-label="Current serving"></td>
+              <td><input class="cell-input" type="number" min="0" value="4" aria-label="To cook"></td>
+              <td><input class="cell-input" placeholder="—" aria-label="Last updated"></td>
+              <td><input class="cell-input" type="date" aria-label="Cooked on"></td>
+              <td class="shopping-column sticky-shopping"><input class="shopping-check" type="checkbox" aria-label="Add Beans and Plantain to shopping list"></td>
+            </tr>
+            <tr data-dish-row>
+              <td class="dish-column sticky-dish"><input class="cell-input dish-input" value="Moi Moi" aria-label="Dish name"></td>
+              <td><input class="cell-input" type="number" min="0" value="4" aria-label="Plan"></td>
+              <td><input class="cell-input" type="number" min="0" value="0" aria-label="Current serving"></td>
+              <td><input class="cell-input" type="number" min="0" value="4" aria-label="To cook"></td>
+              <td><input class="cell-input" placeholder="—" aria-label="Last updated"></td>
+              <td><input class="cell-input" type="date" aria-label="Cooked on"></td>
+              <td class="shopping-column sticky-shopping"><input class="shopping-check" type="checkbox" aria-label="Add Moi Moi to shopping list"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="mobile-scroll-note">↔ Swipe sideways to see other columns. Dish and shopping selection stay visible.</p>
+      <p class="empty-message" id="emptyMessage" hidden>No dishes match your search or filter.</p>
+    </section>
+
+  </main>
+  <script src="cook-ahead.js"></script>
+</body>
+</html>

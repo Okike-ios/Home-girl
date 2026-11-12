@@ -1,0 +1,158 @@
+/* HG-NOUR-001 — Home Girl | Rich Soft Premium integration layer.
+   Imported screen styles and scripts remain intact. This sheet handles only
+   common application chrome, colour harmony, consistent typography/spacing.
+   Per-section accent colours are intentionally retained. */
+:root{
+  --hg-plum:#722b4d;--hg-plum-deep:#4e2039;--hg-cream:#fffaf8;
+  --hg-paper:#fbf6f2;--hg-rose:#eed5df;--hg-muted:#8c7180;
+  --hg-shadow:0 10px 34px rgba(94,46,73,.11);
+  --paper:#f8eee9;--paper-light:#fff7f1;--paper2:#f8eee9;
+  --ink:#54283e;--brown:#725665;--warm-brown:#725665;
+  --parchment:#f8eee9;--cream:#fffaf8;
+  --plum:#722b4d;--deep-plum:#722b4d;--deep-plum-dark:#4e2039;
+  --blue:#607b9b;--menu-blue:#607b9b;
+  --cook:#833653;--green:#69835f;--ochre:#ad8536;
+  --coral:#cb806c;--teal:#548986;--mauve:#916583;
+}
+html,body{max-width:100%;overflow-x:clip}
+body{
+  background:radial-gradient(ellipse 57% 41% at 95% 0%,#f5dfe9 0%,transparent 72%),
+    linear-gradient(135deg,#fcf8f2,#f7ebe9 68%,#f9eee5)!important;
+  min-height:100dvh;color:#54283e;
+  padding-left:224px;
+}
+body::before,body:before{background:none!important;pointer-events:none}
+body,button,input,textarea,select{font-family:Arial,Helvetica,sans-serif}
+h1,h2,h3,.card strong,.header-title,.menu-title,.section-title,.intro h1,
+.dish-name,.title,.panel-title{font-family:Georgia,'Times New Roman',serif}
+button,a,[role="button"]{-webkit-tap-highlight-color:transparent}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{
+ outline:3px solid #b66e93!important;outline-offset:3px;
+}
+/* Shared desktop navigation: same dark plum rail and small brand as the Home Screen. */
+.hg-shell-nav{
+ position:fixed;z-index:60;inset:0 auto 0 0;width:224px;
+ display:flex;flex-direction:column;gap:24px;padding:24px 16px 20px;
+ background:linear-gradient(178deg,#67223f,#4d1b35 70%,#39182c);
+ border-right:1px solid #3b1e31;
+ box-shadow:5px 0 25px #44132b1b;
+ color:#fff8f5;overflow-y:auto;overscroll-behavior:contain;
+ scrollbar-width:thin;scrollbar-color:#9f6d85 transparent;
+}
+.hg-shell-brand{display:flex;align-items:center;gap:10px;flex-shrink:0;color:#fff8f4;font:24px Georgia,serif;letter-spacing:-.025em}
+.hg-shell-brand img{width:50px;height:50px;object-fit:contain;border-radius:12px}
+.hg-shell-nav nav{display:flex!important;flex-direction:column!important;align-items:stretch!important;
+ gap:7px!important;width:100%;padding:0;margin:0;font-family:Arial,Helvetica,sans-serif!important;
+ font-size:13px!important}
+.hg-shell-nav nav a{color:#f0dce6!important;text-decoration:none!important;
+ border:1px solid transparent;border-radius:13px;padding:13px 12px;
+ display:flex;align-items:center;gap:12px;min-height:45px;white-space:normal;
+ font-family:Arial,Helvetica,sans-serif!important;transform:none!important}
+.hg-shell-nav nav a:hover,.hg-shell-nav nav a:focus-visible{
+ color:#fff!important;background:#ffffff1c!important;border-color:#ffffff25}
+.hg-shell-nav nav a[aria-current="page"]{
+ background:#f2d6e3!important;color:#57243f!important;border-color:#f8e6ee!important;
+ box-shadow:0 5px 12px #2a0f211c}
+.hg-shell-nav nav a span{display:inline}
+.hg-shell-tagline{margin-top:auto;color:#e5b5c9;font:italic 13px Georgia,serif;line-height:1.6}
+.hg-mobile-shell{display:none}
+/* Legacy screen headers are functional subheaders beneath the common shell. */
+body .site-header,body .app-header{
+ background:#fffaf8d9!important;backdrop-filter:blur(12px);
+ border-bottom:1px solid #ead4de!important;
+ color:var(--hg-plum-deep);
+}
+body .site-header{padding-left:clamp(18px,3vw,45px);padding-right:clamp(18px,3vw,45px)}
+body .site-header nav a{color:var(--hg-plum-deep)}
+body .site-header nav a:hover{color:var(--hg-plum)}
+/* Form fields and panels get a shared elevated surface rather than heavy parchment. */
+body input:not([type="checkbox"]):not([type="radio"]),
+body select,body textarea{
+ border-radius:11px;
+}
+body .panel,body .card,body .dish-row,body .popover,
+body .table-wrap,body .menu-board,body .form-panel{
+ box-shadow:var(--hg-shadow);
+}
+/* Nourishment landing: retain identity by section, but use Home Girl card proportions. */
+body[data-hg-section="landing"] main{max-width:1090px}
+body[data-hg-section="landing"] .intro{margin-bottom:34px}
+body[data-hg-section="landing"] h1{font:400 clamp(33px,3.5vw,49px)/1.14 Georgia,serif;color:var(--hg-plum)}
+body[data-hg-section="landing"] .system-grid{gap:17px;grid-template-columns:repeat(3,minmax(0,1fr))}
+body[data-hg-section="landing"] .system-grid .card{
+ min-height:205px;border-width:1px!important;border-radius:23px;
+ background:#fffcf9;padding:23px;gap:11px;box-shadow:var(--hg-shadow);
+}
+body[data-hg-section="landing"] .system-grid .card .icon{width:75px;height:75px}
+body[data-hg-section="landing"] .system-grid .card strong{font:400 22px/1.18 Georgia,serif}
+body[data-hg-section="landing"] .system-grid .card.menu{background:#d9e5f0;color:#456583}
+body[data-hg-section="landing"] .system-grid .card.cook{background:#edc9d8;color:#7d3455}
+body[data-hg-section="landing"] .system-grid .card.week{background:#dbe8d6;color:#5c7955}
+body[data-hg-section="landing"] .system-grid .card.maker{background:#f3dfb7;color:#906824}
+body[data-hg-section="landing"] .system-grid .card.shopping{background:#f4d6c9;color:#ad6654}
+body[data-hg-section="landing"] .system-grid .card.pantry{background:#cfe8e3;color:#497a74}
+body[data-hg-section="landing"] .system-grid .card.history{background:#e5d1e3;color:#805778}
+body[data-hg-section="landing"] .system-grid .card:hover{transform:translateY(-3px);filter:saturate(1.07)}
+body[data-hg-section="landing"] .system-grid .card.hg-pending{cursor:not-allowed;opacity:.83}
+body[data-hg-section="landing"] .system-grid .card.hg-pending::after{
+ content:'COMING LATER';font:700 9px Arial,sans-serif;letter-spacing:.11em;
+ background:#fffaf8bd;border-radius:999px;padding:6px 9px;color:#69435a;
+}
+body[data-hg-section="landing"] .history{grid-column:auto}
+/* Accent choices still belong to each section, rather than forcing all pages plum. */
+body[data-hg-section="menu"]{--menu-blue:#5b7897}
+body[data-hg-section="cook"]{--deep-plum:#853a59;--deep-plum-dark:#622344}
+body[data-hg-section="week"]{--green:#69835f}
+body[data-hg-section="form"]{--menu-blue:#5b7897}
+@media(max-width:1050px){
+ body{padding-left:190px}
+ .hg-shell-nav{width:190px;padding-inline:10px}
+ .hg-shell-brand{font-size:21px}
+ body[data-hg-section="landing"] .system-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:759px){
+ body{padding-left:0;padding-top:65px;touch-action:pan-y pinch-zoom}
+ .hg-shell-nav{display:none}
+ .hg-mobile-shell{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  position:fixed;z-index:70;top:0;left:0;right:0;height:65px;
+  padding:9px 17px;background:#fff9f7ec;backdrop-filter:blur(15px);
+  border-bottom:1px solid #ead4de;box-shadow:0 3px 14px #62234212;
+ }
+ .hg-mobile-shell a{font:700 12px Arial,sans-serif;color:#652742;text-decoration:none;
+  border-radius:10px;padding:8px 10px;white-space:nowrap}
+ .hg-mobile-shell a:first-child{display:flex;align-items:center;gap:8px;font:20px Georgia,serif;padding:0}
+ .hg-mobile-shell img{height:42px;width:42px;object-fit:contain;border-radius:10px}
+ body .site-header,body .app-header{min-height:66px}
+ body[data-hg-section="landing"] .system-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
+ body[data-hg-section="landing"] .system-grid .card{min-height:153px;padding:15px 10px;border-radius:19px}
+ body[data-hg-section="landing"] .system-grid .card .icon{width:55px;height:55px}
+ body[data-hg-section="landing"] .system-grid .card strong{font-size:17px;text-align:center}
+ body[data-hg-section="landing"] main{width:min(100% - 30px,520px);padding:30px 0 68px}
+ body[data-hg-section="landing"] .intro{margin-bottom:23px}
+ body[data-hg-section="landing"] h1{font-size:clamp(30px,8vw,42px)}
+ body[data-hg-section="landing"] footer{padding-top:35px}
+}
+@media(max-width:380px){
+ .hg-mobile-shell{padding-inline:11px}
+ .hg-mobile-shell a:first-child{font-size:18px}
+ body[data-hg-section="landing"] .system-grid .card{min-height:143px}
+}
+/* Landing uses the Home Girl rail or mobile brand strip as its single header. */
+body[data-hg-section="landing"] > .site-header{display:none}
+body[data-hg-section="landing"] .system-grid .card.history{width:auto}
+/* Finish the seven-card Nourishment grid with a centered History card. */
+body[data-hg-section="landing"] .system-grid .card.history{
+ grid-column:2;justify-self:stretch;width:auto;
+}
+body[data-hg-section="form"] .site-header .brand{display:none}
+@media(max-width:1050px){
+ body[data-hg-section="landing"] .system-grid .card.history{
+  grid-column:1/-1;width:calc((100% - 17px)/2);justify-self:center;
+ }
+}
+@media(max-width:759px){
+ body[data-hg-section="landing"] .system-grid .card.history{
+  width:calc((100% - 11px)/2);
+ }
+}

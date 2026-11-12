@@ -38,3 +38,6 @@
 @media(prefers-reduced-motion:reduce){
   #view-home .os-card,#view-home .weekly-banner{transition:none}
 }
+
+/* Nourishment launches as a true link, matching existing OS card styling. */
+#view-home a.os-card{text-decoration:none;cursor:pointer}
