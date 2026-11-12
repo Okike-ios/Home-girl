@@ -1,0 +1,40 @@
+/* HG-THEME-003 — Rich Soft Premium Home Screen colour trial.
+   Scoped to the Home Screen; the original theme and Vibrant Feminine trial
+   are retained in separate files for easy comparison or rollback.
+   No layout, typography, navigation, or planner styles are changed. */
+#view-home .weekly-banner{
+  background:#E9BFD0;
+  border-color:#DBA7BE;
+  box-shadow:0 10px 27px #71365021;
+}
+#view-home .weekly-banner .weekly-icon{
+  background:#F6DFE8;
+  color:#702C4E;
+  box-shadow:0 4px 12px #702C4E17;
+}
+#view-home .weekly-banner .weekly-copy h2{color:#57233E}
+#view-home .weekly-banner .weekly-copy p{color:#70475D}
+#view-home .weekly-banner:hover,
+#view-home .weekly-banner:focus-visible{
+  box-shadow:0 15px 32px #7136502E;
+}
+#view-home .os-card{
+  border-color:rgba(96,43,72,.12);
+  box-shadow:0 7px 23px #62314A18;
+}
+#view-home .os-card:nth-child(1){background:#E7B9CB}
+#view-home .os-card:nth-child(2){background:#F0C4C4}
+#view-home .os-card:nth-child(3){background:#D9C1E6}
+#view-home .os-card:nth-child(4){background:#F2CEAE}
+#view-home .os-card:nth-child(5){background:#CDDCC5}
+#view-home .os-card:nth-child(6){background:#F1DC9F}
+#view-home .os-card .os-label{color:#54283E}
+#view-home .os-card .os-sub{color:#745467}
+#view-home .os-card .os-icon{color:#6B3755}
+#view-home .os-card:hover,
+#view-home .os-card:focus-visible{
+  box-shadow:0 16px 31px #62314A29;
+}
+@media(prefers-reduced-motion:reduce){
+  #view-home .os-card,#view-home .weekly-banner{transition:none}
+}
