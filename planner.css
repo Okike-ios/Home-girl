@@ -98,3 +98,7 @@
 @media(max-width:1060px){.planner-layout{grid-template-columns:1fr}.planner-aside{display:grid;grid-template-columns:1fr 1fr}.planner-day{min-height:71px}}
 @media(max-width:759px){.planner-view{padding-bottom:14px}.planner-header{align-items:flex-start;margin-top:15px;gap:10px}.planner-header h1{font-size:34px}.planner-header .planner-primary{padding:11px 12px}.planner-lead{font-size:12px}.planner-surface{padding:16px;border-radius:20px}.planner-layout{display:block}.planner-aside{display:flex;margin-top:14px}.planner-weekdays,.planner-calendar-grid{gap:3px}.planner-day{min-height:51px;border-radius:10px;padding:6px 4px}.planner-day-number{font-size:12px}.planner-day-dots{gap:2px}.planner-day-dot{width:4px;height:4px}.planner-week-grid{gap:4px}.planner-week-day{padding:11px 2px;font-size:10px}.planner-week-day strong{font-size:18px}.planner-week-summary{grid-template-columns:1fr}.planner-stats{gap:7px}.planner-stat{padding:12px;border-radius:13px}.planner-stat .num{font-size:27px}.planner-stat .label{font-size:10px}.planner-row-actions{max-width:90px}.planner-row-title{font-size:13px}.planner-form-grid{grid-template-columns:1fr}.planner-dialog{padding:20px}}
 @media(max-width:380px){.planner-header{flex-direction:column}.planner-header .planner-primary{align-self:flex-start}.planner-weekdays,.planner-calendar-grid{gap:2px}.planner-day{min-height:46px}}
+
+/* Calendar date-filter shortcuts wrap cleanly on smaller devices. */
+.planner-filter-notice{flex-wrap:wrap}
+.planner-filter-notice .planner-jump-links{margin-top:0}
