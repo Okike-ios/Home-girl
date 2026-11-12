@@ -1,4 +1,4 @@
-/* Home Girl — Cook Ahead prototype interactions. Data persistence will be added later. */
+/* Home Girl — Bulk Cooking prototype interactions. Data persistence will be added later. */
 (() => {
   const body = document.getElementById("cookTableBody");
   const master = document.getElementById("masterShoppingCheck");
@@ -18,7 +18,7 @@
     planName.classList.toggle("has-name", hasName);
     planName.setAttribute(
       "aria-label",
-      hasName ? "Cook Ahead name" : "Give your Cook Ahead a name"
+      hasName ? "Bulk Cooking name" : "Give your Bulk Cooking a name"
     );
   }
 
@@ -131,7 +131,7 @@
   });
 
   document.getElementById("resetButton").addEventListener("click", () => {
-    if (!window.confirm("Reset this Cook Ahead plan? This clears the name, dates, and selections. Dish rows will remain.")) return;
+    if (!window.confirm("Reset this Bulk Cooking plan? This clears the name, dates, and selections. Dish rows will remain.")) return;
     document.getElementById("planName").value = "";
     updatePlanName();
     startDate.value = ""; endDate.value = "";
@@ -141,7 +141,7 @@
     applyFilters(); updateCountdown();
   });
   document.getElementById("archiveButton").addEventListener("click", () => {
-    window.alert("Archive will be connected to saved Cook Ahead plans when the app data layer is added.");
+    window.alert("Archive will be connected to saved Bulk Cooking plans when the app data layer is added.");
   });
   document.addEventListener("click", event => {
     if (!event.target.closest(".app-header") && !event.target.closest(".popover")) closePanels();
