@@ -45,7 +45,7 @@ function harness(){
 test('empty history does not navigate away from Home',()=>{
   const {context,swipe,view}=harness();
   assert.equal(view(),'home');
-  swipe(-120);
+  swipe(120);
   assert.equal(view(),'home');
 });
 test('returns from date-filtered Tasks to exact Calendar month and scroll position',()=>{
@@ -56,34 +56,34 @@ test('returns from date-filtered Tasks to exact Calendar month and scroll positi
   context.showView('tasks');
   window.HomeGirlPlanner.state.selectedDate='2026-12-23';
   window.HomeGirlPlanner.state.calendarMonth='2026-12-01';
-  swipe(-130);
+  swipe(130);
   assert.equal(view(),'calendar');
   assert.equal(window.HomeGirlPlanner.state.selectedDate,'2026-11-18');
   assert.equal(window.HomeGirlPlanner.state.calendarMonth,'2026-11-01');
   assert.equal(window.scrollY,320);
-  swipe(-110);
+  swipe(110);
   assert.equal(view(),'home');
   assert.equal(window.scrollY,140);
 });
-test('right swipe shortcut stays; left swipe returns to actual previous page',()=>{
+test('left swipe from Home opens Shopping List; right swipe returns through history',()=>{
   const {context,swipe,view}=harness();
-  swipe(115);assert.equal(view(),'calendar');
+  swipe(-115);assert.equal(view(),'shopping');
   context.showView('reminders');
-  swipe(-110);assert.equal(view(),'calendar');
-  swipe(-110);assert.equal(view(),'home');
+  swipe(110);assert.equal(view(),'shopping');
+  swipe(110);assert.equal(view(),'home');
 });
 test('vertical movement and inputs do not trigger back',()=>{
   const {context,swipe,view}=harness();
   context.showView('calendar');
-  swipe(-120,170);
+  swipe(120,170);
   assert.equal(view(),'calendar');
-  swipe(-130,0,{closest(){return {tagName:'INPUT'}}});
+  swipe(130,0,{closest(){return {tagName:'INPUT'}}});
   assert.equal(view(),'calendar');
 });
 test('desktop touch gestures do not navigate',()=>{
   const {context,window,swipe,view}=harness();
   context.showView('calendar');
   window.innerWidth=1024;
-  swipe(-150);
+  swipe(150);
   assert.equal(view(),'calendar');
 });
