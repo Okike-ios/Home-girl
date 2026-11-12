@@ -21,9 +21,10 @@ function harness(){
   }
   const nav=['home','calendar','tasks','reminders','shopping'].map(view=>({dataset:{view},classList:classes(),parentElement:{classList:classes()},setAttribute(){},removeAttribute(){}}));
   const document={
+    listeners:{},
     title:'',querySelector(selector){return selector==='#planner-dialog[open]'?null:node(selector)},
     querySelectorAll(selector){return selector==='[data-view]'?nav:[]},
-    addEventListener(){},getElementById:node};
+    addEventListener(name,fn){this.listeners[name]=fn},getElementById:node};
   const window={
     scrollY:0,innerWidth:390,scrollTo({top}){this.scrollY=top},
     HomeGirlPlanner:{
@@ -34,10 +35,9 @@ function harness(){
   const source=fs.readFileSync(path.join(__dirname,'..','app.js'),'utf8');
   const context={document,window,localStorage:{getItem:()=>null,setItem(){}},sessionStorage:{getItem:()=>null,setItem(){}},innerWidth:390,Math,console};
   vm.createContext(context);vm.runInContext(source,context);
-  const main=node('#main-content');
   const swipe=(dx,dy=0,target={closest(){return null}})=>{
-    main.listeners.touchstart({touches:[{clientX:180,clientY:100}],target});
-    main.listeners.touchend({changedTouches:[{clientX:180+dx,clientY:100+dy}]});
+    document.listeners.touchstart({touches:[{clientX:180,clientY:100}],target});
+    document.listeners.touchend({changedTouches:[{clientX:180+dx,clientY:100+dy}]});
   };
   return {context,window,document,node,swipe,view:()=>vm.runInContext('currentView',context)};
 }
