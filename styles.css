@@ -191,3 +191,10 @@
   .main-content{min-height:100vh;min-height:100dvh;touch-action:pan-y pinch-zoom;overscroll-behavior-x:contain}
   .mobile-bottom-nav{transform:translateZ(0)}
 }
+
+/* HG-NAV-004 — Keep Home system-card pictograms as delicate as Nourishment. */
+.os-card .os-icon svg{stroke-width:1.45}
+@media(max-width:759px){
+  /* Only deliberate horizontal swipes navigate; vertical scrolling remains native. */
+  #view-home{touch-action:pan-y pinch-zoom}
+}
