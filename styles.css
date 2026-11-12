@@ -183,3 +183,11 @@
   .weekly-banner .weekly-copy{gap:5px}
   .weekly-banner .weekly-copy p{font-size:11px}
 }
+
+/* HG-NAV-003: mobile viewport and gesture stability (no redesign). */
+@media(max-width:759px){
+  html,body{max-width:100%;overflow-x:clip;overscroll-behavior-x:none}
+  .app-shell{min-height:100vh;min-height:100dvh;overflow-x:clip}
+  .main-content{min-height:100vh;min-height:100dvh;touch-action:pan-y pinch-zoom;overscroll-behavior-x:contain}
+  .mobile-bottom-nav{transform:translateZ(0)}
+}
