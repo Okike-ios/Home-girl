@@ -1,0 +1,39 @@
+/* HG-THEME-002: Vibrant Feminine visual trial.
+   Scope: Home Screen cards only. Remove this stylesheet to restore Soft Premium.
+   Calendar, Tasks, Reminders and global navigation deliberately unchanged. */
+#view-home .weekly-banner{
+  background:#D990B2;
+  border-color:#C878A0;
+  box-shadow:0 12px 29px #7729472c;
+}
+#view-home .weekly-banner .weekly-icon{
+  background:#F4CEDF;
+  color:#65233E;
+  box-shadow:0 5px 15px #7229471e;
+}
+#view-home .weekly-banner .weekly-copy h2{color:#4D1834}
+#view-home .weekly-banner .weekly-copy p{color:#57223A}
+#view-home .weekly-banner:hover,
+#view-home .weekly-banner:focus-visible{
+  box-shadow:0 17px 36px #77294735;
+}
+#view-home .os-card{
+  border-color:rgba(79,31,59,.13);
+  box-shadow:0 8px 23px #62314A20;
+}
+#view-home .os-card:nth-child(1){background:#D992B5}
+#view-home .os-card:nth-child(2){background:#ECA8B4}
+#view-home .os-card:nth-child(3){background:#C5A6DF}
+#view-home .os-card:nth-child(4){background:#F0BD98}
+#view-home .os-card:nth-child(5){background:#B0C9AC}
+#view-home .os-card:nth-child(6){background:#EDCD80}
+#view-home .os-card .os-label{color:#4B203A;font-weight:760}
+#view-home .os-card .os-sub{color:#583448}
+#view-home .os-card .os-icon{color:#54223D}
+#view-home .os-card:hover,
+#view-home .os-card:focus-visible{
+  box-shadow:0 17px 33px #62314A2E;
+}
+@media(prefers-reduced-motion:reduce){
+  #view-home .os-card,#view-home .weekly-banner{transition:none}
+}
