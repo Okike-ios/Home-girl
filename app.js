@@ -149,4 +149,12 @@ function setSidebarCollapsed(collapsed){
 let initialCollapse=false;try{initialCollapse=localStorage.getItem('homegirl-sidebar-collapsed')==='1'}catch{}
 setSidebarCollapsed(initialCollapse);
 sidebarToggles.forEach(button=>button.addEventListener('click',()=>setSidebarCollapsed(!shell.classList.contains('sidebar-collapsed'))));
-setWelcome();showView('home');
+setWelcome();
+// Allow shared sidebar links from Nourishment to open the intended Home Girl workspace.
+// Accept only known view keys; all other query values safely fall back to Home.
+let entryView='home';
+try{
+ const requested=new URLSearchParams(window.location.search).get('view');
+ if(requested&&Object.prototype.hasOwnProperty.call(views,requested))entryView=requested;
+}catch{}
+showView(entryView);
