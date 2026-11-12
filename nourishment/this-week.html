@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#eee2c8">
+  <title>This Week | Home Girl</title>
+
+  <link rel="stylesheet" href="nourishment-os.css">
+  <link rel="stylesheet" href="this-week.css">
+  <script src="this-week.js" defer></script>
+<link rel="stylesheet" href="homegirl-integration.css?v=hg-nourishment-001">
+</head>
+
+<body class="this-week-page">
+<aside class="hg-shell-nav" aria-label="Home Girl navigation"><div class="hg-shell-brand"><img src="../assets/home-girl-logo.png" alt=""><span>Home Girl</span></div><nav aria-label="Nourishment"><a href="../index.html">⌂ <span>Home</span></a><a href="nourishment-os.html">♡ <span>Nourishment OS</span></a><a href="the-menu.html">✧ <span>The Menu</span></a><a href="cook-ahead.html">♨ <span>Cook Ahead</span></a><a href="this-week.html">▦ <span>This Week · Meals</span></a></nav><p class="hg-shell-tagline">A happier home, a fuller life.</p></aside><div class="hg-mobile-shell"><a href="../index.html" aria-label="Go to Home Girl Home"><img src="../assets/home-girl-logo.png" alt="">Home Girl</a><a href="nourishment-os.html">Nourishment OS</a></div>
+
+  <!-- APP HEADER -->
+  <header class="app-header">
+
+    <!-- LEFT: BACK AND SEARCH -->
+    <nav class="header-side" aria-label="Page navigation">
+
+      <a class="icon-button"
+         href="nourishment-os.html"
+         aria-label="Back to Nourishment OS"
+         title="Back">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M15 18 9 12l6-6"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"/>
+        </svg>
+      </a>
+
+      <button class="icon-button"
+              id="searchToggle"
+              type="button"
+              aria-label="Search meals"
+              aria-expanded="false"
+              title="Search">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <circle cx="10.8" cy="10.8" r="6.5"
+            stroke="currentColor"
+            stroke-width="1.7"/>
+          <path d="m16 16 4 4"
+            stroke="currentColor"
+            stroke-width="1.7"
+            stroke-linecap="round"/>
+        </svg>
+      </button>
+
+    </nav>
+
+    <!-- CENTRE: PAGE TITLE -->
+    <h1 class="header-title">This Week</h1>
+
+    <!-- RIGHT: FILTER AND MORE -->
+    <nav class="header-side right" aria-label="Page tools">
+
+      <button class="icon-button"
+              id="filterToggle"
+              type="button"
+              aria-label="Filter meals"
+              aria-expanded="false"
+              title="Filter">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M4 7h16M7 12h10m-7 5h4"
+            stroke="currentColor"
+            stroke-width="1.7"
+            stroke-linecap="round"/>
+          <circle cx="8" cy="7" r="1.5" fill="currentColor"/>
+          <circle cx="15" cy="12" r="1.5" fill="currentColor"/>
+          <circle cx="12" cy="17" r="1.5" fill="currentColor"/>
+        </svg>
+      </button>
+
+      <button class="icon-button"
+              id="moreToggle"
+              type="button"
+              aria-label="More options"
+              aria-expanded="false"
+              title="More options">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <circle cx="12" cy="5" r="1.7"/>
+          <circle cx="12" cy="12" r="1.7"/>
+          <circle cx="12" cy="19" r="1.7"/>
+        </svg>
+      </button>
+
+    </nav>
+
+    <!-- SEARCH PANEL -->
+    <div class="popover search-panel" id="searchPanel" hidden>
+      <label for="mealSearch">Search this week</label>
+      <input id="mealSearch"
+             type="search"
+             placeholder="Search meals or components…"
+             autocomplete="off">
+      <button type="button" class="panel-clear" id="clearSearch">
+        Clear search
+      </button>
+    </div>
+
+    <!-- FILTER PANEL -->
+    <div class="popover filter-panel" id="filterPanel" hidden>
+      <label for="mealFilter">Show days</label>
+      <select id="mealFilter">
+        <option value="all">All days</option>
+        <option value="selected">Selected for shopping list</option>
+        <option value="unselected">Not selected</option>
+      </select>
+      <button type="button" class="panel-clear" id="clearFilters">
+        Clear filters
+      </button>
+    </div>
+
+    <!-- MORE MENU -->
+    <div class="popover more-panel" id="morePanel" hidden>
+      <button type="button" id="archiveButton">Archive this week</button>
+      <button type="button" id="resetMenuButton">Reset this week</button>
+    </div>
+
+  </header>
+
+  <main class="main-content">
+
+    <!-- WEEK NAME AND DATES -->
+    <section class="plan-section" aria-label="Weekly meal plan details">
+
+      <div class="name-field">
+        <label class="name-prompt" for="weekName">
+          Give your week a name
+        </label>
+
+        <div class="name-input-wrap">
+          <input
+            type="text"
+            id="weekName"
+            placeholder="Give your week a name"
+            aria-label="Give your week a name"
+            maxlength="100"
+            autocomplete="off">
+        </div>
+      </div>
+
+      <div class="intro">
+        <p>Plan the meals that will carry you through the week.</p>
+      </div>
+
+      <div class="date-fields">
+
+        <div class="date-field">
+          <label for="startDate">FROM</label>
+          <input type="date" id="startDate">
+        </div>
+
+        <span class="date-arrow" aria-hidden="true">→</span>
+
+        <div class="date-field">
+          <label for="endDate">TO</label>
+          <input type="date" id="endDate">
+        </div>
+
+      </div>
+    </section>
+
+    <!-- COUNTDOWN AND ACTIONS -->
+    <section class="countdown-section" aria-label="Week actions">
+
+      <div class="countdown-card" aria-live="polite">
+        <span id="countdownNumber">—</span>
+        <span id="countdownLabel">DAYS LEFT</span>
+      </div>
+
+      <button type="button"
+              class="text-action"
+              id="archiveButtonMain">
+        Archive
+      </button>
+
+      <button type="button"
+              class="text-action reset-action"
+              id="resetButton">
+        Reset
+      </button>
+
+    </section>
+
+    <!-- WEEKLY TABLE -->
+    <section class="table-section">
+
+      <div class="table-toolbar">
+        <div>
+          <h2>Weekly Meal Plan</h2>
+          <p>Start with one component per meal. Add as many as you need.</p>
+        </div>
+        <span class="week-count">7 DAYS</span>
+      </div>
+
+      <p class="mobile-scroll-note">
+        Swipe sideways to move between meals.
+      </p>
+
+      <div class="table-scroll" id="tableScroll">
+        <table class="week-table">
+
+          <thead>
+            <tr>
+              <th class="date-column sticky-date" scope="col">
+                Date
+              </th>
+
+              <th class="meal-column" scope="col">Breakfast</th>
+              <th class="meal-column" scope="col">Lunch</th>
+              <th class="meal-column" scope="col">Brunch</th>
+              <th class="meal-column" scope="col">Dinner</th>
+
+              <th class="shopping-column sticky-shopping" scope="col">
+                <label class="master-label" for="masterShoppingCheck">
+                  <span class="shopping-heading-full">
+                    Add to<br>shopping list
+                  </span>
+
+                  <span class="shopping-heading-short" aria-hidden="true">
+                    ATS
+                  </span>
+
+                  <input
+                    type="checkbox"
+                    id="masterShoppingCheck"
+                    aria-label="Select all days for shopping list">
+                </label>
+              </th>
+            </tr>
+          </thead>
+
+          <tbody id="weekTableBody">
+            <!-- Seven permanent days are generated by JavaScript. -->
+          </tbody>
+
+        </table>
+      </div>
+
+      <p class="empty-message" id="emptyMessage" hidden>
+        No days match your search or filter.
+      </p>
+
+    </section>
+
+    <div class="bottom-actions">
+      <button type="button"
+              class="text-action"
+              id="resetButtonBottom">
+        Reset this week
+      </button>
+    </div>
+
+  </main>
+
+</body>
+</html>
