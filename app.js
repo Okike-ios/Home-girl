@@ -16,7 +16,7 @@ const views={
  shopping:{title:'Shopping List',desc:'Multiple named shopping lists are planned. Their item-entry and inventory workflows are outside this build.',icon:'list'},
  calendar:{title:'Calendar',desc:'Calendar will open My Tasks filtered to the selected date, with shortcuts for reminders and events. This feature is not implemented here.',icon:'calendar'},
  tasks:{title:'My Tasks',desc:'Tasks, completion history and overdue resolution belong to a later implementation milestone.',icon:'check'},
- reminders:{title:'Reminders',desc:'Reminders are user-configured alerts. Their scheduling and delivery are not implemented in this Home Screen prototype.',icon:'bell'},
+ reminders:{title:'Reminders',desc:'Reminders are user-configured alerts. Their scheduling and delivery are not implemented in this Home Screen prototype.',icon:'alarm'},
  notifications:{title:'Notifications',desc:'Your notification inbox is a planned workspace. No notification records are being generated in this prototype.',icon:'bell'},
  settings:{title:'Settings',desc:'Global appearance, sound, privacy and reminder preferences will be available here in a later milestone.',icon:'settings'},
  week:{title:'This Week',desc:'A household-wide weekly overview will summarize tasks, activities and events. It is distinct from Nourishment’s meal planner.',icon:'calendar'},
@@ -38,7 +38,7 @@ let startX=null,startY=null;const main=document.querySelector('#main-content');m
 // Preserve the last choice locally and leave mobile navigation unchanged.
 const shell=document.querySelector('.app-shell');
 const sidebar=document.querySelector('#desktop-sidebar');
-const sidebarToggles=[document.querySelector('#sidebar-toggle-button'),document.querySelector('#sidebar-edge-toggle')].filter(Boolean);
+const sidebarToggles=[document.querySelector('#sidebar-edge-toggle')].filter(Boolean);
 function setSidebarCollapsed(collapsed){
  shell.classList.toggle('sidebar-collapsed',collapsed);
  sidebarToggles.forEach(button=>{
