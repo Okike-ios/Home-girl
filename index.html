@@ -22,34 +22,40 @@
 <symbol id="i-back" viewBox="0 0 24 24"><path d="m15 5-7 7 7 7"/></symbol>
 </svg>
 <div class="app-shell">
-<aside class="sidebar" aria-label="Main navigation">
- <div class="sidebar-brand"><img src="assets/home-girl-logo.png" alt="Home Girl logo"><span>Home Girl</span></div>
+<aside class="sidebar" id="desktop-sidebar" aria-label="Main navigation">
+ <button class="sidebar-edge-toggle" id="sidebar-edge-toggle" type="button" aria-label="Collapse sidebar" aria-controls="desktop-sidebar" aria-expanded="true" title="Collapse sidebar"><svg><use href="#i-chevron"/></svg></button>
+ <div class="sidebar-brand"><img src="assets/home-girl-logo.png" alt="Home Girl logo"><span class="sidebar-brand-title">Home Girl</span></div>
+ <button class="sidebar-toggle-button" id="sidebar-toggle-button" type="button" aria-label="Collapse sidebar" aria-controls="desktop-sidebar" aria-expanded="true" title="Collapse sidebar"><svg><use href="#i-chevron"/></svg><span class="nav-text">Minimize sidebar</span></button>
+ <div class="sidebar-section-label">YOUR SPACE</div>
  <nav class="side-links">
-  <button class="nav-item active" data-view="home"><svg><use href="#i-home"/></svg>Home</button>
-  <button class="nav-item" data-view="dashboard"><svg><use href="#i-grid"/></svg>Dashboard</button>
-  <button class="nav-item" data-view="shop"><svg><use href="#i-store"/></svg>Shop <span class="soon">Soon</span></button>
-  <button class="nav-item" data-view="shopping"><svg><use href="#i-list"/></svg>Shopping List</button>
-  <button class="nav-item" data-view="calendar"><svg><use href="#i-calendar"/></svg>Calendar</button>
-  <button class="nav-item" data-view="tasks"><svg><use href="#i-check"/></svg>My Tasks</button>
+  <button class="nav-item active" data-view="home"><svg><use href="#i-home"/></svg><span class="nav-text">Home</span></button>
+  <button class="nav-item" data-view="dashboard"><svg><use href="#i-grid"/></svg><span class="nav-text">Dashboard</span></button>
+  <button class="nav-item" data-view="shop"><svg><use href="#i-store"/></svg><span class="nav-text">Shop</span> <span class="soon nav-text">Soon</span></button>
+  <button class="nav-item" data-view="shopping"><svg><use href="#i-list"/></svg><span class="nav-text">Shopping List</span></button>
+  <button class="nav-item" data-view="calendar"><svg><use href="#i-calendar"/></svg><span class="nav-text">Calendar</span></button>
+  <button class="nav-item" data-view="tasks"><svg><use href="#i-check"/></svg><span class="nav-text">My Tasks</span></button>
+  <div class="sidebar-section-label secondary-label">DAILY LIFE</div>
+  <button class="nav-item" data-view="reminders"><svg><use href="#i-bell"/></svg><span class="nav-text">Reminders</span></button>
  </nav>
- <div class="sidebar-foot"><button class="nav-item" data-view="notifications"><svg><use href="#i-bell"/></svg>Notifications <span class="tiny-dot"></span></button><button class="nav-item" data-view="settings"><svg><use href="#i-settings"/></svg>Settings</button></div>
+ <div class="sidebar-foot"><div class="sidebar-section-label">PREFERENCES</div><button class="nav-item" data-view="notifications"><svg><use href="#i-bell"/></svg><span class="nav-text">Notifications</span> <span class="tiny-dot"></span></button><button class="nav-item" data-view="settings"><svg><use href="#i-settings"/></svg><span class="nav-text">Settings</span></button></div>
 </aside>
 <main class="main-content" id="main-content">
  <header class="mobile-header"><img src="assets/home-girl-logo.png" alt="Home Girl logo" class="mobile-logo"><div class="mobile-header-actions"><button class="icon-button" aria-label="Notifications" data-view="notifications"><svg><use href="#i-bell"/></svg><span class="notification-dot"></span></button><button class="icon-button" aria-label="Settings" data-view="settings"><svg><use href="#i-settings"/></svg></button></div></header>
  <section class="home-view view is-active" id="view-home" aria-label="Home Girl home screen">
-  <div class="intro"><p class="eyebrow">YOUR HOME, BEAUTIFULLY IN HAND</p><h1 id="welcome-title">Welcome home, Friend <span>♡</span></h1><p id="welcome-subtitle">A little care makes a beautiful difference.</p></div>
-  <section class="weekly-banner" aria-label="This Week"><div class="weekly-icon"><svg><use href="#i-calendar"/></svg></div><div class="weekly-copy"><span class="eyebrow">YOUR HOUSEHOLD AT A GLANCE</span><h2>This Week</h2><p>Plan gently. Live beautifully.</p></div><button class="circle-arrow" type="button" data-view="week" aria-label="Open household weekly overview"><svg><use href="#i-arrow"/></svg></button></section>
+  <div class="intro"><h1 id="welcome-title">Welcome home, Friend <span>♡</span></h1><p id="welcome-subtitle">A little care makes a beautiful difference.</p></div>
+  <button class="weekly-banner" type="button" data-view="week" aria-label="Open This Week household overview"><div class="weekly-icon"><svg><use href="#i-calendar"/></svg></div><div class="weekly-copy"><span class="eyebrow">YOUR HOUSEHOLD AT A GLANCE</span><h2>This Week</h2><p>Plan gently. Live beautifully.</p></div></button>
   <div class="section-heading"><div><p class="eyebrow">YOUR SPACE</p><h2>What would you like to do?</h2></div><span class="six-label">Six ways to feel at home</span></div>
   <section class="os-grid" aria-label="Home Girl operating systems">
-   <button class="os-card" data-os="Nourishment OS"><span class="os-icon icon-berry"><svg><use href="#i-chef"/></svg></span><span class="os-label">Nourishment</span><span class="os-sub">Meals, pantry & more</span><span class="os-chevron">↗</span></button>
-   <button class="os-card" data-os="Home Care OS"><span class="os-icon icon-rose"><svg><use href="#i-home"/></svg></span><span class="os-label">Home Care</span><span class="os-sub">A home well loved</span><span class="os-chevron">↗</span></button>
-   <button class="os-card" data-os="Personal & Well-being OS"><span class="os-icon icon-lavender"><svg><use href="#i-lotus"/></svg></span><span class="os-label">Personal & Well-being</span><span class="os-sub">Make space for you</span><span class="os-chevron">↗</span></button>
-   <button class="os-card" data-os="Home Improvement OS"><span class="os-icon icon-apricot"><svg><use href="#i-tools"/></svg></span><span class="os-label">Home Improvement</span><span class="os-sub">Dream, plan, create</span><span class="os-chevron">↗</span></button>
-   <button class="os-card" data-os="Events OS"><span class="os-icon icon-sage"><svg><use href="#i-calendar"/></svg></span><span class="os-label">Events</span><span class="os-sub">Moments worth keeping</span><span class="os-chevron">↗</span></button>
-   <button class="os-card" data-os="Financial System"><span class="os-icon icon-gold"><svg><use href="#i-coins"/></svg></span><span class="os-label">Financial System</span><span class="os-sub">Stay in the know</span><span class="os-chevron">↗</span></button>
+   <button class="os-card" data-os="Nourishment OS"><span class="os-icon icon-berry"><svg><use href="#i-chef"/></svg></span><span class="os-label">Nourishment</span><span class="os-sub">Meals, pantry & more</span></button>
+   <button class="os-card" data-os="Home Care OS"><span class="os-icon icon-rose"><svg><use href="#i-home"/></svg></span><span class="os-label">Home Care</span><span class="os-sub">A home well loved</span></button>
+   <button class="os-card" data-os="Personal & Well-being OS"><span class="os-icon icon-lavender"><svg><use href="#i-lotus"/></svg></span><span class="os-label">Personal & Well-being</span><span class="os-sub">Make space for you</span></button>
+   <button class="os-card" data-os="Home Improvement OS"><span class="os-icon icon-apricot"><svg><use href="#i-tools"/></svg></span><span class="os-label">Home Improvement</span><span class="os-sub">Dream, plan, create</span></button>
+   <button class="os-card" data-os="Events OS"><span class="os-icon icon-sage"><svg><use href="#i-calendar"/></svg></span><span class="os-label">Events</span><span class="os-sub">Moments worth keeping</span></button>
+   <button class="os-card" data-os="Financial System"><span class="os-icon icon-gold"><svg><use href="#i-coins"/></svg></span><span class="os-label">Financial System</span><span class="os-sub">Stay in the know</span></button>
   </section>
   <div class="home-footnote"><svg><use href="#i-spark"/></svg> A happier home, a fuller life.</div>
  </section>
+ <nav class="mobile-page-dots" id="mobile-page-dots" aria-label="Swipe pages"><button type="button" class="page-dot" data-view="calendar" aria-label="Open Calendar"></button><button type="button" class="page-dot is-current" data-view="home" aria-label="Open Home" aria-current="page"></button><button type="button" class="page-dot" data-view="shopping" aria-label="Open Shopping List"></button></nav>
  <section class="sub-view view" id="view-generic" aria-live="polite"><button class="back-button" data-view="home"><svg><use href="#i-back"/></svg> Back home</button><div class="placeholder-card"><div class="placeholder-icon" id="placeholder-icon"><svg><use href="#i-grid"/></svg></div><p class="eyebrow" id="placeholder-overline">HOME GIRL</p><h1 id="placeholder-title">Coming together beautifully</h1><p id="placeholder-description">This workspace belongs to the next development milestone. The Home Screen is our focus today.</p><button class="primary-button" data-view="home">Return to Home <svg><use href="#i-arrow"/></svg></button></div></section>
 </main>
 <nav class="mobile-bottom-nav" aria-label="Primary navigation"><button data-view="dashboard"><svg><use href="#i-grid"/></svg><span>Dashboard</span></button><button class="selected" data-view="home"><svg><use href="#i-home"/></svg><span>Home</span></button><button data-view="shop"><svg><use href="#i-store"/></svg><span>Shop</span></button></nav>
