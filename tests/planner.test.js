@@ -46,7 +46,8 @@ test('calendar renders and its date tiles open day details',()=>{
   const f=fixture();f.api.render('calendar');
   assert.match(f.el('planner-content').innerHTML,/planner-calendar-grid/);
   f.action('select-date','',{date:'2026-11-18'});
-  assert.match(f.el('planner-content').innerHTML,/November 18, 2026/);
+  assert.match(f.el('planner-content').innerHTML,/Showing .*Nov 18.* from Calendar/);
+  assert.match(f.el('planner-content').innerHTML,/data-plan-action="date-reminders"/);
 });
 test('new tasks persist, complete and remain in history',()=>{
   const f=fixture();f.api.render('tasks');
