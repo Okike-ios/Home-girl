@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Allura&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="homegirl-integration.css?v=hg-nourishment-001">
-<link rel="stylesheet" href="hg-sidebar.css?v=hg-nour-003">
+<link rel="stylesheet" href="hg-sidebar.css?v=hg-nour-004">
 </head>
 
 <body data-hg-section="form" >
@@ -54,7 +54,14 @@
  </nav>
  <div class="sidebar-foot"><div class="sidebar-section-label">PREFERENCES</div><a class="nav-item" href="../index.html?view=notifications"><svg><use href="#i-bell"/></svg><span class="nav-text">Notifications</span> <span class="tiny-dot"></span></a><a class="nav-item" href="../index.html?view=settings"><svg><use href="#i-settings"/></svg><span class="nav-text">Settings</span></a></div>
  </div>
-</aside><div class="hg-mobile-shell"><a href="../index.html" aria-label="Go to Home Girl Home"><img src="../assets/home-girl-logo.png" alt="">Home Girl</a><a href="nourishment-os.html">Nourishment OS</a></div>
+</aside><header class="hg-mobile-shell" aria-label="Home Girl mobile header">
+  <a class="hg-mobile-brand" href="../index.html" aria-label="Home Girl Home"><img src="../assets/home-girl-logo.png" alt="Home Girl logo"></a>
+  <span class="hg-mobile-system-name">Nourishment OS</span>
+  <div class="hg-mobile-header-actions">
+    <a class="hg-mobile-action" href="../index.html?view=notifications" aria-label="Notifications"><svg aria-hidden="true"><use href="#i-bell"/></svg><span class="hg-mobile-notification-dot"></span></a>
+    <a class="hg-mobile-action" href="../index.html?view=settings" aria-label="Settings"><svg aria-hidden="true"><use href="#i-settings"/></svg></a>
+  </div>
+</header>
 
   <!-- Background atmosphere -->
   <div class="ambient ambient-one">❧</div>
@@ -453,5 +460,10 @@
   <script src="menu-form.js"></script>
 
 <script src="hg-sidebar.js?v=hg-nour-002" defer></script>
+<nav class="hg-mobile-bottom-nav" aria-label="Primary navigation">
+  <a href="../index.html?view=dashboard"><svg aria-hidden="true"><use href="#i-grid"/></svg><span>Dashboard</span></a>
+  <a class="selected" href="../index.html"><svg aria-hidden="true"><use href="#i-home"/></svg><span>Home</span></a>
+  <a href="../index.html?view=shop"><svg aria-hidden="true"><use href="#i-store"/></svg><span>Shop</span></a>
+</nav>
 </body>
 </html>
