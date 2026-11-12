@@ -4,3 +4,67 @@
 @media(max-width:759px){.app-shell{display:block;min-height:100dvh}.sidebar{display:none}.main-content{padding:0 18px calc(120px + env(safe-area-inset-bottom))}.mobile-header{display:flex;align-items:center;justify-content:space-between;padding:16px 2px 4px;min-height:91px}.mobile-logo{height:62px;width:62px;object-fit:cover;border-radius:50%;mix-blend-mode:multiply}.mobile-header-actions{display:flex;gap:9px}.icon-button{position:relative;height:43px;width:43px;display:grid;place-items:center;border-radius:15px;border:1px solid #efdce2;background:#fffaf8;color:var(--plum);box-shadow:0 5px 14px #6323420a}.icon-button svg{width:21px;height:21px}.notification-dot{position:absolute;right:9px;top:8px;background:#cb5c76;width:7px;height:7px;border-radius:50%;border:1px solid white}.intro{padding:16px 2px 21px}.intro h1{font-size:clamp(32px,8.2vw,43px);margin-bottom:9px}.intro>p:last-child{font-size:14px}.weekly-banner{border-radius:22px;padding:19px 16px;gap:12px;margin:0 0 31px}.weekly-icon{width:48px;height:48px;border-radius:14px}.weekly-icon svg{width:26px;height:26px}.weekly-copy .eyebrow{font-size:8px;letter-spacing:.1em}.weekly-copy h2{font-size:25px}.weekly-copy p{font-size:11px}.circle-arrow{width:38px;height:38px}.section-heading{margin-bottom:16px}.section-heading h2{font-size:26px}.six-label{display:none}.os-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.os-card{padding:15px;min-height:153px;border-radius:20px}.os-icon{width:55px;height:55px;border-radius:17px;margin-bottom:14px}.os-icon svg{width:28px;height:28px}.os-label{font-size:14px;line-height:1.2}.os-sub{font-size:11px;line-height:1.3;max-width:125px}.os-chevron{right:12px;bottom:10px}.home-footnote{font-size:13px;margin-top:26px}.mobile-bottom-nav{position:fixed;z-index:15;bottom:0;left:0;right:0;padding:9px 18px calc(9px + env(safe-area-inset-bottom));display:grid;grid-template-columns:repeat(3,1fr);gap:5px;background:#fffaf9eb;backdrop-filter:blur(15px);border-top:1px solid #efdee4;box-shadow:0 -5px 28px #7036500b}.mobile-bottom-nav button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;background:transparent;border:0;color:#927485;font-size:11px;border-radius:14px;min-height:57px}.mobile-bottom-nav button svg{height:22px;width:22px}.mobile-bottom-nav button.selected{background:#f5e2e8;color:var(--plum);font-weight:750}.sub-view{min-height:70vh}.placeholder-card{margin:30px auto 0;padding:25px}.toast{left:18px;right:18px;bottom:103px;text-align:center}}
 @media(max-width:360px){.main-content{padding-left:13px;padding-right:13px}.os-card{padding:12px;min-height:143px}.os-label{font-size:13px}.os-icon{width:47px;height:47px;margin-bottom:9px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+
+/* HG-UX-003 — deliberate Soft Premium refinements. Background unchanged. */
+.sidebar{width:244px;transition:width .22s ease,padding .22s ease;overflow:visible;z-index:3}
+.sidebar-section-label{font-size:10px;letter-spacing:.15em;font-weight:750;color:#d9adc1;padding:6px 14px 10px;margin-top:4px;white-space:nowrap;overflow:hidden}
+.sidebar-section-label.secondary-label{margin-top:20px;padding-top:20px;border-top:1px solid #ffffff26}
+.sidebar-toggle-button{display:flex;align-items:center;gap:11px;min-height:33px;width:100%;border:0;border-radius:10px;background:#ffffff0e;color:#f9e9f0;padding:5px 15px;margin-bottom:13px;font-size:12px;text-align:left}
+.sidebar-toggle-button:hover{background:#ffffff24}
+.sidebar-toggle-button svg{width:15px;height:15px;transform:rotate(180deg)}
+.sidebar-edge-toggle{position:absolute;top:46%;right:-15px;width:30px;height:60px;display:flex;align-items:center;justify-content:center;border:1px solid #e6d2dc;border-radius:20px;background:#fff7fa;color:var(--plum);box-shadow:0 4px 13px #4b173628;opacity:0;pointer-events:none;transform:translateX(-6px);transition:opacity .18s,transform .18s;z-index:5}
+.sidebar:hover .sidebar-edge-toggle,.sidebar-edge-toggle:focus-visible{opacity:1;pointer-events:auto;transform:translateX(0)}
+.sidebar-edge-toggle svg{width:17px;height:17px;transform:rotate(180deg)}
+.nav-text{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sidebar .nav-item{white-space:nowrap}
+.sidebar .nav-item .soon{overflow:visible}
+.app-shell.sidebar-collapsed .sidebar{width:76px;padding-left:11px;padding-right:11px}
+.app-shell.sidebar-collapsed .sidebar-brand img{width:46px;height:46px}
+.app-shell.sidebar-collapsed .sidebar-brand{margin-bottom:18px}
+.app-shell.sidebar-collapsed .sidebar-brand-title,.app-shell.sidebar-collapsed .sidebar-section-label,.app-shell.sidebar-collapsed .sidebar .nav-text,.app-shell.sidebar-collapsed .sidebar .soon,.app-shell.sidebar-collapsed .sidebar .tiny-dot{display:none}
+.app-shell.sidebar-collapsed .sidebar-toggle-button{justify-content:center;padding:5px;margin-bottom:20px}
+.app-shell.sidebar-collapsed .sidebar-toggle-button svg,.app-shell.sidebar-collapsed .sidebar-edge-toggle svg{transform:none}
+.app-shell.sidebar-collapsed .sidebar .nav-item{justify-content:center;padding:0;gap:0}
+.app-shell.sidebar-collapsed .sidebar .nav-item svg{width:22px;height:22px}
+.app-shell.sidebar-collapsed .sidebar-foot{padding-top:12px}
+.app-shell.sidebar-collapsed .sidebar-edge-toggle{opacity:1;pointer-events:auto}
+.sidebar .sidebar-brand{font-size:19px}
+.sidebar .sidebar-brand img{width:78px;height:78px}
+.sidebar-foot .sidebar-section-label{padding-top:0}
+
+/* Whole-card navigation, with flat pastel surfaces instead of gradients. */
+.weekly-banner{width:100%;text-align:left;cursor:pointer;background:#f6e1e8;border-color:#eed0dc;transition:transform .16s ease,box-shadow .16s ease}
+.weekly-banner:after{display:none}
+.weekly-banner:hover,.weekly-banner:focus-visible{transform:translateY(-2px);box-shadow:0 14px 35px #63234218}
+.weekly-banner .weekly-icon{background:#edc9d8;box-shadow:none}
+.weekly-banner .weekly-copy{flex:1}
+.os-card{background:#f6e0e9;border-color:#edd0dd}
+.os-card:nth-child(2){background:#f7e5e6;border-color:#efd9de}
+.os-card:nth-child(3){background:#eee2ef;border-color:#e3d4e9}
+.os-card:nth-child(4){background:#f9e7d9;border-color:#f0dbca}
+.os-card:nth-child(5){background:#e8eee4;border-color:#dce6d8}
+.os-card:nth-child(6){background:#f7e8ca;border-color:#eddbb9}
+.os-icon{background:transparent!important;box-shadow:none!important;border-radius:0;width:56px;height:57px;margin-bottom:19px}
+.os-icon svg{width:35px;height:35px;stroke-width:1.8}
+.os-card .os-chevron{display:none}
+.intro{padding-top:4px}
+.mobile-page-dots{display:none}
+
+@media(min-width:760px) and (max-width:1020px){
+ .sidebar{width:196px}
+ .app-shell.sidebar-collapsed .sidebar{width:70px}
+ .sidebar-toggle-button{font-size:11px}
+}
+@media(max-width:759px){
+ .sidebar{display:none}
+ .weekly-banner{padding:19px 16px}
+ .os-icon{width:48px;height:49px;margin-bottom:13px}
+ .os-icon svg{width:31px;height:31px}
+ .mobile-page-dots{display:flex;align-items:center;justify-content:center;gap:12px;margin:22px 0 5px;min-height:23px}
+ .mobile-page-dots[hidden]{display:none}
+ .page-dot{width:11px;height:11px;border-radius:50%;padding:0;border:0;background:#dbb5c3;transition:background .15s,transform .15s}
+ .page-dot.is-current{background:var(--plum);transform:scale(1.18)}
+ .page-dot:focus-visible{outline-offset:5px}
+}
+@media(prefers-reduced-motion:reduce){.sidebar,.sidebar-edge-toggle,.os-card,.weekly-banner,.page-dot{transition:none}}
