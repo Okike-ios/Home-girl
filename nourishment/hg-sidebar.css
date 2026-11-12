@@ -160,7 +160,7 @@ body[data-hg-section="landing"] .system-grid .card .icon{
 body[data-hg-section="landing"] .system-grid .card .icon svg{
  display:block;width:48px!important;height:48px!important;
  max-width:48px;max-height:48px;fill:none;
- stroke:currentColor;stroke-width:4!important;
+ stroke:currentColor;stroke-width:6!important;
  stroke-linecap:round;stroke-linejoin:round;
 }
 body[data-hg-section="landing"] .system-grid .card strong{
@@ -182,6 +182,6 @@ body[data-hg-section="landing"] .system-grid .card{
  body[data-hg-section="landing"] .system-grid .card{min-height:153px}
  body[data-hg-section="landing"] .system-grid .card .icon{width:48px;height:49px;margin-bottom:13px}
  body[data-hg-section="landing"] .system-grid .card .icon svg{
-   width:38px!important;height:38px!important;stroke-width:4!important}
+   width:38px!important;height:38px!important;stroke-width:6!important}
  body[data-hg-section="landing"] .system-grid .card strong{font-size:14px!important}
 }
