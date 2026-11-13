@@ -272,3 +272,25 @@ body[data-hg-section="menu"] .menu-preview-edit svg{
   stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round
 }
 body[data-hg-section="menu"] .menu-preview-edit:hover{background:#29445e}
+
+/* HG-MENU-005: Destructive sample-dish action stays secondary to Edit. */
+body[data-hg-section="menu"] .menu-preview-actions{
+  display:flex;align-items:center;justify-content:flex-end;flex-wrap:wrap;gap:10px;
+}
+body[data-hg-section="menu"] .menu-preview-delete{
+  display:inline-flex;align-items:center;justify-content:center;gap:9px;
+  min-height:44px;padding:10px 17px;
+  border:1px solid #ba7e85;border-radius:13px;
+  background:transparent;color:#96434c;
+  font:700 13px Inter,system-ui,sans-serif;cursor:pointer;
+}
+body[data-hg-section="menu"] .menu-preview-delete svg{
+  width:17px;height:17px;fill:none;stroke:currentColor;
+  stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;
+}
+body[data-hg-section="menu"] .menu-preview-delete:hover{background:#faeded}
+@media(max-width:450px){
+  body[data-hg-section="menu"] .menu-preview-actions > button{
+    flex:1;padding:10px 9px;white-space:nowrap;
+  }
+}
