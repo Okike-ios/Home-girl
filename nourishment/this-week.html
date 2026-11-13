@@ -14,6 +14,7 @@
 <link rel="stylesheet" href="this-week-desktop-rich.css?v=hg-week-d1">
 <link rel="stylesheet" href="this-week-desktop-workspace.css?v=hg-week-d2">
 <link rel="stylesheet" href="this-week-table-controls.css?v=hg-week-d3">
+<link rel="stylesheet" href="this-week-phone-cards.css?v=hg-week-m1">
 </head>
 
 <body class="this-week-page" data-hg-section="week" >
@@ -252,6 +253,26 @@
 
     </section>
 
+    <!-- Phone-only day-by-day planner, inspired by Home-Girl-Source.zip.
+         Reuses the existing week-table inputs instead of duplicating data. -->
+    <section class="week-phone-planner" id="weekPhonePlanner" aria-label="Weekly meal planner by day">
+      <div class="week-phone-overview">
+        <div class="week-phone-overview-copy">
+          <h2 id="weekPhoneName">Weekly meal plan</h2>
+          <p id="weekPhoneRange">Choose your planning week</p>
+        </div>
+        <label class="week-phone-date-choice">
+          <span>Choose week</span>
+          <input type="date" id="weekPhoneDateChoice" aria-label="Choose any date in your planning week">
+        </label>
+      </div>
+      <div class="week-phone-days" id="weekPhoneDays" role="group" aria-label="Select a day to plan"></div>
+      <div class="week-phone-selected-heading">
+        <h3 id="weekPhoneSelectedDay">Monday</h3>
+        <span id="weekPhoneSelectedDate"></span>
+      </div>
+    </section>
+
     <!-- WEEKLY TABLE -->
     <section class="table-section">
 
@@ -339,6 +360,7 @@
 
 <script src="this-week-desktop-workspace.js?v=hg-week-d2" defer></script>
 <script src="this-week-table-controls.js?v=hg-week-d3" defer></script>
+<script src="this-week-phone-cards.js?v=hg-week-m1" defer></script>
 <script src="hg-sidebar.js?v=hg-nour-002" defer></script>
 <nav class="hg-mobile-bottom-nav" aria-label="Primary navigation">
   <a href="../index.html?view=dashboard"><svg aria-hidden="true"><use href="#i-grid"/></svg><span>Dashboard</span></a>
