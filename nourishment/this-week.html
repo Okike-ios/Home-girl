@@ -107,6 +107,10 @@
         </button>
         <div class="week-date-popover" id="weekDatePopover" hidden role="group" aria-label="Weekly plan dates">
           <strong>Planning window</strong>
+          <p class="week-window-guidance" id="weekWindowGuidance">Your weekly planner runs from Monday to Sunday. Select any date, and Home Girl will set the correct seven-day window and ISO calendar week number.</p>
+          <label class="week-date-choice-label" for="weekDateChoice">Choose any date in the week</label>
+          <input id="weekDateChoice" type="date" aria-describedby="weekWindowGuidance" aria-label="Choose any date in the planning week">
+          <p class="week-year-note">ISO week-year: <strong id="weekCalendarYear">—</strong></p>
         </div>
       </div>
     </nav>
@@ -231,7 +235,7 @@
 
       <div class="countdown-card" aria-live="polite">
         <span id="countdownNumber">—</span>
-        <span id="countdownLabel">DAYS LEFT</span>
+        <span id="countdownLabel">ISO WEEK</span>
       </div>
 
       <button type="button"
