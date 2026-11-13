@@ -211,9 +211,6 @@
     filterSelect.value="all";
     render();
   });
-  el("quickCheck").addEventListener("click",() =>
-    window.alert("Pantry ingredient checks and Shopping List integration are not connected yet. No stock or shopping records were changed.")
-  );
 
   let swipe=null;
   document.addEventListener("touchstart",event=>{
