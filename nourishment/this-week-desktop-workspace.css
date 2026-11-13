@@ -214,3 +214,51 @@
 @media(min-width:760px) and (max-width:900px){
   body.this-week-page .week-desktop-search{max-width:100%}
 }
+
+/* HG-WEEK-002: ISO-week date selection with calculated Monday/Sunday. */
+@media(min-width:760px){
+  body.this-week-page .week-date-popover{
+    width:min(388px,calc(100vw - 32px));
+  }
+  body.this-week-page .week-date-popover .week-window-guidance{
+    margin:0 0 16px;
+    color:#748071;
+    font:400 12px/1.55 Inter,ui-sans-serif,system-ui,sans-serif;
+  }
+  body.this-week-page .week-date-popover .week-date-choice-label{
+    display:block;
+    margin-bottom:7px;
+    color:var(--week-deep);
+    font:700 11px/1.4 Inter,ui-sans-serif,system-ui,sans-serif;
+  }
+  body.this-week-page .week-date-popover #weekDateChoice{
+    display:block;
+    width:100%;
+    min-height:44px;
+    margin:0 0 16px;
+    padding:8px 11px;
+    background:#fff;
+    border:1px solid var(--week-line);
+    border-radius:11px;
+    color:var(--week-deep);
+    font:500 13px/1.35 Inter,ui-sans-serif,system-ui,sans-serif;
+  }
+  body.this-week-page .week-date-popover .date-fields{
+    margin:0;
+  }
+  body.this-week-page .week-date-popover .date-field input[readonly]{
+    pointer-events:none;
+    background:#f3f6ee;
+    color:var(--week-deep);
+    opacity:1;
+  }
+  body.this-week-page .week-date-popover .week-year-note{
+    margin:12px 0 0;
+    color:#748071;
+    font:400 11px/1.45 Inter,ui-sans-serif,system-ui,sans-serif;
+  }
+  body.this-week-page .week-date-popover .week-year-note strong{
+    color:var(--week-deep);
+    font-weight:700;
+  }
+}
