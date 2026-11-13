@@ -15,7 +15,7 @@
 <link rel="stylesheet" href="this-week-desktop-workspace.css?v=hg-week-d2">
 <link rel="stylesheet" href="this-week-table-controls.css?v=hg-week-d3">
 <link rel="stylesheet" href="this-week-phone-cards.css?v=hg-week-m1">
-<link rel="stylesheet" href="this-week-phone-workspace.css?v=hg-week-m2">
+<link rel="stylesheet" href="this-week-phone-workspace.css?v=hg-week-m4">
 </head>
 
 <body class="this-week-page" data-hg-section="week" >
@@ -356,15 +356,17 @@
     <div class="bottom-actions">
       <button type="button"
               class="text-action"
-              id="resetButtonBottom">
-        Reset this week
+              id="weekPhoneEditButton"
+              aria-expanded="false"
+              aria-controls="weekEditTablePopover">
+        Edit
       </button>
     </div>
 
   </main>
 
 <script src="this-week-desktop-workspace.js?v=hg-week-d2" defer></script>
-<script src="this-week-table-controls.js?v=hg-week-d3" defer></script>
+<script src="this-week-table-controls.js?v=hg-week-m4" defer></script>
 <script src="this-week-phone-cards.js?v=hg-week-m1" defer></script>
 <script src="this-week-phone-workspace.js?v=hg-week-m2" defer></script>
 <script src="hg-sidebar.js?v=hg-nour-002" defer></script>
