@@ -339,3 +339,45 @@ body[data-hg-section="quick"] > .app-header .icon-button:hover{
     width:38px;height:38px;padding:8px;
   }
 }
+
+/* HG-QUICK-005 — Per-dish cooked status in the yellow Quick Meals theme.
+   Desktop adds a fifth column; phone displays status in the expanded form.
+   This is local interface state only, not a Pantry/History transaction. */
+body[data-hg-section="quick"] .quick-table th:nth-child(1){width:38%}
+body[data-hg-section="quick"] .quick-table th:nth-child(2){width:15%}
+body[data-hg-section="quick"] .quick-table th:nth-child(3){width:22%;text-align:center}
+body[data-hg-section="quick"] .quick-table th:nth-child(4){width:17%;text-align:center}
+body[data-hg-section="quick"] .quick-table th:nth-child(5){width:8%;text-align:center;display:table-cell}
+body[data-hg-section="quick"] .quick-table td.quick-cooked{text-align:center}
+body[data-hg-section="quick"] .quick-cooked-label{display:inline-flex;align-items:center;justify-content:center;gap:9px;cursor:pointer;color:var(--quick-deep)}
+body[data-hg-section="quick"] .quick-cooked-label input{width:19px;height:19px;flex:none;accent-color:var(--quick)}
+body[data-hg-section="quick"] .quick-cooked-label span{display:none}
+body[data-hg-section="quick"] .quick-is-cooked .quick-name-input{color:var(--quick-dark)}
+body[data-hg-section="quick"] .quick-table tr.quick-is-cooked td{background:#fff7e6}
+body[data-hg-section="quick"] .quick-table tr.quick-is-cooked:nth-child(even) td{background:#fdf4e2}
+@media(max-width:759px){
+  body[data-hg-section="quick"] .quick-table .quick-cooked{display:none!important}
+  body[data-hg-section="quick"] .quick-table .quick-open .quick-cooked{
+    display:flex!important;
+    grid-column:1/-1;
+    grid-row:auto;
+    justify-content:space-between;
+    padding:10px 0!important;
+    border-top:1px solid var(--quick-line)!important;
+  }
+  body[data-hg-section="quick"] .quick-open .quick-cooked-label{
+    display:flex;justify-content:space-between;width:100%;
+  }
+  body[data-hg-section="quick"] .quick-open .quick-cooked-label span{
+    display:inline;font:650 12px/1.3 Inter,Arial,sans-serif;
+  }
+  body[data-hg-section="quick"] .quick-is-cooked:not(.quick-open) .quick-serving-copy::after{
+    content:" · Cooked";
+    color:var(--quick-deep);
+    font-weight:700;
+  }
+  body[data-hg-section="quick"] .quick-table tr.quick-is-cooked,
+  body[data-hg-section="quick"] .quick-table tr.quick-is-cooked:nth-child(even){
+    background:#fff7e6;
+  }
+}
