@@ -8,8 +8,8 @@
 <link rel="stylesheet" href="cook-ahead.css">
 <link rel="stylesheet" href="homegirl-integration.css?v=hg-nourishment-001">
 <link rel="stylesheet" href="hg-sidebar.css?v=hg-nour-006">
-<link rel="stylesheet" href="the-menu-cards.css?v=hg-menu-cards-001">
-<script src="the-menu-cards.js?v=hg-menu-cards-001" defer></script>
+<link rel="stylesheet" href="the-menu-cards.css?v=hg-menu-cards-003">
+<script src="the-menu-cards.js?v=hg-menu-cards-003" defer></script>
 <script src="hg-sidebar.js?v=hg-nour-002" defer></script>
 </head>
 <body data-hg-section="menu">
@@ -92,6 +92,25 @@
 <p class="menu-empty" id="menuEmpty" hidden>No dishes match your search or filter.</p>
 </section>
 <p class="menu-prototype-note">Sample dishes for interface review only. These cards are not read from or saved to your Menu database.</p>
+<dialog class="menu-preview" id="menuDishPreview" aria-labelledby="menuPreviewTitle">
+<div class="menu-preview-head">
+<span class="menu-preview-eyebrow">SAMPLE DISH INFORMATION</span>
+<button type="button" class="menu-preview-close" id="menuPreviewClose" aria-label="Close dish preview"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5 5 19"/></svg></button>
+</div>
+<div class="menu-preview-body">
+<h2 id="menuPreviewTitle"></h2>
+<p id="menuPreviewMeta" class="menu-preview-meta"></p>
+<div class="menu-preview-section">
+<h3>Ingredients</h3>
+<ul id="menuPreviewIngredients"></ul>
+</div>
+<div class="menu-preview-section">
+<h3>Preparation</h3>
+<p id="menuPreviewPreparation"></p>
+</div>
+<p class="menu-preview-note">These are illustrative details for interface testing, not saved recipes or verified cooking instructions.</p>
+</div>
+</dialog>
 </main>
 <nav class="hg-mobile-bottom-nav" aria-label="Primary navigation">
   <a href="../index.html?view=dashboard"><svg aria-hidden="true"><use href="#i-grid"/></svg><span>Dashboard</span></a>
