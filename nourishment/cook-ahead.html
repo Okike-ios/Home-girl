@@ -9,7 +9,8 @@
 <link rel="stylesheet" href="homegirl-integration.css?v=hg-nourishment-001">
 <link rel="stylesheet" href="hg-sidebar.css?v=hg-nour-006">
 <link rel="stylesheet" href="bulk-cooking-phase1.css?v=hg-bulk-p1">
-<link rel="stylesheet" href="bulk-cooking-mobile-cards.css?v=hg-bulk-p5">
+<link rel="stylesheet" href="bulk-cooking-mobile-cards.css?v=hg-bulk-p6">
+<link rel="stylesheet" href="bulk-cooking-mobile-workspace.css?v=hg-bulk-p6"">
 </head>
 <body data-hg-section="cook" >
 <svg class="svg-defs" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -73,6 +74,12 @@
       <button class="icon-button" id="moreToggle" type="button" aria-label="More options" aria-expanded="false">
         <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="5" r="1.5"></circle><circle cx="12" cy="12" r="1.5"></circle><circle cx="12" cy="19" r="1.5"></circle></svg>
       </button>
+      <button class="icon-button mobile-cycle-action" id="mobileArchiveReset" type="button" aria-label="Archive and reset cycle" title="Archive and reset">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h18v5H3zM5 9v11h14V9M10 13h4M7 16h3"/></svg>
+      </button>
+      <button class="icon-button mobile-cycle-action" id="mobileDeleteDishes" type="button" aria-label="Delete all dishes without archiving" title="Delete dishes">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v6M14 11v6"/></svg>
+      </button>
     </nav>
   </header>
 
@@ -94,6 +101,9 @@
   </div>
 
   <main class="main-content">
+    <div class="mobile-bulk-workspace" id="mobileBulkWorkspace" aria-label="Mobile Bulk Cooking controls">
+      <div class="mobile-bulk-search" id="mobileBulkSearch"></div>
+    </div>
     <section class="bulk-intro" aria-label="Bulk Cooking introduction">
       <div class="bulk-intro-copy">
         <h1>Your cooking cycle</h1>
@@ -141,6 +151,15 @@
     </section>
 
     <section class="countdown-section" aria-label="Countdown">
+      <div class="mobile-cycle-calendar">
+        <button id="mobileCycleCalendar" class="mobile-calendar-button" type="button" aria-label="Choose cooking cycle dates" aria-expanded="false" aria-controls="mobileDatePopover">
+          <svg viewBox="0 0 48 48" aria-hidden="true"><rect x="6" y="9" width="36" height="34" rx="5"/><path d="M6 19h36M15 4v10M33 4v10"/></svg>
+          <strong id="mobileCalendarNumber">0</strong>
+        </button>
+        <div id="mobileDatePopover" class="mobile-date-popover" hidden role="group" aria-label="Cooking cycle dates">
+          <strong>Cooking window</strong>
+        </div>
+      </div>
       <button class="text-action" id="archiveButton" type="button">Archive</button>
       <div class="countdown-card" aria-live="polite">
         <span id="countdownNumber">—</span>
@@ -242,6 +261,7 @@
 
   </main>
   <script src="cook-ahead.js?v=hg-bulk-p4"></script>
+<script src="bulk-cooking-mobile-workspace.js?v=hg-bulk-p6" defer></script>
 <script src="hg-sidebar.js?v=hg-nour-002" defer></script>
 <nav class="hg-mobile-bottom-nav" aria-label="Primary navigation">
   <a href="../index.html?view=dashboard"><svg aria-hidden="true"><use href="#i-grid"/></svg><span>Dashboard</span></a>
