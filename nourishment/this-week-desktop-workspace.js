@@ -135,13 +135,11 @@
   });
 
   archiveReset.addEventListener("click", () => {
-    if (!desktop.matches) return;
     // Archiving is a placeholder. Do not reset anything without first saving it.
     get("archiveButtonMain").click();
   });
 
   deleteMeals.addEventListener("click", () => {
-    if (!desktop.matches) return;
     const rows = [...weekBody.querySelectorAll("[data-day-row]")];
     const hasData = rows.some(row =>
       [...row.querySelectorAll(".component-input")].some(input => input.value.trim()) ||
