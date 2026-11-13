@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="bulk-cooking-phase1.css?v=hg-bulk-p1">
 <link rel="stylesheet" href="bulk-cooking-mobile-cards.css?v=hg-bulk-p8">
 <link rel="stylesheet" href="bulk-cooking-mobile-workspace.css?v=hg-bulk-p7">
-<link rel="stylesheet" href="bulk-cooking-desktop-workspace.css?v=hg-bulk-d1">
+<link rel="stylesheet" href="bulk-cooking-desktop-workspace.css?v=hg-bulk-d2">
 </head>
 <body data-hg-section="cook" >
 <svg class="svg-defs" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -171,10 +171,10 @@
 
     <section class="table-section" aria-label="Bulk Cooking dishes">
       <div class="table-toolbar">
-        <p>Select the dishes you want to add to your shopping list.</p>
         <button class="add-row-button" id="addDishButton" type="button">
           <span>+</span> Add dish
         </button>
+        <div class="desktop-shop-select" id="desktopShopSelect"></div>
       </div>
 
       <div class="table-scroll" tabindex="0" aria-label="Bulk Cooking meal list; individual cards on phones">
@@ -193,7 +193,9 @@
                   <span class="shopping-heading-full">Add to <br>shopping list</span>
                   <span class="shopping-heading-short" aria-hidden="true">ATS</span>
                 </label>
+                <span class="desktop-shopping-heading">Add to shopping list</span>
               </th>
+              <th class="delete-column" scope="col" aria-label="Delete dish" title="Delete dish">Delete</th>
             </tr>
           </thead>
 
@@ -206,6 +208,7 @@
               <td><input class="cell-input" placeholder="—" aria-label="Last updated"></td>
               <td><input class="cell-input" type="date" aria-label="Cooked on"></td>
               <td class="shopping-column sticky-shopping"><input class="shopping-check" type="checkbox" aria-label="Add Egusi Soup to shopping list"></td>
+              <td class="delete-column"><button class="desktop-dish-delete" type="button" aria-label="Delete this dish" title="Delete dish"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v6M14 11v6"/></svg></button></td>
             </tr>
             <tr data-dish-row>
               <td class="dish-column sticky-dish"><input class="cell-input dish-input" value="Tomato Stew" aria-label="Dish name"></td>
@@ -215,6 +218,7 @@
               <td><input class="cell-input" placeholder="—" aria-label="Last updated"></td>
               <td><input class="cell-input" type="date" aria-label="Cooked on"></td>
               <td class="shopping-column sticky-shopping"><input class="shopping-check" type="checkbox" aria-label="Add Tomato Stew to shopping list"></td>
+              <td class="delete-column"><button class="desktop-dish-delete" type="button" aria-label="Delete this dish" title="Delete dish"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v6M14 11v6"/></svg></button></td>
             </tr>
             <tr data-dish-row>
               <td class="dish-column sticky-dish"><input class="cell-input dish-input" value="Chicken Curry" aria-label="Dish name"></td>
@@ -224,6 +228,7 @@
               <td><input class="cell-input" placeholder="—" aria-label="Last updated"></td>
               <td><input class="cell-input" type="date" aria-label="Cooked on"></td>
               <td class="shopping-column sticky-shopping"><input class="shopping-check" type="checkbox" aria-label="Add Chicken Curry to shopping list"></td>
+              <td class="delete-column"><button class="desktop-dish-delete" type="button" aria-label="Delete this dish" title="Delete dish"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v6M14 11v6"/></svg></button></td>
             </tr>
             <tr data-dish-row>
               <td class="dish-column sticky-dish"><input class="cell-input dish-input" value="Jollof Rice" aria-label="Dish name"></td>
@@ -233,6 +238,7 @@
               <td><input class="cell-input" placeholder="—" aria-label="Last updated"></td>
               <td><input class="cell-input" type="date" aria-label="Cooked on"></td>
               <td class="shopping-column sticky-shopping"><input class="shopping-check" type="checkbox" aria-label="Add Jollof Rice to shopping list"></td>
+              <td class="delete-column"><button class="desktop-dish-delete" type="button" aria-label="Delete this dish" title="Delete dish"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v6M14 11v6"/></svg></button></td>
             </tr>
             <tr data-dish-row>
               <td class="dish-column sticky-dish"><input class="cell-input dish-input" value="Beans &amp; Plantain" aria-label="Dish name"></td>
@@ -242,6 +248,7 @@
               <td><input class="cell-input" placeholder="—" aria-label="Last updated"></td>
               <td><input class="cell-input" type="date" aria-label="Cooked on"></td>
               <td class="shopping-column sticky-shopping"><input class="shopping-check" type="checkbox" aria-label="Add Beans and Plantain to shopping list"></td>
+              <td class="delete-column"><button class="desktop-dish-delete" type="button" aria-label="Delete this dish" title="Delete dish"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v6M14 11v6"/></svg></button></td>
             </tr>
             <tr data-dish-row>
               <td class="dish-column sticky-dish"><input class="cell-input dish-input" value="Moi Moi" aria-label="Dish name"></td>
@@ -251,6 +258,7 @@
               <td><input class="cell-input" placeholder="—" aria-label="Last updated"></td>
               <td><input class="cell-input" type="date" aria-label="Cooked on"></td>
               <td class="shopping-column sticky-shopping"><input class="shopping-check" type="checkbox" aria-label="Add Moi Moi to shopping list"></td>
+              <td class="delete-column"><button class="desktop-dish-delete" type="button" aria-label="Delete this dish" title="Delete dish"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v6M14 11v6"/></svg></button></td>
             </tr>
           </tbody>
         </table>
@@ -261,7 +269,7 @@
     </section>
 
   </main>
-  <script src="cook-ahead.js?v=hg-bulk-p8"></script>
+  <script src="cook-ahead.js?v=hg-bulk-d2"></script>
 <script src="bulk-cooking-mobile-workspace.js?v=hg-bulk-d1" defer></script>
 <script src="hg-sidebar.js?v=hg-nour-002" defer></script>
 <nav class="hg-mobile-bottom-nav" aria-label="Primary navigation">
