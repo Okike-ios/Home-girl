@@ -1,0 +1,293 @@
+/* HG-WEEK-M2 — Bulk Cooking-style top section on phones only.
+ * Shared Home Girl logo/notification/settings shell and desktop layout untouched.
+ */
+.week-phone-tools{display:none}
+@media(max-width:759px){
+  body.this-week-page[data-hg-section="week"] > .app-header{
+    width:calc(100% - 32px)!important;
+    max-width:520px;
+    min-height:60px;
+    padding:8px 0!important;
+    margin-inline:auto;
+    border:0!important;
+    border-radius:0!important;
+    background:transparent!important;
+    box-shadow:none!important;
+    overflow:visible;
+    gap:4px;
+  }
+  /* The Home Girl back gesture replaces the mobile back button.
+     Search and Filter are now below the editable week name. */
+  body.this-week-page .app-header a[aria-label="Back to Nourishment OS"],
+  body.this-week-page .app-header #moreToggle{
+    display:none!important;
+  }
+  body.this-week-page .app-header .header-side{
+    gap:6px;
+    min-width:0;
+    align-items:center;
+  }
+  body.this-week-page .app-header .header-side.right{
+    gap:7px;
+    justify-self:end;
+  }
+  body.this-week-page .app-header .header-title{
+    padding:0 3px;
+    color:var(--phone-week-deep);
+    font:400 18px/1.2 Georgia,"Times New Roman",serif;
+  }
+  body.this-week-page .app-header .header-side.right .week-desktop-action{
+    display:inline-grid!important;
+    place-items:center;
+    width:38px;
+    height:38px;
+    flex:0 0 38px;
+    padding:0;
+    border:1px solid var(--phone-week-border);
+    border-radius:12px;
+    background:#fffaf5;
+    color:var(--phone-week-deep);
+    box-shadow:none;
+  }
+  body.this-week-page .app-header .header-side.right .week-desktop-action svg{
+    display:block;
+    width:20px;
+    height:20px;
+    fill:none;
+    stroke:currentColor;
+    stroke-width:1.7;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+  }
+  body.this-week-page .app-header .week-calendar-control{
+    display:block!important;
+    position:relative;
+    flex:none;
+  }
+  body.this-week-page .app-header .week-calendar-button{
+    display:grid;
+    position:relative;
+    place-items:center;
+    width:39px;
+    height:43px;
+    padding:0;
+    border:0;
+    background:transparent;
+    color:var(--phone-week-deep);
+    cursor:pointer;
+  }
+  body.this-week-page .app-header .week-calendar-button svg{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    fill:#e9eee2;
+    stroke:var(--phone-week-deep);
+    stroke-width:2.4;
+    stroke-linejoin:round;
+    stroke-linecap:round;
+  }
+  body.this-week-page .app-header .week-calendar-button strong{
+    position:relative;
+    padding-top:7px;
+    color:var(--phone-week-deep);
+    font:800 16px/1 Inter,ui-sans-serif,system-ui,sans-serif;
+    font-variant-numeric:tabular-nums;
+  }
+  body.this-week-page .app-header .week-calendar-button:focus-visible,
+  body.this-week-page .week-phone-search .icon-button:focus-visible{
+    outline:2px solid var(--phone-week-deep);
+    outline-offset:3px;
+  }
+  body.this-week-page .week-date-popover{
+    position:absolute;
+    z-index:90;
+    top:calc(100% + 10px);
+    left:0;
+    right:auto;
+    width:min(328px,calc(100vw - 40px));
+    box-sizing:border-box;
+    padding:17px;
+    border:1px solid var(--phone-week-border);
+    border-radius:18px;
+    background:#fffaf5;
+    color:var(--phone-week-deep);
+    box-shadow:0 12px 35px rgba(67,90,62,.18);
+    font-family:Inter,ui-sans-serif,system-ui,sans-serif;
+  }
+  body.this-week-page .week-date-popover[hidden]{display:none!important}
+  body.this-week-page .week-date-popover > strong{
+    display:block;
+    margin-bottom:10px;
+    font-size:14px;
+    line-height:1.3;
+  }
+  body.this-week-page .week-date-popover .week-window-guidance{
+    margin:0 0 13px;
+    color:#748071;
+    font-size:12px;
+    line-height:1.5;
+  }
+  body.this-week-page .week-date-popover .week-date-choice-label{
+    display:block;
+    margin-bottom:6px;
+    color:var(--phone-week-deep);
+    font-size:11px;
+    font-weight:750;
+  }
+  body.this-week-page .week-date-popover #weekDateChoice{
+    display:block;
+    width:100%;
+    min-width:0;
+    min-height:42px;
+    padding:8px;
+    margin-bottom:14px;
+    border:1px solid var(--phone-week-border);
+    border-radius:11px;
+    background:#fff;
+    color:var(--phone-week-deep);
+    font-size:13px;
+    box-sizing:border-box;
+  }
+  body.this-week-page .week-date-popover .date-fields{
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+    gap:9px;
+    align-items:end;
+    width:100%;
+    max-width:none;
+    margin:0;
+  }
+  body.this-week-page .week-date-popover .date-arrow{display:none!important}
+  body.this-week-page .week-date-popover .date-field{
+    min-width:0;
+  }
+  body.this-week-page .week-date-popover .date-field label{
+    display:block;
+    margin-bottom:6px;
+    font-size:10px;
+    font-weight:700;
+  }
+  body.this-week-page .week-date-popover .date-field input{
+    display:block;
+    width:100%;
+    min-width:0;
+    min-height:40px;
+    padding:6px 4px;
+    border:1px solid var(--phone-week-border);
+    border-radius:10px;
+    background:#edf2e8;
+    color:var(--phone-week-deep);
+    font-size:11px;
+    pointer-events:none;
+    box-sizing:border-box;
+  }
+  body.this-week-page .week-date-popover .week-year-note{
+    margin:12px 0 0;
+    color:#748071;
+    font-size:11px;
+  }
+
+  body.this-week-page .main-content{gap:14px}
+  body.this-week-page .plan-section{
+    padding:5px 1px 0;
+  }
+  body.this-week-page .plan-section #weekName,
+  body.this-week-page .plan-section #weekName.has-name{
+    min-height:0;
+    padding:3px 0 7px;
+    font:400 clamp(20px,5vw,25px)/1.3 Georgia,"Times New Roman",serif!important;
+    color:var(--phone-week-deep);
+    text-align:left;
+  }
+  body.this-week-page .plan-section #weekName::placeholder{
+    color:var(--phone-week-deep);
+    font:italic 400 clamp(19px,4.7vw,24px)/1.3 Georgia,"Times New Roman",serif!important;
+  }
+  body.this-week-page .plan-section .intro p{
+    margin:0;
+    color:#748071;
+    font:400 12px/1.5 Inter,ui-sans-serif,system-ui,sans-serif;
+    text-align:left;
+  }
+
+  /* Search typing cell, Search button, Filter button — like Bulk Cooking. */
+  body.this-week-page .week-phone-tools{
+    display:block;
+    order:1;
+    width:100%;
+    margin:0;
+  }
+  body.this-week-page .week-phone-search{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) 43px 43px;
+    gap:8px;
+    align-items:center;
+  }
+  body.this-week-page .week-phone-search #mealSearch{
+    display:block!important;
+    width:100%;
+    min-width:0;
+    height:44px;
+    min-height:44px;
+    padding:10px 12px;
+    border:1px solid var(--phone-week-border);
+    border-radius:13px;
+    background:#fff;
+    color:var(--phone-week-deep);
+    font:500 14px/1.25 Inter,ui-sans-serif,system-ui,sans-serif;
+    box-sizing:border-box;
+  }
+  body.this-week-page .week-phone-search #searchToggle,
+  body.this-week-page .week-phone-search #filterToggle{
+    display:grid!important;
+    place-items:center;
+    width:43px;height:43px;
+    flex:none;
+    margin:0;
+    padding:0;
+    border:1px solid var(--phone-week-border);
+    border-radius:13px;
+    background:#fffaf5;
+    color:var(--phone-week-deep);
+    box-shadow:none;
+  }
+  body.this-week-page .week-phone-search svg{
+    width:20px;height:20px;
+  }
+  body.this-week-page .filter-panel{
+    position:fixed;
+    z-index:100;
+    max-width:calc(100vw - 32px);
+    border:1px solid var(--phone-week-border);
+    border-radius:15px;
+    background:#fffaf5;
+    box-shadow:0 10px 24px rgba(67,90,62,.16);
+  }
+  body.this-week-page .filter-panel[hidden]{display:none!important}
+  /* The same week picker remains available in the header; remove the
+     duplicate Choose week card from the seven-day planner. */
+  body.this-week-page .week-phone-planner{
+    order:2;
+  }
+  body.this-week-page .week-phone-overview{
+    display:none!important;
+  }
+  body.this-week-page .table-section{order:3}
+  body.this-week-page .bottom-actions{order:4}
+}
+@media(max-width:370px){
+  body.this-week-page .app-header .header-side.right .week-desktop-action{
+    width:34px;height:36px;flex-basis:34px;
+  }
+  body.this-week-page .app-header .week-calendar-button{
+    width:35px;height:39px;
+  }
+  body.this-week-page .app-header .week-calendar-button strong{font-size:14px}
+  body.this-week-page .week-phone-search{
+    grid-template-columns:minmax(0,1fr) 39px 39px;
+    gap:6px;
+  }
+  body.this-week-page .week-phone-search #searchToggle,
+  body.this-week-page .week-phone-search #filterToggle{width:39px;height:39px}
+}
