@@ -1,0 +1,204 @@
+/* HG-WEEK-D3 — desktop table tools and responsive column chooser.
+   Scoped to large screens; the original week meal structure remains intact. */
+.week-table-top-actions,
+.week-desktop-shopping-heading{display:none}
+@media(min-width:760px){
+  body.this-week-page .app-header .header-side a[aria-label="Back to Nourishment OS"]{
+    border-radius:14px!important;
+    border:1px solid var(--week-line)!important;
+    background:rgba(255,250,245,.55)!important;
+    color:var(--week-deep);
+    box-shadow:none!important;
+    width:45px;
+    height:45px;
+  }
+  body.this-week-page .app-header .header-side a[aria-label="Back to Nourishment OS"] svg{
+    width:22px;height:22px;
+  }
+  body.this-week-page .week-desktop-search #filterToggle svg{
+    width:21px;height:21px;
+  }
+  body.this-week-page .table-toolbar{
+    align-items:center;
+    gap:20px;
+    justify-content:space-between;
+  }
+  body.this-week-page .table-toolbar>div:first-child{
+    flex:1;
+    min-width:0;
+  }
+  body.this-week-page .week-table-heading-line{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:13px;
+    margin-bottom:5px;
+  }
+  body.this-week-page .week-table-heading-line h2{
+    margin:0;
+    flex:none;
+  }
+  body.this-week-page .week-table-heading-line .week-count{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    margin:0;
+    padding:7px 12px;
+    border:1px solid #d5dfc8;
+    border-radius:999px;
+    background:#edf1e7;
+    color:var(--week-deep);
+    font:750 11px/1.2 Inter,ui-sans-serif,system-ui,sans-serif;
+    white-space:nowrap;
+  }
+  body.this-week-page .week-table-top-actions{
+    display:flex;
+    flex:none;
+    align-items:center;
+    justify-content:flex-end;
+    gap:12px;
+  }
+  body.this-week-page .week-table-edit-wrap{position:relative}
+  body.this-week-page .week-edit-table-button{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:9px;
+    min-height:43px;
+    padding:9px 15px;
+    border:1px solid var(--week-deep);
+    border-radius:13px;
+    background:var(--week-deep);
+    color:#fff;
+    font:700 12px/1.3 Inter,ui-sans-serif,system-ui,sans-serif;
+    white-space:nowrap;
+    cursor:pointer;
+  }
+  body.this-week-page .week-edit-table-button:hover{
+    background:#334a32;
+    border-color:#334a32;
+  }
+  body.this-week-page .week-edit-table-button span{
+    font:700 20px/1 Inter,ui-sans-serif,system-ui,sans-serif;
+  }
+  body.this-week-page .week-edit-table-button:focus-visible{
+    outline:2px solid var(--week-accent);
+    outline-offset:3px;
+  }
+  body.this-week-page .week-edit-table-popover{
+    position:absolute;
+    z-index:75;
+    top:calc(100% + 10px);
+    right:0;
+    width:248px;
+    padding:16px;
+    border:1px solid var(--week-line);
+    border-radius:16px;
+    background:#fffaf5;
+    box-shadow:0 14px 30px rgba(68,82,58,.16);
+    font-family:Inter,ui-sans-serif,system-ui,sans-serif;
+  }
+  body.this-week-page .week-edit-table-popover[hidden]{display:none!important}
+  body.this-week-page .week-edit-table-popover > strong{
+    display:block;
+    margin-bottom:12px;
+    color:var(--week-deep);
+    font-size:13px;
+  }
+  body.this-week-page .week-edit-table-popover label{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    min-height:36px;
+    color:var(--week-brown);
+    font-size:13px;
+    cursor:pointer;
+  }
+  body.this-week-page .week-edit-table-popover input{
+    width:17px;
+    height:17px;
+    flex:none;
+    accent-color:var(--week-accent);
+  }
+  body.this-week-page .week-edit-table-popover p{
+    margin:11px 0 0;
+    color:#748071;
+    font:400 11px/1.45 Inter,ui-sans-serif,system-ui,sans-serif;
+  }
+  body.this-week-page .week-desktop-shop-select{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    min-height:43px;
+    padding:9px 13px;
+    border:1px solid var(--week-line);
+    border-radius:13px;
+    background:#fffaf5;
+  }
+  body.this-week-page .week-desktop-shop-select .master-label{
+    display:flex;
+    flex-direction:row;
+    align-items:center;
+    gap:9px;
+    height:auto;
+    white-space:nowrap;
+    color:var(--week-deep);
+    font:700 12px/1.3 Inter,ui-sans-serif,system-ui,sans-serif;
+    cursor:pointer;
+  }
+  body.this-week-page .week-desktop-shop-select .master-label input{
+    width:19px;height:19px;
+    accent-color:var(--week-accent);
+  }
+  body.this-week-page .week-desktop-shop-select .shopping-heading-full{
+    display:inline!important;
+    white-space:normal;
+  }
+  body.this-week-page .week-desktop-shop-select .shopping-heading-full br{display:none}
+  body.this-week-page .week-desktop-shop-select .shopping-heading-short{display:none!important}
+  body.this-week-page .week-desktop-shopping-heading{
+    display:inline;
+    color:var(--week-deep);
+    font:750 11px/1.35 Inter,ui-sans-serif,system-ui,sans-serif;
+    text-transform:uppercase;
+    letter-spacing:.035em;
+  }
+  /* The table keeps its original overall width, even with fewer meal columns. */
+  body.this-week-page .week-table{
+    width:100%!important;
+    min-width:1120px!important;
+    table-layout:fixed!important;
+    --visible-week-meals:4;
+  }
+  body.this-week-page .week-table th.date-column,
+  body.this-week-page .week-table td.date-column{
+    width:105px!important;
+    min-width:105px!important;
+    max-width:105px!important;
+  }
+  body.this-week-page .week-table th.shopping-column,
+  body.this-week-page .week-table td.shopping-column{
+    width:145px!important;
+    min-width:145px!important;
+    max-width:145px!important;
+  }
+  body.this-week-page .week-table th.meal-column,
+  body.this-week-page .week-table td.meal-column{
+    width:calc((100% - 250px) / var(--visible-week-meals))!important;
+    min-width:0!important;
+    max-width:none!important;
+  }
+  body.this-week-page .week-table .week-meal-hidden{
+    display:none!important;
+  }
+  body.this-week-page .week-table .component-input{
+    width:100%;
+    min-width:0;
+  }
+}
+@media(min-width:760px) and (max-width:1000px){
+  body.this-week-page .week-table-top-actions{gap:7px}
+  body.this-week-page .week-edit-table-button{padding:8px 11px}
+  body.this-week-page .week-desktop-shop-select{padding:8px 10px}
+  body.this-week-page .week-desktop-shop-select .master-label{font-size:11px}
+}
