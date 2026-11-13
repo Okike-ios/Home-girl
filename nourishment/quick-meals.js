@@ -25,7 +25,7 @@
     {name:"Moi Moi",servings:3}
   ];
   let nextId = 0;
-  const dishes = examples.map(d => ({id:++nextId,name:d.name,servings:d.servings,selected:false,expanded:false}));
+  const dishes = examples.map(d => ({id:++nextId,name:d.name,servings:d.servings,selected:false,cooked:false,expanded:false}));
   const selectedCount = () => dishes.filter(d => d.selected).length;
   function showStatus(message) {status.textContent = message || "";}
 
@@ -135,6 +135,28 @@
     shopLabel.append(checkbox,labelText);
     shoppingCell.append(shopLabel);
 
+    // A local preparation status only: no Pantry deduction or History record.
+    const cookedCell = document.createElement("td");
+    cookedCell.className = "quick-cooked";
+    const cookedLabel = document.createElement("label");
+    cookedLabel.className = "quick-cooked-label";
+    const cookedCheck = document.createElement("input");
+    cookedCheck.type = "checkbox";
+    cookedCheck.checked = Boolean(d.cooked);
+    cookedCheck.setAttribute("aria-label", "Mark " + (d.name || "new dish") + " as cooked");
+    const cookedText = document.createElement("span");
+    cookedText.textContent = "Mark as Cooked";
+    cookedLabel.append(cookedCheck,cookedText);
+    cookedCheck.addEventListener("change", () => {
+      d.cooked = cookedCheck.checked;
+      row.classList.toggle("quick-is-cooked",d.cooked);
+      showStatus(d.cooked
+        ? "Marked as cooked for this session only. History and Pantry have not been updated."
+        : "Cooking status cleared for this session.");
+    });
+    cookedCell.append(cookedLabel);
+    if(d.cooked) row.classList.add("quick-is-cooked");
+
     const deleteCell = document.createElement("td");
     deleteCell.className = "quick-delete";
     const deleteButton = document.createElement("button");
@@ -151,7 +173,7 @@
       render();
     });
     deleteCell.append(deleteButton);
-    row.append(dishCell,servingCell,shoppingCell,deleteCell);
+    row.append(dishCell,servingCell,shoppingCell,cookedCell,deleteCell);
     return {row,nameField};
   }
   function render(focusId) {
@@ -173,7 +195,7 @@
   }
 
   add.addEventListener("click",() => {
-    const d={id:++nextId,name:"",servings:1,selected:false,expanded:true};
+    const d={id:++nextId,name:"",servings:1,selected:false,cooked:false,expanded:true};
     dishes.unshift(d);
     search.value = "";
     filterSelect.value = "all";
