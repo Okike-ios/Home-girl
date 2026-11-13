@@ -292,8 +292,78 @@
   body.this-week-page .week-phone-search #filterToggle{width:39px;height:39px}
 }
 
-/* HG-WEEK-M3: The redundant bottom Reset this week action is hidden on phones.
-   Desktop controls and archive/delete actions are unchanged. */
+/* HG-WEEK-M4: Edit meal categories on phones, without resetting any entries. */
 @media(max-width:759px){
-  body.this-week-page .bottom-actions{display:none!important}
+  body.this-week-page .bottom-actions{
+    display:flex!important;
+    flex-direction:column;
+    align-items:flex-end;
+    position:relative;
+    order:4;
+    padding:4px 0 0;
+  }
+  body.this-week-page #weekPhoneEditButton{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    min-width:110px;
+    min-height:43px;
+    padding:10px 18px;
+    border:1px solid var(--phone-week-deep);
+    border-radius:13px;
+    background:var(--phone-week-deep);
+    color:#fff;
+    font:700 13px/1.25 Inter,ui-sans-serif,system-ui,sans-serif;
+    cursor:pointer;
+  }
+  body.this-week-page #weekPhoneEditButton:focus-visible{
+    outline:2px solid var(--phone-week-accent);
+    outline-offset:3px;
+  }
+  body.this-week-page .bottom-actions .week-edit-table-popover{
+    display:block;
+    position:absolute;
+    z-index:85;
+    right:0;
+    bottom:calc(100% + 10px);
+    top:auto;
+    width:min(250px,calc(100vw - 40px));
+    box-sizing:border-box;
+    padding:16px;
+    border:1px solid var(--phone-week-border);
+    border-radius:16px;
+    background:#fffaf5;
+    box-shadow:0 12px 30px rgba(67,90,62,.18);
+    text-align:left;
+    font-family:Inter,ui-sans-serif,system-ui,sans-serif;
+  }
+  body.this-week-page .bottom-actions .week-edit-table-popover[hidden]{display:none!important}
+  body.this-week-page .bottom-actions .week-edit-table-popover > strong{
+    display:block;
+    margin-bottom:10px;
+    color:var(--phone-week-deep);
+    font-size:13px;
+  }
+  body.this-week-page .bottom-actions .week-edit-table-popover label{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    min-height:39px;
+    color:var(--phone-week-deep);
+    font-size:13px;
+  }
+  body.this-week-page .bottom-actions .week-edit-table-popover input[type="checkbox"]{
+    width:18px;
+    height:18px;
+    accent-color:var(--phone-week-accent);
+  }
+  body.this-week-page .bottom-actions .week-edit-table-popover p{
+    margin:10px 0 0;
+    color:#748071;
+    font-size:11px;
+    line-height:1.4;
+  }
+  body.this-week-page .week-table tbody tr[data-day-row] td.week-phone-meal-hidden{
+    display:none!important;
+  }
 }
