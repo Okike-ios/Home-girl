@@ -356,7 +356,7 @@
   endDateInput.setAttribute("aria-label", "Calculated Sunday (read only)");
 
   function dateFromISO(value) {
-    if (!/^\\d{4}-\\d{2}-\\d{2}$/.test(value)) return null;
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return null;
     const [year, month, day] = value.split("-").map(Number);
     const result = new Date(Date.UTC(year, month - 1, day));
     return result.getUTCFullYear() === year && result.getUTCMonth() === month - 1 && result.getUTCDate() === day ? result : null;
