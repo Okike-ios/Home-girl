@@ -34,20 +34,57 @@
     "Fried Rice":{time:"Lunch or Dinner",ingredients:["Rice","Mixed vegetables","Stock","Curry seasoning","Oil"],preparation:"Part-cook rice in seasoned stock, then stir-fry with vegetables and aromatics."},
     "Akara":{time:"Breakfast or Snack",ingredients:["Peeled beans","Onion","Pepper","Salt","Frying oil"],preparation:"Blend beans with aromatics into a thick batter and fry spoonfuls until golden."}
   };
+  const editsKey="hg-menu-demo-edits-v1";
+  let savedEdits={};
+  try{savedEdits=JSON.parse(localStorage.getItem(editsKey)||"{}")||{};}catch{savedEdits={};}
+  for(const dish of samples){
+    const originalName=dish.name;
+    dish.originalName=originalName;
+    const saved=savedEdits[originalName];
+    if(saved&&typeof saved.name==="string"){
+      dish.name=saved.name;
+      dish.category=saved.category||dish.category;
+      dish.serves=Number(saved.serves)||dish.serves;
+      dish.editedTime=saved.bestTime||"";
+      dish.editedRecipe=saved.recipe||"";
+      dish.editedIngredients=Array.isArray(saved.ingredients)?saved.ingredients:null;
+    }
+  }
   const preview=$("menuDishPreview");
   const closePreview=$("menuPreviewClose");
   let previewTrigger=null;
+  let activeDish=null;
+  const editButton=$("menuPreviewEdit");
+  if(editButton){
+    editButton.addEventListener("click",()=>{
+      if(!activeDish)return;
+      const base=previewDetails[activeDish.originalName];
+      const payload={
+        key:activeDish.originalName,
+        name:activeDish.name,
+        category:activeDish.category,
+        bestTime:activeDish.editedTime||base.time,
+        serves:activeDish.serves,
+        recipe:activeDish.editedRecipe||base.preparation,
+        ingredients:activeDish.editedIngredients||base.ingredients.map(name=>({name,quantity:"",unit:""}))
+      };
+      sessionStorage.setItem("hg-menu-demo-edit-payload",JSON.stringify(payload));
+      window.location.href="menu-form.html?demoEdit=1";
+    });
+  }
   function openPreview(dish,trigger){
     if(!preview)return;
     previewTrigger=trigger;
-    const detail=previewDetails[dish.name];
+    activeDish=dish;
+    const detail=previewDetails[dish.originalName];
     $("menuPreviewTitle").textContent=dish.name;
-    $("menuPreviewMeta").textContent=dish.category+" · Serves "+dish.serves+" · "+detail.time;
+    $("menuPreviewMeta").textContent=dish.category+" · Serves "+dish.serves+" · "+(dish.editedTime||detail.time);
     const ingredients=$("menuPreviewIngredients");
-    ingredients.replaceChildren(...detail.ingredients.map(name=>{
+    const ingredientNames=dish.editedIngredients?dish.editedIngredients.map(item=>item.name).filter(Boolean):detail.ingredients;
+    ingredients.replaceChildren(...ingredientNames.map(name=>{
       const item=document.createElement("li");item.textContent=name;return item;
     }));
-    $("menuPreviewPreparation").textContent=detail.preparation;
+    $("menuPreviewPreparation").textContent=dish.editedRecipe||detail.preparation;
     if(typeof preview.showModal==="function")preview.showModal();
     else preview.setAttribute("open","");
     closePreview?.focus();
