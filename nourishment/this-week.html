@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="homegirl-integration.css?v=hg-nourishment-001">
 <link rel="stylesheet" href="hg-sidebar.css?v=hg-nour-006">
 <link rel="stylesheet" href="this-week-desktop-rich.css?v=hg-week-d1">
+<link rel="stylesheet" href="this-week-desktop-workspace.css?v=hg-week-d2">
 </head>
 
 <body class="this-week-page" data-hg-section="week" >
@@ -98,6 +99,15 @@
         </svg>
       </button>
 
+      <div class="week-calendar-control" id="weekCalendarControl">
+        <button type="button" id="weekCalendarButton" class="week-calendar-button" aria-label="Choose weekly planning dates" aria-expanded="false" aria-controls="weekDatePopover">
+          <svg viewBox="0 0 48 48" aria-hidden="true"><rect x="6" y="9" width="36" height="34" rx="5"/><path d="M6 19h36M15 4v10M33 4v10"/></svg>
+          <strong id="weekCalendarNumber">0</strong>
+        </button>
+        <div class="week-date-popover" id="weekDatePopover" hidden role="group" aria-label="Weekly plan dates">
+          <strong>Planning window</strong>
+        </div>
+      </div>
     </nav>
 
     <!-- CENTRE: PAGE TITLE -->
@@ -136,6 +146,12 @@
         </svg>
       </button>
 
+      <button type="button" class="icon-button week-desktop-action" id="weekArchiveReset" aria-label="Archive and reset week" title="Archive and reset">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h18v5H3zM5 9v11h14V9M10 13h4"/></svg>
+      </button>
+      <button type="button" class="icon-button week-desktop-action" id="weekDeleteMeals" aria-label="Delete this week's meals without archiving" title="Delete meals">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v6M14 11v6"/></svg>
+      </button>
     </nav>
 
     <!-- SEARCH PANEL -->
@@ -172,6 +188,10 @@
   </header>
 
   <main class="main-content">
+    <section id="weekDesktopWorkspace" class="week-desktop-workspace" aria-label="Weekly planning details">
+      <div class="week-desktop-intro" id="weekDesktopIntro"></div>
+      <div class="week-desktop-search" id="weekDesktopSearch"></div>
+    </section>
 
     <!-- WEEK NAME AND DATES -->
     <section class="plan-section" aria-label="Weekly meal plan details">
@@ -306,6 +326,7 @@
 
   </main>
 
+<script src="this-week-desktop-workspace.js?v=hg-week-d2" defer></script>
 <script src="hg-sidebar.js?v=hg-nour-002" defer></script>
 <nav class="hg-mobile-bottom-nav" aria-label="Primary navigation">
   <a href="../index.html?view=dashboard"><svg aria-hidden="true"><use href="#i-grid"/></svg><span>Dashboard</span></a>
