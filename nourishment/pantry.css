@@ -385,3 +385,90 @@ body[data-hg-section="pantry"] :is(button,input,select):focus-visible{outline:2p
     width:100%!important;
   }
 }
+
+/* HG-PANTRY-004 — Visibly interactive dropdowns and Bulk Cooking-style phone summaries.
+   Collapsed cards show current stock, quantity needed and the existing
+   shopping checkbox. The same checkbox moves into the expanded form. */
+body[data-hg-section="pantry"] .pantry-field-category select.pantry-input,
+body[data-hg-section="pantry"] .pantry-field-frequency select.pantry-input{
+  appearance:auto!important;
+  -webkit-appearance:menulist!important;
+  cursor:pointer;
+  padding-right:16px!important;
+  color:var(--pantry-deep);
+}
+@media(min-width:760px){
+  body[data-hg-section="pantry"] .pantry-field-category select.pantry-input,
+  body[data-hg-section="pantry"] .pantry-field-frequency select.pantry-input{
+    border:1px solid var(--pantry-line)!important;
+    border-radius:9px!important;
+    background:#fff!important;
+    min-height:39px;
+    padding:7px 10px!important;
+  }
+}
+@media(max-width:759px){
+  body[data-hg-section="pantry"] .pantry-table tr.pantry-item-row:not(.pantry-open){
+    grid-template-columns:minmax(0,1fr) 30px;
+    grid-template-rows:auto auto auto;
+    row-gap:2px;
+    min-height:94px;
+  }
+  body[data-hg-section="pantry"] .pantry-table tr.pantry-item-row:not(.pantry-open) td.pantry-item-name{
+    grid-column:1;
+    grid-row:1/4;
+    min-width:0!important;
+  }
+  body[data-hg-section="pantry"] .pantry-table tr.pantry-item-row:not(.pantry-open) .pantry-item-subtitle,
+  body[data-hg-section="pantry"] .pantry-table tr.pantry-item-row:not(.pantry-open) .pantry-needed-subtitle{
+    display:block!important;
+    padding-left:31px;
+    margin-top:2px;
+    color:var(--pantry-muted);
+    font:500 12px/1.35 Inter,ui-sans-serif,system-ui,sans-serif;
+  }
+  body[data-hg-section="pantry"] .pantry-table tr.pantry-item-row:not(.pantry-open) .pantry-needed-subtitle{
+    color:var(--pantry-deep);
+  }
+  body[data-hg-section="pantry"] .pantry-table tr.pantry-item-row:not(.pantry-open) td.pantry-field-cart{
+    display:grid!important;
+    grid-column:2;
+    grid-row:1/4;
+    align-self:center;
+    justify-self:center;
+    width:30px!important;
+    padding:0!important;
+    border:0!important;
+    background:transparent!important;
+  }
+  body[data-hg-section="pantry"] .pantry-table tr.pantry-item-row:not(.pantry-open) .pantry-check-label{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    width:30px;
+    min-height:32px;
+    margin:0;
+    padding:0;
+    border:0;
+    background:transparent;
+  }
+  body[data-hg-section="pantry"] .pantry-table tr.pantry-item-row:not(.pantry-open) .pantry-check-label input{
+    width:22px;
+    height:22px;
+    flex:none;
+    margin:0;
+  }
+  body[data-hg-section="pantry"] .pantry-table tr.pantry-item-row:not(.pantry-open) .pantry-check-label span{
+    display:none!important;
+  }
+  body[data-hg-section="pantry"] .pantry-table tr.pantry-open .pantry-needed-subtitle{
+    display:none!important;
+  }
+  body[data-hg-section="pantry"] .pantry-table tr.pantry-open .pantry-field-category select.pantry-input,
+  body[data-hg-section="pantry"] .pantry-table tr.pantry-open .pantry-field-frequency select.pantry-input{
+    border:1px solid var(--pantry-line)!important;
+    border-radius:11px!important;
+    background:#fff!important;
+    padding:9px 12px!important;
+  }
+}
