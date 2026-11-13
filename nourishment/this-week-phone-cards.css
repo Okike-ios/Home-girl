@@ -1,0 +1,361 @@
+/* HG-WEEK-M1 — Source-ZIP-inspired phone experience for This Week.
+ * The original seven-row table remains in the document. CSS presents one
+ * selected day's existing meal cells as four cards, without horizontal scroll.
+ * Desktop/laptop appearance is untouched. */
+.week-phone-planner{display:none}
+@media(max-width:759px){
+  body.this-week-page[data-hg-section="week"]{
+    --phone-week-deep:#435a3e;
+    --phone-week-accent:#657b4f;
+    --phone-week-border:#dce3d3;
+    --phone-week-paper:#fffaf5;
+    --phone-week-soft:#edf1e7;
+    color:#4f4038;
+    font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  }
+  body.this-week-page .main-content{
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+    width:calc(100% - 32px);
+    max-width:520px;
+    padding:13px 0 calc(118px + env(safe-area-inset-bottom))!important;
+    margin:0 auto;
+  }
+  body.this-week-page .plan-section{
+    order:0;
+    display:block;
+    margin:0;
+    padding:6px 1px 0;
+    border:0;
+    background:transparent;
+  }
+  body.this-week-page .plan-section .name-prompt{display:none}
+  body.this-week-page .plan-section .name-input-wrap{
+    border:0;
+    background:transparent;
+    box-shadow:none!important;
+  }
+  body.this-week-page .plan-section #weekName,
+  body.this-week-page .plan-section #weekName.has-name{
+    display:block;
+    width:100%;
+    min-height:45px;
+    padding:3px 0 5px;
+    border:0;
+    background:transparent;
+    color:var(--phone-week-deep);
+    font:400 clamp(23px,6vw,29px)/1.2 Georgia,"Times New Roman",serif;
+  }
+  body.this-week-page .plan-section #weekName::placeholder{
+    color:var(--phone-week-deep);
+    opacity:.85;
+    font:italic 400 clamp(22px,5.6vw,27px)/1.2 Georgia,"Times New Roman",serif;
+  }
+  body.this-week-page .plan-section .intro{
+    margin:0 0 2px;
+    padding:0;
+  }
+  body.this-week-page .plan-section .intro p{
+    color:#748071;
+    font:400 12px/1.5 Inter,ui-sans-serif,system-ui,sans-serif;
+  }
+  body.this-week-page .plan-section .date-fields,
+  body.this-week-page .countdown-section,
+  body.this-week-page .week-desktop-workspace{display:none!important}
+  body.this-week-page .week-phone-planner{
+    order:1;
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    width:100%;
+  }
+  body.this-week-page .week-phone-overview{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    padding:12px 14px;
+    border:1px solid var(--phone-week-border);
+    border-radius:17px;
+    background:linear-gradient(140deg,#fffaf5,#f0f4eb);
+    box-shadow:0 5px 15px rgba(67,90,62,.055);
+  }
+  body.this-week-page .week-phone-overview-copy{
+    min-width:0;
+    flex:1;
+  }
+  body.this-week-page .week-phone-overview-copy h2{display:none}
+  body.this-week-page .week-phone-overview-copy p{
+    margin:0;
+    color:var(--phone-week-deep);
+    font:600 12px/1.4 Inter,ui-sans-serif,system-ui,sans-serif;
+  }
+  body.this-week-page .week-phone-date-choice{
+    flex:0 0 auto;
+    display:flex;
+    flex-direction:column;
+    align-items:flex-end;
+    gap:3px;
+    color:var(--phone-week-deep);
+    font:700 10px/1.2 Inter,ui-sans-serif,system-ui,sans-serif;
+  }
+  body.this-week-page .week-phone-date-choice input[type="date"]{
+    display:block;
+    width:116px;
+    min-width:0;
+    height:35px;
+    min-height:35px;
+    padding:5px 7px;
+    border:1px solid var(--phone-week-border);
+    border-radius:10px;
+    background:#fff;
+    color:var(--phone-week-deep);
+    font:500 11px/1.2 Inter,ui-sans-serif,system-ui,sans-serif;
+  }
+  body.this-week-page .week-phone-days{
+    display:grid;
+    grid-template-columns:repeat(7,minmax(0,1fr));
+    gap:4px;
+    width:100%;
+  }
+  body.this-week-page .week-phone-day-button{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:6px;
+    min-height:69px;
+    min-width:0;
+    padding:8px 2px;
+    border:1px solid var(--phone-week-border);
+    border-radius:13px;
+    background:#f0f2e9;
+    color:#56694e;
+    font:600 12px/1.2 Inter,ui-sans-serif,system-ui,sans-serif;
+    cursor:pointer;
+  }
+  body.this-week-page .week-phone-day-button[aria-pressed="true"]{
+    border-color:var(--phone-week-deep);
+    background:var(--phone-week-deep);
+    color:#fff;
+    box-shadow:0 5px 11px rgba(67,90,62,.18);
+  }
+  body.this-week-page .week-phone-day-button:focus-visible{
+    outline:2px solid var(--phone-week-deep);
+    outline-offset:2px;
+  }
+  body.this-week-page .week-phone-day-name{font-size:clamp(9px,2.7vw,12px)}
+  body.this-week-page .week-phone-day-date{
+    font:700 clamp(14px,4.5vw,19px)/1.2 Georgia,"Times New Roman",serif;
+    font-variant-numeric:tabular-nums;
+  }
+  body.this-week-page .week-phone-selected-heading{
+    display:flex;
+    align-items:baseline;
+    flex-wrap:wrap;
+    gap:7px;
+    padding:4px 2px 0;
+  }
+  body.this-week-page .week-phone-selected-heading h3{
+    margin:0;
+    color:var(--phone-week-deep);
+    font:400 23px/1.2 Georgia,"Times New Roman",serif;
+  }
+  body.this-week-page .week-phone-selected-heading span{
+    color:#7b8973;
+    font:500 12px/1.4 Inter,ui-sans-serif,system-ui,sans-serif;
+  }
+  body.this-week-page .week-phone-no-match{
+    margin:0;
+    padding:14px;
+    border:1px dashed var(--phone-week-border);
+    border-radius:13px;
+    color:#718169;
+    font:400 12px/1.5 Inter,ui-sans-serif,system-ui,sans-serif;
+  }
+  body.this-week-page .week-phone-no-match[hidden]{display:none!important}
+
+  /* Existing table cells become one card per meal for the active day. */
+  body.this-week-page .table-section{
+    order:2;
+    min-width:0;
+    padding:0;
+    margin:0;
+    border:0;
+    background:transparent;
+    box-shadow:none;
+  }
+  body.this-week-page .table-toolbar,
+  body.this-week-page .mobile-scroll-note{display:none!important}
+  body.this-week-page .table-scroll{
+    display:block;
+    width:100%;
+    max-width:100%;
+    overflow:visible;
+    border:0;
+    background:transparent;
+  }
+  body.this-week-page .week-table{
+    display:block;
+    width:100%!important;
+    min-width:0!important;
+    max-width:100%!important;
+    table-layout:auto!important;
+    border:0;
+    background:transparent;
+  }
+  body.this-week-page .week-table thead{display:none!important}
+  body.this-week-page .week-table tbody{
+    display:block;
+    width:100%;
+  }
+  body.this-week-page .week-table tbody tr[data-day-row]{
+    display:none!important;
+    width:100%;
+    min-width:0;
+  }
+  body.this-week-page .week-table tbody tr[data-day-row].week-phone-selected:not([hidden]){
+    display:flex!important;
+    flex-direction:column;
+    gap:12px;
+  }
+  body.this-week-page .week-table tbody tr[data-day-row] td,
+  body.this-week-page .week-table tbody tr[data-day-row]:nth-child(even) td,
+  body.this-week-page .week-table tbody tr[data-day-row] td.sticky-date,
+  body.this-week-page .week-table tbody tr[data-day-row] td.sticky-shopping{
+    position:static!important;
+    display:block;
+    width:100%!important;
+    max-width:100%!important;
+    min-width:0!important;
+    padding:15px 14px;
+    margin:0;
+    border:1px solid var(--phone-week-border)!important;
+    border-radius:17px;
+    background:var(--phone-week-paper)!important;
+    box-shadow:0 6px 17px rgba(67,90,62,.065);
+    box-sizing:border-box;
+  }
+  body.this-week-page .week-table tbody tr[data-day-row] td.date-column{
+    display:none!important;
+  }
+  body.this-week-page .week-table tbody td.meal-column::before{
+    content:attr(data-meal);
+    display:block;
+    margin:0 0 11px;
+    color:var(--phone-week-deep);
+    font:400 20px/1.2 Georgia,"Times New Roman",serif;
+    text-transform:capitalize;
+  }
+  body.this-week-page .week-table .component-list{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    min-height:0;
+  }
+  body.this-week-page .week-table .component-item{
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  body.this-week-page .week-table .component-input{
+    flex:1;
+    min-width:0;
+    width:100%;
+    min-height:43px;
+    padding:10px 11px;
+    border:1px solid var(--phone-week-border);
+    border-radius:12px;
+    background:#fff;
+    color:var(--phone-week-deep);
+    font:500 14px/1.3 Inter,ui-sans-serif,system-ui,sans-serif;
+  }
+  body.this-week-page .week-table .component-input::placeholder{
+    color:#97a48f;
+    font-style:normal;
+  }
+  body.this-week-page .week-table .component-input:focus{
+    border-color:#9eaf91;
+    outline:2px solid #e2e9d9;
+    background:#fff;
+  }
+  body.this-week-page .week-table .remove-component{
+    flex:0 0 34px;
+    width:34px;
+    height:36px;
+    min-height:36px;
+    border-radius:10px;
+    color:#789070;
+    opacity:1;
+    font-size:21px;
+  }
+  body.this-week-page .week-table .remove-component:hover{
+    background:var(--phone-week-soft);
+    color:var(--phone-week-deep);
+  }
+  body.this-week-page .week-table .add-component{
+    display:inline-flex;
+    gap:6px;
+    align-items:center;
+    margin:9px 0 0;
+    padding:6px 2px;
+    color:var(--phone-week-deep);
+    font:700 12px/1.3 Inter,ui-sans-serif,system-ui,sans-serif;
+  }
+  body.this-week-page .week-table tbody tr[data-day-row] td.shopping-column{
+    order:-1;
+    display:flex;
+    flex-direction:row;
+    justify-content:space-between;
+    align-items:center;
+    gap:14px;
+    padding:10px 14px;
+    border-radius:14px;
+    background:#edf2e8!important;
+  }
+  body.this-week-page .week-table tbody td.shopping-column::before{
+    content:"Include this day in weekly shopping";
+    color:var(--phone-week-deep);
+    font:650 12px/1.35 Inter,ui-sans-serif,system-ui,sans-serif;
+  }
+  body.this-week-page .week-table .day-shopping-label{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    min-height:0;
+  }
+  body.this-week-page .week-table .shopping-check{
+    width:20px;
+    height:20px;
+    flex:0 0 auto;
+    accent-color:var(--phone-week-accent);
+  }
+  body.this-week-page #emptyMessage{
+    padding:14px;
+    margin-top:7px;
+    border:1px dashed var(--phone-week-border);
+    border-radius:13px;
+    color:#748071;
+    font:400 12px/1.4 Inter,ui-sans-serif,system-ui,sans-serif;
+  }
+  body.this-week-page .bottom-actions{
+    order:3;
+    display:block;
+    padding:2px 0 0;
+    text-align:right;
+  }
+  body.this-week-page .bottom-actions .text-action{
+    min-height:40px;
+    border:1px solid var(--phone-week-border);
+    border-radius:12px;
+    color:var(--phone-week-deep);
+    font:700 12px/1.3 Inter,ui-sans-serif,system-ui,sans-serif;
+  }
+}
+@media(max-width:360px){
+  body.this-week-page .week-phone-overview{padding:11px 9px;gap:5px}
+  body.this-week-page .week-phone-date-choice input[type="date"]{width:107px;font-size:10px}
+  body.this-week-page .week-phone-days{gap:3px}
+  body.this-week-page .week-phone-day-button{border-radius:11px;min-height:63px}
+}
