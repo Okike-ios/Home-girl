@@ -69,6 +69,15 @@
     button.append(arrow, dishLabel);
     dishCell.appendChild(button);
 
+    // An individual removal action belongs to each meal's expanded phone form.
+    // Keep it in the existing shopping cell so the desktop table gains no column.
+    const deleteDish = document.createElement("button");
+    deleteDish.type = "button";
+    deleteDish.className = "meal-dish-delete";
+    deleteDish.textContent = "Delete dish";
+    deleteDish.setAttribute("aria-label", "Delete this dish");
+    row.cells[6].appendChild(deleteDish);
+
     const servingLabel = document.createElement("span");
     servingLabel.className = "meal-card-serving";
     servingCell.appendChild(servingLabel);
@@ -99,8 +108,16 @@
   body.addEventListener("click", event => {
     const row = event.target.closest("[data-dish-row]");
     if (!row || !mobileCards.matches) return;
-    // The checkbox must toggle on its own, never expand/collapse the card.
-    if (event.target.closest(".shopping-check, input, select, textarea, label")) return;
+    const deleteButton = event.target.closest(".meal-dish-delete");
+    if (deleteButton) {
+      const dishName = row.querySelector(".dish-input").value.trim() || "this dish";
+      if (!window.confirm(`Delete "${dishName}" from this cooking cycle? This will not archive it.`)) return;
+      row.remove();
+      applyFilters();
+      return;
+    }
+    // Checkboxes and all form controls work without expanding/collapsing the card.
+    if (event.target.closest(".shopping-check, input, select, textarea, label, button")) return;
     toggleMobileCard(row);
   });
 
@@ -162,7 +179,16 @@
     const td = document.createElement("td"); td.className = "shopping-column sticky-shopping";
     const checkbox = document.createElement("input"); checkbox.type = "checkbox"; checkbox.className = "shopping-check";
     checkbox.setAttribute("aria-label", "Add dish to shopping list"); td.appendChild(checkbox); row.appendChild(td);
-    body.appendChild(row); prepareMobileCard(row); toggleMobileCard(row, true); applyFilters(); row.querySelector(".dish-input").focus();
+    // New dishes always appear first. Clear any active filtering so an empty
+    // new dish cannot disappear immediately after being created.
+    searchInput.value = "";
+    filterSelect.value = "all";
+    body.prepend(row);
+    prepareMobileCard(row);
+    toggleMobileCard(row, true);
+    applyFilters();
+    row.querySelector(".dish-input").focus();
+    if (mobileCards.matches) row.scrollIntoView({block:"nearest"});
   }
   document.getElementById("addDishButton").addEventListener("click", addDish);
   document.getElementById("addDishFromMenu").addEventListener("click", () => { closePanels(); addDish(); });
