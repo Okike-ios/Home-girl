@@ -105,10 +105,26 @@
   }
 
   rows().forEach(prepareMobileCard);
+
+  // The one Select All control moves above the desktop table, and returns
+  // to the header cell on phones. Its checked state and listeners are shared.
+  const masterLabel = master.closest(".master-label");
+  const originalMasterParent = masterLabel.parentNode;
+  const masterMarker = document.createComment("Select all original position");
+  originalMasterParent.insertBefore(masterMarker, masterLabel);
+  const desktopShopSelect = document.getElementById("desktopShopSelect");
+  function positionMasterControl() {
+    if (mobileCards.matches) masterMarker.after(masterLabel);
+    else desktopShopSelect.append(masterLabel);
+  }
+  positionMasterControl();
+  if (mobileCards.addEventListener) mobileCards.addEventListener("change", positionMasterControl);
+  else mobileCards.addListener(positionMasterControl);
+
   body.addEventListener("click", event => {
     const row = event.target.closest("[data-dish-row]");
-    if (!row || !mobileCards.matches) return;
-    const deleteButton = event.target.closest(".meal-dish-delete");
+    if (!row) return;
+    const deleteButton = event.target.closest(".meal-dish-delete, .desktop-dish-delete");
     if (deleteButton) {
       const dishName = row.querySelector(".dish-input").value.trim() || "this dish";
       if (!window.confirm(`Delete "${dishName}" from this cooking cycle? This will not archive it.`)) return;
@@ -116,6 +132,7 @@
       applyFilters();
       return;
     }
+    if (!mobileCards.matches) return;
     // Checkboxes and all form controls work without expanding/collapsing the card.
     if (event.target.closest(".shopping-check, input, select, textarea, label, button")) return;
     toggleMobileCard(row);
@@ -179,6 +196,16 @@
     const td = document.createElement("td"); td.className = "shopping-column sticky-shopping";
     const checkbox = document.createElement("input"); checkbox.type = "checkbox"; checkbox.className = "shopping-check";
     checkbox.setAttribute("aria-label", "Add dish to shopping list"); td.appendChild(checkbox); row.appendChild(td);
+    const deleteCell = document.createElement("td");
+    deleteCell.className = "delete-column";
+    const desktopDelete = document.createElement("button");
+    desktopDelete.type = "button";
+    desktopDelete.className = "desktop-dish-delete";
+    desktopDelete.setAttribute("aria-label", "Delete this dish");
+    desktopDelete.title = "Delete dish";
+    desktopDelete.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v6M14 11v6"/></svg>';
+    deleteCell.appendChild(desktopDelete);
+    row.appendChild(deleteCell);
     // New dishes always appear first. Clear any active filtering so an empty
     // new dish cannot disappear immediately after being created.
     searchInput.value = "";
