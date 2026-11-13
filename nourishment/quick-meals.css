@@ -98,3 +98,117 @@ body[data-hg-section="quick"] .quick-next{align-items:stretch;flex-direction:col
 body[data-hg-section="quick"] .quick-primary{width:100%}
 }
 @media(prefers-reduced-motion:reduce){body[data-hg-section="quick"] *{transition:none!important}}
+
+/* HG-QUICK-002 — Four-column parity with Bulk Cooking, sample-dish interface. */
+body[data-hg-section="quick"] .quick-toolbar{justify-content:space-between;gap:14px}
+body[data-hg-section="quick"] .quick-add{display:inline-flex;align-items:center;gap:10px;min-height:45px;padding:9px 18px;border:1px solid var(--quick-deep);border-radius:13px;background:var(--quick-deep);color:#fff;font:700 13px/1.3 Inter,Arial,sans-serif;cursor:pointer}
+body[data-hg-section="quick"] .quick-add span{font:700 21px/1 Inter,Arial,sans-serif}
+body[data-hg-section="quick"] .quick-select-all{display:flex;align-items:center;justify-content:center;gap:10px;min-height:45px;padding:8px 15px;border:1px solid var(--quick-line);border-radius:13px;background:#fffaf3;color:var(--quick-deep);font:700 12px/1.35 Inter,Arial,sans-serif;cursor:pointer}
+body[data-hg-section="quick"] .quick-select-all input{width:20px;height:20px;accent-color:var(--quick);flex:none}
+body[data-hg-section="quick"] .quick-table{width:100%;min-width:630px;table-layout:fixed}
+body[data-hg-section="quick"] .quick-table th:nth-child(1){width:47%}
+body[data-hg-section="quick"] .quick-table th:nth-child(2){width:19%}
+body[data-hg-section="quick"] .quick-table th:nth-child(3){width:24%;text-align:center}
+body[data-hg-section="quick"] .quick-table th:nth-child(4){width:10%;text-align:center}
+body[data-hg-section="quick"] .quick-table th:nth-child(n+5){display:none}
+body[data-hg-section="quick"] .quick-table th svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+body[data-hg-section="quick"] .quick-table td.quick-pick,body[data-hg-section="quick"] .quick-table td.quick-delete{text-align:center}
+body[data-hg-section="quick"] .quick-table .quick-dish{min-width:0}
+body[data-hg-section="quick"] .quick-name-input{display:block;width:100%;min-width:0;max-width:100%;height:39px;min-height:39px;margin-top:4px;padding:7px 11px;border:1px solid var(--quick-line);border-radius:10px;background:#fff;color:var(--quick-deep);font:600 14px/1.3 Inter,Arial,sans-serif;box-sizing:border-box}
+body[data-hg-section="quick"] .quick-dish-toggle{display:none}
+body[data-hg-section="quick"] .quick-serving-copy{display:none}
+body[data-hg-section="quick"] .quick-servings input{width:85px;height:39px;max-width:100%;text-align:center}
+body[data-hg-section="quick"] .quick-pick-label{justify-content:center}
+body[data-hg-section="quick"] .quick-pick-label span{display:none}
+body[data-hg-section="quick"] .quick-delete-button{display:inline-flex;align-items:center;justify-content:center;min-height:36px;min-width:36px;padding:7px;border:1px solid transparent;border-radius:9px;background:transparent;color:var(--quick-deep);cursor:pointer}
+body[data-hg-section="quick"] .quick-delete-button:hover{border-color:var(--quick-line);background:var(--quick-soft)}
+body[data-hg-section="quick"] .quick-delete-button svg{display:block;width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+body[data-hg-section="quick"] .quick-delete-button span{display:none}
+@media(max-width:759px){
+  body[data-hg-section="quick"] .quick-toolbar{gap:8px;margin-bottom:14px}
+  body[data-hg-section="quick"] .quick-add{min-height:43px;padding:8px 12px;font-size:12px;border-radius:13px;white-space:nowrap}
+  body[data-hg-section="quick"] .quick-select-all{min-height:43px;padding:8px 10px;gap:7px;font-size:11px;max-width:65%}
+  body[data-hg-section="quick"] .quick-select-all input{width:19px;height:19px}
+  body[data-hg-section="quick"] .quick-list-scroll{width:100%;overflow:visible}
+  body[data-hg-section="quick"] .quick-table{min-width:0!important;width:100%!important;display:block}
+  body[data-hg-section="quick"] .quick-table tbody{display:block}
+  body[data-hg-section="quick"] .quick-table tr.quick-dish-row{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) 30px;
+    grid-template-rows:auto auto;
+    align-items:center;
+    gap:4px 11px;
+    padding:13px 15px;
+    border-radius:18px;
+    min-height:75px;
+  }
+  body[data-hg-section="quick"] .quick-table tr.quick-dish-row td,
+  body[data-hg-section="quick"] .quick-table tr.quick-dish-row:nth-child(even) td,
+  body[data-hg-section="quick"] .quick-table tr.quick-selected td{
+    width:auto!important;min-width:0!important;
+    padding:0!important;margin:0;
+    border:0!important;background:transparent!important;
+  }
+  body[data-hg-section="quick"] .quick-table .quick-dish{
+    grid-column:1;
+    grid-row:1;
+    min-width:0;
+  }
+  body[data-hg-section="quick"] .quick-table .quick-dish-toggle{
+    display:flex;
+    width:100%;
+    gap:9px;
+    align-items:center;
+    justify-content:flex-start;
+    color:var(--quick-deep);
+    font:700 19px/1.25 Georgia,serif;
+    cursor:pointer;
+  }
+  body[data-hg-section="quick"] .quick-dish .quick-arrow{display:inline-block;flex:none;width:23px;color:#b89859;font:700 28px/1 Inter,Arial,sans-serif;text-align:center}
+  body[data-hg-section="quick"] .quick-dish .quick-name-input{display:none}
+  body[data-hg-section="quick"] .quick-table .quick-servings{grid-column:1;grid-row:2;padding-left:32px!important}
+  body[data-hg-section="quick"] .quick-table .quick-serving-copy{display:inline;color:#95764b;font:600 12px/1.3 Inter,Arial,sans-serif}
+  body[data-hg-section="quick"] .quick-table .quick-servings input{display:none}
+  body[data-hg-section="quick"] .quick-table .quick-pick{grid-column:2;grid-row:1/3}
+  body[data-hg-section="quick"] .quick-pick-label{justify-content:center}
+  body[data-hg-section="quick"] .quick-pick input{width:22px;height:22px}
+  body[data-hg-section="quick"] .quick-table .quick-delete{display:none!important}
+  body[data-hg-section="quick"] .quick-table .quick-open{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:12px 10px;
+    padding:18px 15px 15px;
+  }
+  body[data-hg-section="quick"] .quick-table .quick-open .quick-dish{
+    grid-column:1/-1;grid-row:auto;
+    border-bottom:1px solid var(--quick-line)!important;
+    padding-bottom:12px!important;
+  }
+  body[data-hg-section="quick"] .quick-open .quick-dish .quick-name-input{display:block!important;width:100%;min-height:42px;height:42px}
+  body[data-hg-section="quick"] .quick-open .quick-dish .quick-dish-name{display:none}
+  body[data-hg-section="quick"] .quick-open .quick-dish .quick-dish-toggle{justify-content:flex-start;margin-bottom:8px}
+  body[data-hg-section="quick"] .quick-open .quick-servings{grid-column:1/-1;grid-row:auto;padding:0!important}
+  body[data-hg-section="quick"] .quick-open .quick-servings::before{content:"Serving";display:block;margin-bottom:6px;color:#9b865e;font:750 10px/1.3 Inter,Arial,sans-serif;text-transform:uppercase;letter-spacing:.07em}
+  body[data-hg-section="quick"] .quick-open .quick-serving-copy{display:none}
+  body[data-hg-section="quick"] .quick-open .quick-servings input{display:block!important;width:100%!important;max-width:100%;height:42px;text-align:left}
+  body[data-hg-section="quick"] .quick-open .quick-pick{
+    grid-column:1/-1;grid-row:auto;
+    padding-top:12px!important;
+    border-top:1px solid var(--quick-line)!important;
+  }
+  body[data-hg-section="quick"] .quick-open .quick-pick-label{justify-content:space-between}
+  body[data-hg-section="quick"] .quick-open .quick-pick-label span{display:inline;font-size:12px;color:var(--quick-deep)}
+  body[data-hg-section="quick"] .quick-table .quick-open .quick-delete{
+    display:flex!important;
+    grid-column:1/-1;
+    grid-row:auto;
+    justify-content:flex-end;
+    padding-top:5px!important;
+  }
+  body[data-hg-section="quick"] .quick-open .quick-delete-button{
+    border:1px solid var(--quick-line);background:#fff9ef;
+    padding:9px 13px;border-radius:11px;
+    color:var(--quick-deep);font-size:12px;font-weight:700;gap:8px;
+  }
+  body[data-hg-section="quick"] .quick-open .quick-delete-button span{display:inline}
+  body[data-hg-section="quick"] .quick-table .quick-open .quick-arrow{transform:rotate(180deg)}
+}
