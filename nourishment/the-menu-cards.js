@@ -66,7 +66,7 @@
     deleteButton.addEventListener("click",()=>{
       if(!activeDish)return;
       const dish=activeDish;
-      if(!window.confirm('Delete "'+dish.name+'" from this demo Menu?\\n\\nThis removes only the placeholder dish in this browser.'))return;
+      if(!window.confirm('Delete "'+dish.name+'" from this demo Menu?\n\nThis removes only the placeholder dish in this browser.'))return;
       const next=[...new Set([...deletedDishes,dish.originalName])];
       try{
         localStorage.setItem(deletedKey,JSON.stringify(next));
