@@ -346,63 +346,80 @@
     closePanels();
   });
 
-  /* COUNTDOWN */
+  /* HG-WEEK-002 — Fixed ISO Monday-Sunday planning windows.
+     An arbitrary selected date maps to its Monday and following Sunday.
+     ISO week number uses Thursday's year, including year boundaries. */
+  const chosenWeekDate = document.getElementById("weekDateChoice");
+  const isoWeekYear = document.getElementById("weekCalendarYear");
+  const endDateInput = endDate;
+  endDateInput.readOnly = true;
+  endDateInput.setAttribute("aria-label", "Calculated Sunday (read only)");
 
-  function updateCountdown() {
-    if (!endDate.value) {
-      number.textContent = "—";
-      countdownLabel.textContent = "DAYS LEFT";
-      return;
-    }
+  function dateFromISO(value) {
+    if (!/^\\d{4}-\\d{2}-\\d{2}$/.test(value)) return null;
+    const [year, month, day] = value.split("-").map(Number);
+    const result = new Date(Date.UTC(year, month - 1, day));
+    return result.getUTCFullYear() === year && result.getUTCMonth() === month - 1 && result.getUTCDate() === day ? result : null;
+  }
+  function dateString(date) {
+    return date.toISOString().slice(0, 10);
+  }
+  function weekForDate(value) {
+    const selected = dateFromISO(value);
+    if (!selected) return null;
+    const monday = new Date(selected);
+    monday.setUTCDate(monday.getUTCDate() - ((monday.getUTCDay() + 6) % 7));
+    const sunday = new Date(monday);
+    sunday.setUTCDate(sunday.getUTCDate() + 6);
+    const thursday = new Date(monday);
+    thursday.setUTCDate(thursday.getUTCDate() + 3);
+    const weekYear = thursday.getUTCFullYear();
+    const firstThursday = new Date(Date.UTC(weekYear, 0, 4));
+    firstThursday.setUTCDate(firstThursday.getUTCDate() - ((firstThursday.getUTCDay() + 6) % 7));
+    const week = Math.round((monday.getTime() - firstThursday.getTime()) / 604800000) + 1;
+    return { monday: dateString(monday), sunday: dateString(sunday), week, year: weekYear };
+  }
 
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-
-    const target = new Date(`${endDate.value}T00:00:00`);
-    const daysLeft = Math.ceil((target - today) / 86400000);
-
-    if (daysLeft < 0) {
-      number.textContent = "0";
-      countdownLabel.textContent = "DAYS OVER";
+  function syncWeekNumber() {
+    const week = weekForDate(startDate.value);
+    number.textContent = week ? String(week.week) : "0";
+    countdownLabel.textContent = week ? `ISO WEEK ${week.year}` : "ISO WEEK";
+    if (isoWeekYear) isoWeekYear.textContent = week ? String(week.year) : "";
+  }
+  function chooseWeek(value) {
+    const week = weekForDate(value);
+    if (!week) {
+      startDate.value = "";
+      endDate.value = "";
+      if (chosenWeekDate) chosenWeekDate.value = "";
     } else {
-      number.textContent = String(daysLeft);
-      countdownLabel.textContent =
-        daysLeft === 1 ? "DAY LEFT" : "DAYS LEFT";
+      startDate.value = week.monday;
+      endDate.value = week.sunday;
+      if (chosenWeekDate) chosenWeekDate.value = value;
     }
+    updateDayDates();
+    syncWeekNumber();
+    // Inform the desktop calendar display of programmatic changes.
+    startDate.dispatchEvent(new Event("weekwindowchange", { bubbles: true }));
   }
 
   startDate.addEventListener("change", () => {
-    if (startDate.value) {
-      endDate.min = startDate.value;
-
-      if (endDate.value && endDate.value < startDate.value) {
-        endDate.value = "";
-      }
-
-      startDate.max = endDate.value || "";
-    } else {
-      endDate.removeAttribute("min");
-      startDate.removeAttribute("max");
-    }
-
-    updateDayDates();
-    updateCountdown();
+    // On narrow screens this remains the date selector; the selected date
+    // is normalized to Monday before calculating the seven day labels.
+    chooseWeek(startDate.value);
   });
-
+  if (chosenWeekDate) {
+    chosenWeekDate.addEventListener("change", () => chooseWeek(chosenWeekDate.value));
+  }
+  // No direct To editing: Sunday is always computed.
   endDate.addEventListener("change", () => {
-    if (endDate.value) {
-      startDate.max = endDate.value;
-
-      if (startDate.value && startDate.value > endDate.value) {
-        startDate.value = "";
-      }
-    } else {
-      startDate.removeAttribute("max");
-    }
-
-    updateDayDates();
-    updateCountdown();
+    if (startDate.value) chooseWeek(startDate.value);
+    else endDate.value = "";
   });
+  // Existing reset logic calls updateCountdown; preserve the function name.
+  function updateCountdown() {
+    syncWeekNumber();
+  }
 
   /* ARCHIVE PLACEHOLDER */
 
@@ -429,6 +446,7 @@
 
     startDate.value = "";
     endDate.value = "";
+    if (chosenWeekDate) chosenWeekDate.value = "";
     startDate.removeAttribute("max");
     endDate.removeAttribute("min");
 
