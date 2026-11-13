@@ -1,0 +1,216 @@
+/* HG-WEEK-D2 — match Bulk Cooking's approved desktop workspace.
+   All rules are desktop-only and scoped above the existing week meal table. */
+.week-desktop-workspace,.week-calendar-control,.week-desktop-action{display:none!important}
+@media(min-width:760px){
+  body.this-week-page > .app-header{
+    background:transparent!important;
+    background-image:none!important;
+    border:0!important;
+    border-bottom:0!important;
+    border-radius:0!important;
+    box-shadow:none!important;
+    outline:none!important;
+    padding:13px 0 12px!important;
+    min-height:78px;
+  }
+  body.this-week-page .header-side:first-child{gap:10px}
+  body.this-week-page .header-side.right #moreToggle{
+    display:none!important;
+  }
+  body.this-week-page .header-side.right .week-desktop-action{
+    display:inline-grid!important;
+    place-items:center;
+    width:45px;height:45px;
+    padding:0;
+    flex:0 0 45px;
+    border:1px solid #d8e0ce;
+    border-radius:14px;
+    background:rgba(255,250,245,.6);
+    box-shadow:none;
+  }
+  body.this-week-page .header-side.right .week-desktop-action svg{
+    width:23px;height:23px;
+    stroke:currentColor;fill:none;
+    stroke-width:1.8;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+  }
+  body.this-week-page .header-side .icon-button[aria-label="Back to Nourishment OS"]{
+    display:inline-grid;
+    place-items:center;
+    background:rgba(255,250,245,.6);
+    border:1px solid #d8e0ce;
+  }
+  body.this-week-page .week-calendar-control{
+    display:block!important;
+    position:relative;
+    flex:none;
+  }
+  body.this-week-page .week-calendar-button{
+    position:relative;
+    display:grid;
+    place-items:center;
+    width:47px;height:51px;
+    padding:0;
+    border:0;
+    background:transparent;
+    color:var(--week-deep);
+    cursor:pointer;
+  }
+  body.this-week-page .week-calendar-button svg{
+    position:absolute;inset:0;
+    width:100%;height:100%;
+    stroke:var(--week-deep);
+    fill:#e9eee2;
+    stroke-width:2.3;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+  }
+  body.this-week-page .week-calendar-button strong{
+    position:relative;
+    padding-top:8px;
+    font:800 18px/1 Inter,ui-sans-serif,system-ui,sans-serif;
+    font-variant-numeric:tabular-nums;
+  }
+  body.this-week-page .week-calendar-button:focus-visible{
+    outline:2px solid var(--week-accent);
+    outline-offset:3px;border-radius:7px;
+  }
+  body.this-week-page .week-date-popover{
+    position:absolute;z-index:70;
+    top:calc(100% + 9px);left:0;
+    width:350px;
+    padding:18px;
+    border:1px solid var(--week-line);
+    border-radius:18px;
+    background:#fffaf5;
+    box-shadow:0 12px 32px rgba(68,82,58,.15);
+    font-family:Inter,ui-sans-serif,system-ui,sans-serif;
+  }
+  body.this-week-page .week-date-popover[hidden]{display:none!important}
+  body.this-week-page .week-date-popover > strong{
+    display:block;
+    margin:0 0 12px;
+    color:var(--week-deep);
+    font:700 14px/1.4 Inter,ui-sans-serif,system-ui,sans-serif;
+  }
+  body.this-week-page .week-date-popover .date-fields{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+    gap:12px;
+    max-width:none;
+    align-items:end;
+  }
+  body.this-week-page .week-date-popover .date-arrow{display:none}
+  body.this-week-page .week-date-popover .date-field input{
+    width:100%;
+    padding:8px 4px;
+    font-size:12px;
+  }
+  body.this-week-page .plan-section,
+  body.this-week-page .countdown-section{
+    display:none!important;
+  }
+  body.this-week-page .main-content{
+    gap:16px;
+    padding-top:15px!important;
+  }
+  body.this-week-page .week-desktop-workspace{
+    display:flex!important;
+    flex-direction:column;
+    align-items:stretch;
+    gap:20px;
+    width:100%;
+    padding:4px 2px 1px;
+    background:transparent;
+    border:0;
+  }
+  body.this-week-page .week-desktop-intro{
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+    min-width:0;
+  }
+  body.this-week-page .week-desktop-intro .name-prompt{display:none!important}
+  body.this-week-page .week-desktop-intro .name-input-wrap{
+    border:0;
+    background:transparent;
+    box-shadow:none!important;
+  }
+  body.this-week-page .week-desktop-intro #weekName,
+  body.this-week-page .week-desktop-intro #weekName.has-name{
+    display:block;
+    width:100%;
+    min-width:0;
+    min-height:48px;
+    padding:4px 0 6px;
+    border:0;
+    background:transparent;
+    color:var(--week-deep);
+    font:400 clamp(25px,2.8vw,34px)/1.25 Georgia,"Times New Roman",serif;
+  }
+  body.this-week-page .week-desktop-intro #weekName::placeholder{
+    color:var(--week-deep);
+    opacity:.8;
+    font:italic 400 clamp(24px,2.4vw,31px)/1.25 Georgia,"Times New Roman",serif;
+  }
+  body.this-week-page .week-desktop-intro .intro{
+    display:block;
+    padding:0;margin:0;
+    text-align:left;
+  }
+  body.this-week-page .week-desktop-intro .intro p{
+    max-width:760px;
+    color:#748071;
+    margin:0;
+    font:400 14px/1.55 Inter,ui-sans-serif,system-ui,sans-serif;
+  }
+  body.this-week-page .week-desktop-search{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) 46px 46px;
+    align-items:center;
+    gap:10px;
+    width:100%;
+    max-width:730px;
+  }
+  body.this-week-page .week-desktop-search #mealSearch{
+    display:block;
+    width:100%;
+    min-width:0;
+    min-height:46px;
+    padding:9px 15px;
+    border:1px solid var(--week-line);
+    border-radius:13px;
+    background:#fffaf5;
+    color:var(--week-deep);
+    font:500 14px/1.35 Inter,ui-sans-serif,system-ui,sans-serif;
+  }
+  body.this-week-page .week-desktop-search #mealSearch::placeholder{color:#899b81}
+  body.this-week-page .week-desktop-search #searchToggle,
+  body.this-week-page .week-desktop-search #filterToggle{
+    display:inline-grid!important;
+    place-items:center;
+    width:46px;height:46px;
+    padding:0;
+    flex:none;
+    border:1px solid var(--week-line);
+    border-radius:13px;
+    background:#fffaf5;
+    color:var(--week-deep);
+    box-shadow:none;
+  }
+  body.this-week-page .week-desktop-search svg{
+    width:21px;height:21px;
+  }
+  body.this-week-page .filter-panel{
+    position:fixed;
+    z-index:80;
+    max-width:min(340px,calc(100vw - 32px));
+    right:16px;
+  }
+  body.this-week-page .filter-panel[hidden],
+  body.this-week-page .search-panel[hidden]{display:none!important}
+}
+@media(min-width:760px) and (max-width:900px){
+  body.this-week-page .week-desktop-search{max-width:100%}
+}
