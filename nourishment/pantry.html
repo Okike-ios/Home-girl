@@ -8,8 +8,8 @@
 <link rel="stylesheet" href="cook-ahead.css">
 <link rel="stylesheet" href="homegirl-integration.css?v=hg-nourishment-001">
 <link rel="stylesheet" href="hg-sidebar.css?v=hg-nour-006">
-<link rel="stylesheet" href="pantry.css?v=hg-pantry-001">
-<script src="pantry.js?v=hg-pantry-001" defer></script>
+<link rel="stylesheet" href="pantry.css?v=hg-pantry-002">
+<script src="pantry.js?v=hg-pantry-002" defer></script>
 <script src="hg-sidebar.js?v=hg-nour-002" defer></script>
 </head>
 <body data-hg-section="pantry">
@@ -84,26 +84,26 @@
 <label for="pantryCategoryFilter">Category</label>
 <select id="pantryCategoryFilter"><option value="all">All categories</option></select>
 <label for="pantryStockFilter">Stock</label>
-<select id="pantryStockFilter"><option value="all">All items</option><option value="low">Needs replenishing</option><option value="in-stock">At or above standard</option><option value="cart">Marked for Cart</option></select>
+<select id="pantryStockFilter"><option value="all">All items</option><option value="low">Needs replenishing</option><option value="in-stock">At or above standard</option><option value="cart">Marked for shopping</option></select>
 <button type="button" id="pantryClearFilters" class="pantry-text-button">Clear filters</button>
 </div>
 </section>
 <section class="pantry-workspace" aria-label="Master Food Inventory">
 <div class="pantry-toolbar">
 <button id="pantryAddItem" class="pantry-primary" type="button"><span aria-hidden="true">+</span> Add item</button>
-<label class="pantry-select-all"><input type="checkbox" id="pantrySelectAll"><span>Select all</span></label>
+
 </div>
 <div class="pantry-table-scroll" tabindex="0" aria-label="Scrollable pantry inventory table">
 <table class="pantry-table">
 <thead><tr>
-<th scope="col">Select</th><th scope="col">Item</th><th scope="col">Category</th><th scope="col">Purchase frequency</th><th scope="col">Standard stock</th><th scope="col">Current stock</th><th scope="col">Unit</th><th scope="col">Last purchase</th><th scope="col">Quantity needed</th><th scope="col">Purchase quantity</th><th scope="col">Supplier</th><th scope="col">Add to Cart</th><th scope="col">Last updated</th>
+<th scope="col" class="pantry-sticky-item">Item</th><th scope="col">Category</th><th scope="col">Purchase frequency</th><th scope="col">Standard stock</th><th scope="col">Current stock</th><th scope="col">Unit</th><th scope="col">Last purchase</th><th scope="col">Quantity needed</th><th scope="col">Purchase quantity</th><th scope="col">Supplier</th><th scope="col">Last updated</th><th scope="col" class="pantry-sticky-shopping">Add to shopping list</th><th scope="col" class="pantry-sticky-delete" aria-label="Delete item" title="Delete item"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v6M14 11v6"/></svg></th>
 </tr></thead>
 <tbody id="pantryRows"></tbody>
 </table>
 </div>
 <p class="pantry-status" id="pantryStatus" role="status" aria-live="polite"></p>
 </section>
-<p class="pantry-disclaimer">Interface prototype: sample inventory only. Updates, selection, and Cart indicators are not saved to your account or sent to Shopping List, Cart, or Pantry records.</p>
+<p class="pantry-disclaimer">Interface prototype: sample inventory only. Edits and shopping-list selections are local to this sample prototype; no inventory or shopping records are saved.</p>
 </main>
 <nav class="hg-mobile-bottom-nav" aria-label="Primary navigation">
   <a href="../index.html?view=dashboard"><svg aria-hidden="true"><use href="#i-grid"/></svg><span>Dashboard</span></a>
