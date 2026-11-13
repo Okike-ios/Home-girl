@@ -212,3 +212,5 @@ body[data-hg-section="quick"] .quick-delete-button span{display:none}
   body[data-hg-section="quick"] .quick-open .quick-delete-button span{display:inline}
   body[data-hg-section="quick"] .quick-table .quick-open .quick-arrow{transform:rotate(180deg)}
 }
+
+body[data-hg-section="quick"] .quick-demo-note{margin:-7px 0 13px;color:#917b58;font:500 11px/1.4 Inter,Arial,sans-serif}
