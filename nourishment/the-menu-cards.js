@@ -21,6 +21,47 @@
     {name:"Fried Rice",category:"Rice Dishes",serves:4},
     {name:"Akara",category:"Breakfast",serves:3}
   ];
+  // Demonstration-only ingredients and descriptions, not user records.
+  const previewDetails={
+    "Egusi Soup":{time:"Lunch or Dinner",ingredients:["Ground egusi","Leafy vegetables","Palm oil","Stock or water","Seasoning"],preparation:"Prepare a seasoned stock, stir in egusi and simmer gently, then add vegetables near the end."},
+    "Jollof Rice":{time:"Lunch or Dinner",ingredients:["Rice","Tomatoes and pepper","Onion","Oil","Stock and seasonings"],preparation:"Cook a seasoned tomato base, add rice and stock, then steam until the rice is tender."},
+    "Tomato Stew":{time:"Lunch or Dinner",ingredients:["Tomatoes","Red bell pepper","Onions","Oil","Salt and seasoning"],preparation:"Blend and reduce the vegetables, then fry in oil and season to preference."},
+    "Chicken Curry":{time:"Lunch or Dinner",ingredients:["Chicken","Curry seasoning","Onion","Mixed vegetables","Stock"],preparation:"Season the chicken, simmer with vegetables and stock, and adjust the curry sauce to taste."},
+    "Beans & Plantain":{time:"Lunch or Dinner",ingredients:["Beans","Plantain","Onion","Palm oil","Seasoning"],preparation:"Cook the beans until tender, season, and serve with fried or roasted plantain."},
+    "Moi Moi":{time:"Breakfast or Side",ingredients:["Peeled beans","Red pepper","Onion","Oil","Seasoning"],preparation:"Blend the beans with pepper and aromatics, pour into containers and steam until set."},
+    "Yam & Egg Sauce":{time:"Breakfast",ingredients:["Yam","Eggs","Tomatoes","Onion","Pepper"],preparation:"Boil yam until tender and serve alongside eggs cooked with a seasoned tomato-pepper sauce."},
+    "Pepper Soup":{time:"Lunch or Dinner",ingredients:["Protein of choice","Pepper soup spices","Fresh pepper","Scent leaves","Stock or water"],preparation:"Simmer the chosen protein with spices and stock until cooked, then finish with herbs."},
+    "Fried Rice":{time:"Lunch or Dinner",ingredients:["Rice","Mixed vegetables","Stock","Curry seasoning","Oil"],preparation:"Part-cook rice in seasoned stock, then stir-fry with vegetables and aromatics."},
+    "Akara":{time:"Breakfast or Snack",ingredients:["Peeled beans","Onion","Pepper","Salt","Frying oil"],preparation:"Blend beans with aromatics into a thick batter and fry spoonfuls until golden."}
+  };
+  const preview=$("menuDishPreview");
+  const closePreview=$("menuPreviewClose");
+  let previewTrigger=null;
+  function openPreview(dish,trigger){
+    if(!preview)return;
+    previewTrigger=trigger;
+    const detail=previewDetails[dish.name];
+    $("menuPreviewTitle").textContent=dish.name;
+    $("menuPreviewMeta").textContent=dish.category+" · Serves "+dish.serves+" · "+detail.time;
+    const ingredients=$("menuPreviewIngredients");
+    ingredients.replaceChildren(...detail.ingredients.map(name=>{
+      const item=document.createElement("li");item.textContent=name;return item;
+    }));
+    $("menuPreviewPreparation").textContent=detail.preparation;
+    if(typeof preview.showModal==="function")preview.showModal();
+    else preview.setAttribute("open","");
+    closePreview?.focus();
+  }
+  if(preview&&closePreview){
+    closePreview.addEventListener("click",()=>preview.close());
+    preview.addEventListener("click",event=>{
+      if(event.target===preview)preview.close();
+    });
+    preview.addEventListener("close",()=>{
+      previewTrigger?.focus();
+      previewTrigger=null;
+    });
+  }
   const dishIcon='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 13h18M5 13c0 5 3 8 7 8s7-3 7-8M8 9c-1.5-2 0-4 1.5-5M13 10c-1.5-2 0-4 1.5-5M17 9c-1.5-2 0-4 1.5-5"/></svg>';
   for(const name of [...new Set(samples.map(d=>d.category))].sort()){
     category.add(new Option(name,name));
@@ -36,6 +77,16 @@
     for(const dish of visible){
       const row=document.createElement("article");
       row.className="menu-card";
+      row.tabIndex=0;
+      row.setAttribute("role","button");
+      row.setAttribute("aria-label","Preview "+dish.name+" information");
+      row.addEventListener("click",()=>openPreview(dish,row));
+      row.addEventListener("keydown",event=>{
+        if(event.key==="Enter"||event.key===" "){
+          event.preventDefault();
+          openPreview(dish,row);
+        }
+      });
       const icon=document.createElement("div");
       icon.className="menu-card-visual";
       icon.innerHTML=dishIcon;
