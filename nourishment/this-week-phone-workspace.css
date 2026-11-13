@@ -291,3 +291,9 @@
   body.this-week-page .week-phone-search #searchToggle,
   body.this-week-page .week-phone-search #filterToggle{width:39px;height:39px}
 }
+
+/* HG-WEEK-M3: The redundant bottom Reset this week action is hidden on phones.
+   Desktop controls and archive/delete actions are unchanged. */
+@media(max-width:759px){
+  body.this-week-page .bottom-actions{display:none!important}
+}
