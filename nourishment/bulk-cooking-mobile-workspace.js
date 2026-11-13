@@ -59,34 +59,24 @@
   one("#startDate").addEventListener("change", syncCalendar);
   one("#endDate").addEventListener("change", syncCalendar);
 
-  function arrangeMobile() {
-    if (mobile.matches) {
-      intro.insertBefore(nameField, originalTitle);
-      originalName.placeholder = "Give this cycle a name";
-      originalName.setAttribute("aria-label", "Cycle name");
-      searchBar.append(searchInput, searchButton, filterButton);
-      datePopup.append(dates);
-      mobileHeaderLeft.append(calendarBox);
-      if (!searchPanel.hidden) searchPanel.hidden = true;
-      searchButton.setAttribute("aria-expanded", "false");
-      showDatePopover(false);
-    } else {
-      nodes.forEach(returnToOriginal);
-      originalName.placeholder = desktopNamePlaceholder;
-      originalName.setAttribute("aria-label", "Bulk Cooking name");
-      filterPanel.hidden = true;
-      filterButton.setAttribute("aria-expanded", "false");
-      showDatePopover(false);
-    }
+  // The same cycle controls power phone and laptop layouts. Move the actual
+  // inputs, never copies, into the unified workspace at either screen size.
+  function arrangeWorkspace() {
+    intro.insertBefore(nameField, originalTitle);
+    originalName.placeholder = "Give this cycle a name";
+    originalName.setAttribute("aria-label", "Cycle name");
+    searchBar.append(searchInput, searchButton, filterButton);
+    datePopup.append(dates);
+    mobileHeaderLeft.append(calendarBox);
+    searchPanel.hidden = true;
+    searchButton.setAttribute("aria-expanded", "false");
+    showDatePopover(false);
     syncCalendar();
   }
-  arrangeMobile();
-  if (mobile.addEventListener) mobile.addEventListener("change", arrangeMobile);
-  else mobile.addListener(arrangeMobile);
+  arrangeWorkspace();
 
   // In phone layout, Search is an always-visible field; the icon focuses it.
   searchButton.addEventListener("click", event => {
-    if (!mobile.matches) return;
     event.stopImmediatePropagation();
     event.preventDefault();
     searchPanel.hidden = true;
@@ -97,23 +87,21 @@
   // The original filter-popover handler remains intact; prevent the existing
   // document-level click-away handler closing it in the same click.
   filterButton.addEventListener("click", event => {
-    if (!mobile.matches) return;
     event.stopPropagation();
     const bounds = filterButton.getBoundingClientRect();
     filterPanel.style.top = Math.min(window.innerHeight - 90, bounds.bottom + 8) + "px";
     filterPanel.style.right = Math.max(12, window.innerWidth - bounds.right) + "px";
   });
   calendarButton.addEventListener("click", event => {
-    if (!mobile.matches) return;
     event.stopPropagation();
     showDatePopover(datePopup.hidden);
   });
   datePopup.addEventListener("click", event => event.stopPropagation());
   document.addEventListener("click", event => {
-    if (mobile.matches && !calendarBox.contains(event.target)) showDatePopover(false);
+    if (!calendarBox.contains(event.target)) showDatePopover(false);
   });
   document.addEventListener("keydown", event => {
-    if (event.key === "Escape" && mobile.matches && !datePopup.hidden) {
+    if (event.key === "Escape" && !datePopup.hidden) {
       showDatePopover(false);
       calendarButton.focus();
     }
@@ -125,7 +113,7 @@
     window.alert("Archive & Reset is not available yet. Bulk Cooking cycles are not currently saved to History, so your dishes have NOT been cleared.");
   });
   deleteButton.addEventListener("click", () => {
-    if (!mobile.matches || !tableBody.querySelector("[data-dish-row]")) return;
+    if (!tableBody.querySelector("[data-dish-row]")) return;
     if (!window.confirm("Delete all dishes in this cycle without archiving? This cannot be undone.")) return;
     tableBody.replaceChildren();
     searchInput.value = "";
