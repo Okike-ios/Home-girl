@@ -28,6 +28,8 @@
   const searchPanel = one("#searchPanel");
   const originalName = one("#planName");
   const originalTitle = one(".bulk-intro-copy h1");
+  const mobileHeaderLeft = one(".app-header .header-side");
+  const desktopNamePlaceholder = originalName.placeholder;
   const nodes = [nameField, dates, searchInput, searchButton, filterButton, calendarBox];
   if (nodes.some(node => !node) || !datePopup || !intro || !searchBar || !bulkIntro) return;
 
@@ -60,14 +62,18 @@
   function arrangeMobile() {
     if (mobile.matches) {
       intro.insertBefore(nameField, originalTitle);
+      originalName.placeholder = "Give this cycle a name";
+      originalName.setAttribute("aria-label", "Cycle name");
       searchBar.append(searchInput, searchButton, filterButton);
       datePopup.append(dates);
-      bulkIntro.append(calendarBox);
+      mobileHeaderLeft.append(calendarBox);
       if (!searchPanel.hidden) searchPanel.hidden = true;
       searchButton.setAttribute("aria-expanded", "false");
       showDatePopover(false);
     } else {
       nodes.forEach(returnToOriginal);
+      originalName.placeholder = desktopNamePlaceholder;
+      originalName.setAttribute("aria-label", "Bulk Cooking name");
       filterPanel.hidden = true;
       filterButton.setAttribute("aria-expanded", "false");
       showDatePopover(false);
