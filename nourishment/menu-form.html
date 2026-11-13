@@ -4,15 +4,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Add New Dish | My Home Girl</title>
+  <title>Add New Dish | Home Girl</title>
+<meta name="theme-color" content="#526c8a">
 
   <link rel="stylesheet" href="menu-form.css">
+<link rel="stylesheet" href="cook-ahead.css">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Allura&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="homegirl-integration.css?v=hg-nourishment-001">
 <link rel="stylesheet" href="hg-sidebar.css?v=hg-nour-006">
+<link rel="stylesheet" href="menu-form-refined.css?v=hg-menu-form-003">
 </head>
 
 <body data-hg-section="form" >
@@ -69,25 +72,13 @@
   <div class="ambient ambient-three">—</div>
 
 
-  <!-- Header -->
-  <header class="site-header">
-
-    <a href="the-menu.html" class="back-link">
-      <span>←</span>
-      <span>The Menu</span>
-    </a>
-
-    <div class="brand">
-      My Home Girl
-    </div>
-
-    <div class="header-title">
-      ADD NEW DISH
-    </div>
-
-  </header>
-
-
+<header class="app-header">
+<nav class="header-side" aria-label="Page navigation">
+<a class="icon-button menu-form-back" href="the-menu.html" aria-label="Back to The Menu" title="Back to The Menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5m6-6-6 6 6 6"/></svg></a>
+</nav>
+<h1 class="header-title">Add New Dish</h1>
+<nav class="header-side right" aria-label="Page actions"></nav>
+</header>
   <main>
 
     <!-- Introduction -->
@@ -123,43 +114,6 @@
             <h2>The Dish</h2>
             <p>Start with the dish itself.</p>
           </div>
-        </div>
-
-
-        <!-- Image -->
-        <div class="field image-field">
-
-          <label>Dish Image</label>
-
-          <div class="image-upload" id="image-upload">
-
-            <input
-              type="file"
-              id="dish-image"
-              accept="image/*"
-              hidden
-            >
-
-            <div class="image-placeholder" id="image-placeholder">
-
-              <div class="camera-mark">+</div>
-
-              <strong>Add a photo of your dish</strong>
-
-              <span>Tap to choose an image</span>
-
-              <small>Optional</small>
-
-            </div>
-
-            <img
-              id="image-preview"
-              class="image-preview"
-              alt="Dish preview"
-            >
-
-          </div>
-
         </div>
 
 
@@ -457,7 +411,7 @@
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase.js"></script>
-  <script src="menu-form.js"></script>
+  <script src="menu-form.js?v=hg-menu-form-003"></script>
 
 <script src="hg-sidebar.js?v=hg-nour-002" defer></script>
 <nav class="hg-mobile-bottom-nav" aria-label="Primary navigation">
