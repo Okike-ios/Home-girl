@@ -226,3 +226,129 @@
     font-size:13px;
   }
 }
+
+/* HG-BULK-P3 — compact closed meal cards with on-demand editable details.
+   Below 760px only; desktop table remains pixel-for-pixel unchanged. */
+.meal-card-toggle,.meal-card-serving{display:none}
+@media(max-width:759px){
+  body[data-hg-section="cook"] #cookTableBody{
+    max-width:480px;
+    margin-inline:auto;
+    gap:11px;
+  }
+  body[data-hg-section="cook"] #cookTableBody tr[data-dish-row]{
+    grid-template-columns:minmax(0,1fr) minmax(55px,auto) 28px;
+    align-items:center;
+    gap:8px;
+    padding:12px 15px;
+    border-radius:17px;
+    min-height:73px;
+  }
+  body[data-hg-section="cook"] #cookTableBody tr[data-dish-row] td{
+    min-width:0;
+  }
+  body[data-hg-section="cook"] #cookTableBody tr[data-dish-row]:not(.meal-card-open) td:nth-child(1){
+    grid-column:1;
+    border:0!important;
+    padding:0!important;
+  }
+  body[data-hg-section="cook"] #cookTableBody tr[data-dish-row]:not(.meal-card-open) td:nth-child(3){
+    grid-column:2;
+    align-items:flex-end;
+    justify-content:center;
+    padding:0!important;
+  }
+  body[data-hg-section="cook"] #cookTableBody tr[data-dish-row]:not(.meal-card-open) td:nth-child(7){
+    grid-column:3;
+    display:flex;
+    align-items:center!important;
+    justify-content:center!important;
+    padding:0!important;
+    margin:0;
+    border:0!important;
+  }
+  body[data-hg-section="cook"] #cookTableBody tr[data-dish-row]:not(.meal-card-open) td:is(:nth-child(2),:nth-child(4),:nth-child(5),:nth-child(6)){
+    display:none!important;
+  }
+  body[data-hg-section="cook"] #cookTableBody tr[data-dish-row]:not(.meal-card-open) td::before{
+    display:none!important;
+  }
+  body[data-hg-section="cook"] #cookTableBody tr[data-dish-row]:not(.meal-card-open) td:nth-child(1) .dish-input,
+  body[data-hg-section="cook"] #cookTableBody tr[data-dish-row]:not(.meal-card-open) td:nth-child(3) .cell-input{
+    display:none!important;
+  }
+  body[data-hg-section="cook"] #cookTableBody .meal-card-toggle{
+    width:100%;
+    min-width:0;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:7px;
+    padding:6px 0;
+    color:var(--bulk-plum);
+    background:transparent;
+    border:0;
+    text-align:left;
+    cursor:pointer;
+    font:700 17px/1.2 Georgia,"Times New Roman",serif;
+  }
+  body[data-hg-section="cook"] #cookTableBody .meal-card-toggle:focus-visible{
+    outline:2px solid var(--bulk-plum);
+    outline-offset:3px;border-radius:5px;
+  }
+  body[data-hg-section="cook"] #cookTableBody .meal-card-name{
+    min-width:0;overflow-wrap:anywhere;
+  }
+  body[data-hg-section="cook"] #cookTableBody .meal-card-chevron{
+    flex:none;color:#a87f92;font:700 19px/1;transition:transform .16s;
+  }
+  body[data-hg-section="cook"] #cookTableBody .meal-card-serving{
+    display:block;
+    color:var(--bulk-dark);
+    background:#f8ebef;
+    padding:7px 10px;
+    min-width:38px;
+    border-radius:10px;
+    text-align:center;
+    font:700 15px/1.2 Inter,ui-sans-serif,system-ui,sans-serif;
+    font-variant-numeric:tabular-nums;
+  }
+  body[data-hg-section="cook"] #cookTableBody tr[data-dish-row]:not(.meal-card-open) td:nth-child(7) .shopping-check{
+    display:block;width:21px;height:21px;margin:0;
+  }
+  /* Expanded card exposes the SAME original seven fields; no duplicated form. */
+  body[data-hg-section="cook"] #cookTableBody tr[data-dish-row].meal-card-open{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    align-items:stretch;
+    gap:12px 10px;
+    padding:18px 15px 15px;
+  }
+  body[data-hg-section="cook"] #cookTableBody tr[data-dish-row].meal-card-open td:nth-child(1){
+    grid-column:1/-1;
+    padding-bottom:12px!important;
+  }
+  body[data-hg-section="cook"] #cookTableBody tr[data-dish-row].meal-card-open .meal-card-toggle{
+    margin-bottom:9px;
+  }
+  body[data-hg-section="cook"] #cookTableBody tr[data-dish-row].meal-card-open .meal-card-chevron{
+    transform:rotate(180deg);
+  }
+  body[data-hg-section="cook"] #cookTableBody tr[data-dish-row].meal-card-open .meal-card-serving{
+    display:none!important;
+  }
+  body[data-hg-section="cook"] #cookTableBody tr[data-dish-row].meal-card-open td:nth-child(3) .cell-input{
+    display:block!important;
+  }
+  body[data-hg-section="cook"] #cookTableBody tr[data-dish-row].meal-card-open td:nth-child(7){
+    grid-column:1/-1;
+  }
+  body[data-hg-section="cook"] #cookTableBody tr[data-dish-row].meal-card-open td:nth-child(7)::before{
+    display:block;
+  }
+  body[data-hg-section="cook"] #cookTableBody tr[data-dish-row].meal-card-open td:nth-child(6){
+    grid-column:1/-1;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  body[data-hg-section="cook"] #cookTableBody .meal-card-chevron{transition:none}
+}
