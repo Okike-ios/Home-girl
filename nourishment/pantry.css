@@ -472,3 +472,8 @@ body[data-hg-section="pantry"] .pantry-field-frequency select.pantry-input{
     padding:9px 12px!important;
   }
 }
+
+/* Keep the additional stock summary out of the laptop's editable Item cell. */
+@media(min-width:760px){
+  body[data-hg-section="pantry"] .pantry-needed-subtitle{display:none!important}
+}
