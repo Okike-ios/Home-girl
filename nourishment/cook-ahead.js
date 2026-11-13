@@ -66,7 +66,7 @@
     arrow.className = "meal-card-chevron";
     arrow.setAttribute("aria-hidden", "true");
     arrow.textContent = "⌄";
-    button.append(dishLabel, arrow);
+    button.append(arrow, dishLabel);
     dishCell.appendChild(button);
 
     const servingLabel = document.createElement("span");
