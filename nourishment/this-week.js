@@ -468,7 +468,6 @@
   }
 
   document.getElementById("resetButton").addEventListener("click", resetWeek);
-  document.getElementById("resetButtonBottom").addEventListener("click", resetWeek);
   document.getElementById("resetMenuButton").addEventListener("click", resetWeek);
 
   /* CLOSE MENUS WHEN CLICKING OUTSIDE */
