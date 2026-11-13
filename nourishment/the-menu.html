@@ -1,26 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>The Menu · Home Girl</title>
-
-  <link rel="stylesheet" href="the-menu.css">
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-  <link
-    href="https://fonts.googleapis.com/css2?family=Allura&family=DM+Serif+Display:ital@0;1&display=swap"
-    rel="stylesheet"
-  >
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#526c8a">
+<title>The Menu | Home Girl</title>
+<link rel="stylesheet" href="cook-ahead.css">
 <link rel="stylesheet" href="homegirl-integration.css?v=hg-nourishment-001">
 <link rel="stylesheet" href="hg-sidebar.css?v=hg-nour-006">
-<link rel="stylesheet" href="the-menu-rich.css?v=hg-menu-001">
+<link rel="stylesheet" href="the-menu-cards.css?v=hg-menu-cards-001">
+<script src="the-menu-cards.js?v=hg-menu-cards-001" defer></script>
+<script src="hg-sidebar.js?v=hg-nour-002" defer></script>
 </head>
-
-<body data-hg-section="menu" >
+<body data-hg-section="menu">
 <svg class="svg-defs" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
 <symbol id="i-home" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-6v-7h-4v7H4a1 1 0 0 1-1-1z"/></symbol>
 <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></symbol>
@@ -68,93 +60,39 @@
 </header>
 <p class="hg-mobile-system-kicker">NOURISHMENT OS</p>
 
-  <!-- AMBIENT DECOR -->
-  <div class="ambient ambient-leaf">❧</div>
-  <div class="ambient ambient-spoon">⌁</div>
-  <div class="ambient ambient-herb">✦</div>
-  <div class="ambient ambient-mark">—</div>
 
-
-  <!-- HEADER -->
-  <header class="site-header">
-
-    <a href="nourishment-os.html" class="home-link">
-      <span class="home-arrow">←</span>
-      <span>Home</span>
-    </a>
-
-    <div class="menu-title">
-      <span>THE MENU</span>
-    </div>
-
-    <div class="menu-actions">
-
-      <button class="icon-button" aria-label="Search">
-        <span class="search-icon"></span>
-      </button>
-
-      <button class="filter-button" aria-label="Filter">
-        <span class="filter-icon">
-          <i></i>
-          <i></i>
-          <i></i>
-        </span>
-      </button>
-
-      <!-- ADD NEW DISH -->
-      <a href="menu-form.html" class="add-dish-button">
-        <span>+</span>
-        Add New Dish
-      </a>
-
-    </div>
-
-  </header>
-
-
-  <!-- MAIN -->
-<main>
-
-  <section class="empty-menu" id="empty-menu">
-
-    <div class="empty-ornament">
-      <span></span>
-      <b>✦</b>
-      <span></span>
-    </div>
-
-    <h1>What are we cooking?</h1>
-
-    <p class="empty-message">
-      Let’s start building your menu.
-    </p>
-
-    <!-- ADD NEW DISH -->
-    <a href="menu-form.html" class="primary-action">
-      <span>+</span>
-      Add New Dish
-    </a>
-
-  </section>
-
-  <section class="dish-list" id="dish-list"></section>
-
+<header class="app-header">
+<nav class="header-side" aria-label="Menu navigation">
+<a class="icon-button menu-back" href="nourishment-os.html" aria-label="Back to Nourishment OS" title="Back to Nourishment OS"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5m6-6-6 6 6 6"/></svg></a>
+</nav>
+<h1 class="header-title">The Menu</h1>
+<nav class="header-side right" aria-label="Menu actions">
+<a href="menu-form.html" class="icon-button menu-header-add" aria-label="Add new dish" title="Add new dish"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v16M4 12h16"/></svg></a>
+</nav>
+</header>
+<main class="main-content">
+<section class="menu-intro">
+<h2>What are we cooking?</h2>
+<p>A place for all your favourite dishes.</p>
+</section>
+<section class="menu-search" aria-label="Search and filter dishes">
+<label class="sr-only" for="menuSearch">Search dishes</label>
+<input id="menuSearch" type="search" placeholder="Search dishes…" autocomplete="off">
+<button class="menu-square" id="menuSearchButton" type="button" aria-label="Focus dish search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg></button>
+<button class="menu-square" id="menuFilterButton" type="button" aria-label="Filter dishes" aria-expanded="false" aria-controls="menuFilterPanel"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/><circle cx="9" cy="6" r="1.5"/><circle cx="15" cy="12" r="1.5"/><circle cx="11" cy="18" r="1.5"/></svg></button>
+<div class="menu-filter-panel" id="menuFilterPanel" hidden>
+<label for="menuCategoryFilter">Category</label>
+<select id="menuCategoryFilter"><option value="all">All dishes</option></select>
+<button id="menuResetFilters" class="menu-filter-reset" type="button">Clear filters</button>
+</div>
+</section>
+<section class="menu-workspace" aria-label="Dish collection">
+<div class="menu-toolbar"><a class="menu-add-dish" href="menu-form.html"><span aria-hidden="true">+</span> Add new dish</a><span class="menu-count" id="menuCount" aria-live="polite"></span></div>
+<div class="menu-cards" id="menuCards"></div>
+<p class="menu-empty" id="menuEmpty" hidden>No dishes match your search or filter.</p>
+</section>
+<p class="menu-prototype-note">Sample dishes for interface review only. These cards are not read from or saved to your Menu database.</p>
 </main>
-
-
-  <!-- UTILITY BUTTON -->
-  <button class="utility-button" aria-label="Menu options">
-    <span></span>
-    <span></span>
-    <span></span>
-  </button>
-
-
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="supabase.js"></script>
-  <script src="the-menu.js"></script>
-
-<script src="hg-sidebar.js?v=hg-nour-002" defer></script>
 <nav class="hg-mobile-bottom-nav" aria-label="Primary navigation">
   <a href="../index.html?view=dashboard"><svg aria-hidden="true"><use href="#i-grid"/></svg><span>Dashboard</span></a>
   <a class="selected" href="../index.html"><svg aria-hidden="true"><use href="#i-home"/></svg><span>Home</span></a>
