@@ -42,7 +42,68 @@
     if (open && panel.id === "searchPanel") searchInput.focus();
   }));
 
+  // HG-BULK-P3: One set of meal inputs for laptop table and phone detail cards.
+  // Summary labels are read-only mirrors; the existing inputs are the only data source.
+  const mobileCards = window.matchMedia("(max-width: 759px)");
   const rows = () => [...body.querySelectorAll("[data-dish-row]")];
+
+  function prepareMobileCard(row) {
+    if (row.querySelector(".meal-card-toggle")) return;
+    const dishCell = row.cells[0];
+    const servingCell = row.cells[2];
+    const dishInput = row.querySelector(".dish-input");
+    const servingInput = servingCell.querySelector("input");
+    const shopInput = row.querySelector(".shopping-check");
+    if (!dishCell || !servingCell || !dishInput || !servingInput || !shopInput) return;
+
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "meal-card-toggle";
+    button.setAttribute("aria-expanded", "false");
+    const dishLabel = document.createElement("span");
+    dishLabel.className = "meal-card-name";
+    const arrow = document.createElement("span");
+    arrow.className = "meal-card-chevron";
+    arrow.setAttribute("aria-hidden", "true");
+    arrow.textContent = "⌄";
+    button.append(dishLabel, arrow);
+    dishCell.appendChild(button);
+
+    const servingLabel = document.createElement("span");
+    servingLabel.className = "meal-card-serving";
+    servingCell.appendChild(servingLabel);
+
+    function updateSummary() {
+      const name = dishInput.value.trim() || "New dish";
+      dishLabel.textContent = name;
+      servingLabel.textContent = servingInput.value === "" ? "—" : servingInput.value;
+      button.setAttribute("aria-label", `Edit ${name} details`);
+      shopInput.setAttribute("aria-label", `Add ${name} to shopping list`);
+    }
+    dishInput.addEventListener("input", updateSummary);
+    servingInput.addEventListener("input", updateSummary);
+    updateSummary();
+  }
+
+  function toggleMobileCard(row, force) {
+    if (!mobileCards.matches) return;
+    const button = row.querySelector(".meal-card-toggle");
+    if (!button) return;
+    const open = typeof force === "boolean" ? force : !row.classList.contains("meal-card-open");
+    row.classList.toggle("meal-card-open", open);
+    button.setAttribute("aria-expanded", String(open));
+    button.setAttribute("aria-label", (open ? "Close " : "Edit ") + (row.querySelector(".dish-input").value.trim() || "new dish") + " details");
+  }
+
+  rows().forEach(prepareMobileCard);
+  body.addEventListener("click", event => {
+    const row = event.target.closest("[data-dish-row]");
+    if (!row || !mobileCards.matches) return;
+    // The checkbox must toggle on its own, never expand/collapse the card.
+    if (event.target.closest(".shopping-check, input, select, textarea, label")) return;
+    toggleMobileCard(row);
+  });
+
   function syncMaster() {
     const visible = rows().filter(row => !row.hidden).map(row => row.querySelector(".shopping-check"));
     const checked = visible.filter(box => box.checked).length;
@@ -101,7 +162,7 @@
     const td = document.createElement("td"); td.className = "shopping-column sticky-shopping";
     const checkbox = document.createElement("input"); checkbox.type = "checkbox"; checkbox.className = "shopping-check";
     checkbox.setAttribute("aria-label", "Add dish to shopping list"); td.appendChild(checkbox); row.appendChild(td);
-    body.appendChild(row); applyFilters(); row.querySelector(".dish-input").focus();
+    body.appendChild(row); prepareMobileCard(row); toggleMobileCard(row, true); applyFilters(); row.querySelector(".dish-input").focus();
   }
   document.getElementById("addDishButton").addEventListener("click", addDish);
   document.getElementById("addDishFromMenu").addEventListener("click", () => { closePanels(); addDish(); });
