@@ -589,3 +589,31 @@ body[data-hg-section="pantry"] .pantry-field-frequency select.pantry-input{
     padding-top:0!important;
   }
 }
+
+/* HG-PANTRY-006 — Desktop sticky action column polish.
+   Center the header trash over row actions and keep the shopping/delete
+   seam drawn by the sticky Delete cell itself during horizontal scrolling. */
+@media(min-width:760px){
+  body[data-hg-section="pantry"] .pantry-table th.pantry-sticky-delete{
+    padding:0!important;
+    text-align:center!important;
+    vertical-align:middle!important;
+  }
+  body[data-hg-section="pantry"] .pantry-table th.pantry-sticky-delete svg{
+    display:block;
+    margin:0 auto!important;
+    width:20px;
+    height:20px;
+  }
+  body[data-hg-section="pantry"] .pantry-table td.pantry-row-actions.pantry-sticky-delete{
+    text-align:center!important;
+    vertical-align:middle!important;
+    padding:7px 6px!important;
+  }
+  body[data-hg-section="pantry"] .pantry-table th.pantry-sticky-delete,
+  body[data-hg-section="pantry"] .pantry-table td.pantry-sticky-delete{
+    border-left:1px solid var(--pantry-line)!important;
+    box-shadow:inset 1px 0 0 var(--pantry-line),-3px 0 8px -7px rgba(39,77,73,.6)!important;
+    background-clip:padding-box;
+  }
+}
