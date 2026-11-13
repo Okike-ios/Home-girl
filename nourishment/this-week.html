@@ -13,6 +13,7 @@
 <link rel="stylesheet" href="hg-sidebar.css?v=hg-nour-006">
 <link rel="stylesheet" href="this-week-desktop-rich.css?v=hg-week-d1">
 <link rel="stylesheet" href="this-week-desktop-workspace.css?v=hg-week-d2">
+<link rel="stylesheet" href="this-week-table-controls.css?v=hg-week-d3">
 </head>
 
 <body class="this-week-page" data-hg-section="week" >
@@ -74,7 +75,7 @@
          aria-label="Back to Nourishment OS"
          title="Back">
         <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path d="M15 18 9 12l6-6"
+          <path d="M19 12H5m6-6-6 6 6 6"
             stroke="currentColor"
             stroke-width="1.8"
             stroke-linecap="round"
@@ -122,15 +123,7 @@
               aria-label="Filter meals"
               aria-expanded="false"
               title="Filter">
-        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path d="M4 7h16M7 12h10m-7 5h4"
-            stroke="currentColor"
-            stroke-width="1.7"
-            stroke-linecap="round"/>
-          <circle cx="8" cy="7" r="1.5" fill="currentColor"/>
-          <circle cx="15" cy="12" r="1.5" fill="currentColor"/>
-          <circle cx="12" cy="17" r="1.5" fill="currentColor"/>
-        </svg>
+        <svg viewBox="0 0 24 24" aria-hidden="true" fill="none"><path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="9" cy="6" r="1.5" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="15" cy="12" r="1.5" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="11" cy="18" r="1.5" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>
       </button>
 
       <button class="icon-button"
@@ -260,10 +253,23 @@
 
       <div class="table-toolbar">
         <div>
-          <h2>Weekly Meal Plan</h2>
+          <div class="week-table-heading-line"><h2>Weekly Meal Plan</h2><span class="week-count">7 DAYS</span></div>
           <p>Start with one component per meal. Add as many as you need.</p>
         </div>
-        <span class="week-count">7 DAYS</span>
+        <div class="week-table-top-actions">
+          <div class="week-table-edit-wrap">
+            <button id="weekEditTableButton" class="week-edit-table-button" type="button" aria-expanded="false" aria-controls="weekEditTablePopover"><span aria-hidden="true">+</span> Edit table</button>
+            <div id="weekEditTablePopover" class="week-edit-table-popover" hidden role="group" aria-label="Choose meal columns">
+              <strong>Show meal columns</strong>
+              <label><input type="checkbox" value="breakfast" checked> Breakfast</label>
+              <label><input type="checkbox" value="lunch" checked> Lunch</label>
+              <label><input type="checkbox" value="brunch" checked> Brunch</label>
+              <label><input type="checkbox" value="dinner" checked> Dinner</label>
+              <p>Select at least one meal to display.</p>
+            </div>
+          </div>
+          <div id="weekDesktopShopSelect" class="week-desktop-shop-select"></div>
+        </div>
       </div>
 
       <p class="mobile-scroll-note">
@@ -285,6 +291,7 @@
               <th class="meal-column" scope="col">Dinner</th>
 
               <th class="shopping-column sticky-shopping" scope="col">
+                <span class="week-desktop-shopping-heading">Add to<br>shopping list</span>
                 <label class="master-label" for="masterShoppingCheck">
                   <span class="shopping-heading-full">
                     Add to<br>shopping list
@@ -327,6 +334,7 @@
   </main>
 
 <script src="this-week-desktop-workspace.js?v=hg-week-d2" defer></script>
+<script src="this-week-table-controls.js?v=hg-week-d3" defer></script>
 <script src="hg-sidebar.js?v=hg-nour-002" defer></script>
 <nav class="hg-mobile-bottom-nav" aria-label="Primary navigation">
   <a href="../index.html?view=dashboard"><svg aria-hidden="true"><use href="#i-grid"/></svg><span>Dashboard</span></a>
