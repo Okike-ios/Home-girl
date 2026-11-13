@@ -55,14 +55,17 @@
     calendarNumber.textContent = days;
     const start = get("startDate").value;
     const end = get("endDate").value;
+    const year = get("weekCalendarYear").textContent.trim();
     calendarButton.setAttribute("aria-label",
-      `Cooking-week calendar: ${days} days left. From ${start || "not set"} to ${end || "not set"}. Choose dates.`);
+      `ISO calendar week ${days}${year && year !== "—" ? " of " + year : ""}. Monday ${start || "not set"} through Sunday ${end || "not set"}. Choose a planning week.`);
   }
   function arrange() {
     if (desktop.matches) {
       introTarget.append(nameField, intro);
       searchTarget.append(searchInput, searchButton, filterButton);
       datePopover.append(dates);
+      get("startDate").readOnly = true;
+      get("endDate").readOnly = true;
       weekName.placeholder = "Give this week a name";
       weekName.setAttribute("aria-label", "Week name");
       searchPanel.hidden = true;
@@ -71,6 +74,8 @@
       filterButton.setAttribute("aria-expanded", "false");
     } else {
       movable.forEach(restore);
+      get("startDate").readOnly = false;
+      get("endDate").readOnly = true;
       weekName.placeholder = originalNamePlaceholder;
       filterPanel.hidden = true;
       filterButton.setAttribute("aria-expanded", "false");
@@ -87,6 +92,7 @@
   });
   get("startDate").addEventListener("change", syncCalendar);
   get("endDate").addEventListener("change", syncCalendar);
+  get("startDate").addEventListener("weekwindowchange", syncCalendar);
 
   calendarButton.addEventListener("click", event => {
     if (!desktop.matches) return;
