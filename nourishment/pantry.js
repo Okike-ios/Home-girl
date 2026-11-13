@@ -68,7 +68,7 @@
     categoryFilter.value=[...categoryFilter.options].some(x=>x.value===previous)?previous:"all";
   }
   function createItem(d){
-    const row=make("tr","pantry-item-row"+(d.expanded?" pantry-open":"")+(needed(d)>0?" pantry-low":""));
+    const row=make("tr","pantry-item-row"+(d.expanded?" pantry-open":"")+(needed(d)>0?" pantry-low":"")+(d.cart?" pantry-shopping-selected":""));
     row.dataset.id=String(d.id);
     const nameCell=make("td","pantry-item-name pantry-sticky-item");
     const toggle=make("button","pantry-item-toggle");
@@ -83,6 +83,8 @@
     nameCell.append(toggle);
     const topMeta=make("span","pantry-item-subtitle",displayNum(d.current)+" "+d.unit+" in stock");
     nameCell.append(topMeta);
+    const neededMeta=make("span","pantry-needed-subtitle","Quantity needed: "+displayNum(needed(d))+" "+d.unit);
+    nameCell.append(neededMeta);
     row.append(nameCell);
 
     const fieldGroup=make("div","pantry-edit-fields");
@@ -100,7 +102,10 @@
         const caption=make("span",null,"Add to shopping list");
         label.append(input,caption);
         cell.append(label);
-        input.addEventListener("change",()=>{d.cart=input.checked;});
+        input.addEventListener("change",()=>{
+          d.cart=input.checked;
+          row.classList.toggle("pantry-shopping-selected",d.cart);
+        });
       }else if(field.type==="select"){
         input=make("select","pantry-input");
         field.options.forEach(option=>input.add(new Option(option,option)));
@@ -123,11 +128,15 @@
               if(quantity)quantity.textContent=displayNum(needed(d));
               row.classList.toggle("pantry-low",needed(d)>0);
               topMeta.textContent=displayNum(d.current)+" "+d.unit+" in stock";
+              neededMeta.textContent="Quantity needed: "+displayNum(needed(d))+" "+d.unit;
             }
             if(field.key==="name"){
               toggle.querySelector(".pantry-item-title").textContent=d.name||"New item";
             }
-            if(field.key==="unit")topMeta.textContent=displayNum(d.current)+" "+d.unit+" in stock";
+            if(field.key==="unit"){
+              topMeta.textContent=displayNum(d.current)+" "+d.unit+" in stock";
+              neededMeta.textContent="Quantity needed: "+displayNum(needed(d))+" "+d.unit;
+            }
             const updated=row.querySelector(".pantry-field-lastUpdated output");
             if(updated)updated.textContent=d.lastUpdated;
             if(field.key==="name"||field.key==="category")refreshCategories();
