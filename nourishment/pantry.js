@@ -1,4 +1,4 @@
-/* HG-PANTRY-001 — initial responsive Master Food Inventory prototype.
+/* HG-PANTRY-003 — initial responsive Master Food Inventory prototype.
  * Sample data is in-memory only. No Supabase, Cart or Shopping List writes.
  * 13 columns: Item, Category, Frequency, Standard Stock, Current Stock,
  * Unit, Last Purchase, Quantity Needed, Purchase Quantity, Supplier,
@@ -14,12 +14,19 @@
   const mobile = matchMedia("(max-width:759px)");
   if (!tbody) return;
   let nextId=0;
+  const categories=[
+    "Grains & Cereals","Beans & Legumes","Meat & Poultry",
+    "Fish & Seafood","Vegetables","Fruits","Tubers & Roots",
+    "Oils & Fats","Spices & Seasonings","Dairy & Eggs",
+    "Baking & Dry Goods","Beverages","Other"
+  ];
+  const frequencies=["Weekly","Biweekly","Monthly","Seasonal","Bulk"];
   const source=[
-    {name:"Rice",category:"Grains",frequency:"Monthly",standard:10,current:6,unit:"kg",supplier:"Local market"},
-    {name:"Egusi",category:"Proteins & seeds",frequency:"Monthly",standard:3,current:1,unit:"kg",supplier:"Local market"},
+    {name:"Rice",category:"Grains & Cereals",frequency:"Monthly",standard:10,current:6,unit:"kg",supplier:"Local market"},
+    {name:"Egusi",category:"Other",frequency:"Monthly",standard:3,current:1,unit:"kg",supplier:"Local market"},
     {name:"Tomatoes",category:"Vegetables",frequency:"Weekly",standard:5,current:2,unit:"kg",supplier:"Produce vendor"},
-    {name:"Palm Oil",category:"Oils",frequency:"Monthly",standard:4,current:3,unit:"L",supplier:"Local market"},
-    {name:"Beans",category:"Grains",frequency:"Monthly",standard:6,current:6,unit:"kg",supplier:"Local market"},
+    {name:"Palm Oil",category:"Oils & Fats",frequency:"Monthly",standard:4,current:3,unit:"L",supplier:"Local market"},
+    {name:"Beans",category:"Beans & Legumes",frequency:"Monthly",standard:6,current:6,unit:"kg",supplier:"Local market"},
     {name:"Onions",category:"Vegetables",frequency:"Weekly",standard:3,current:1,unit:"kg",supplier:"Produce vendor"}
   ];
   const data=source.map(x=>({
@@ -30,8 +37,8 @@
   }));
   const fields=[
     {key:"name",label:"Item",type:"text"},
-    {key:"category",label:"Category",type:"text"},
-    {key:"frequency",label:"Purchase frequency",type:"select",options:["Weekly","Fortnightly","Monthly","As needed","Quarterly"]},
+    {key:"category",label:"Category",type:"select",options:categories},
+    {key:"frequency",label:"Purchase frequency",type:"select",options:frequencies},
     {key:"standard",label:"Standard stock",type:"number"},
     {key:"current",label:"Current stock",type:"number"},
     {key:"unit",label:"Unit",type:"text"},
@@ -57,7 +64,7 @@
   function refreshCategories(){
     const previous=categoryFilter.value;
     categoryFilter.replaceChildren(new Option("All categories","all"));
-    [...new Set(data.map(d=>d.category).filter(Boolean))].sort().forEach(c=>categoryFilter.add(new Option(c,c)));
+    categories.forEach(c=>categoryFilter.add(new Option(c,c)));
     categoryFilter.value=[...categoryFilter.options].some(x=>x.value===previous)?previous:"all";
   }
   function createItem(d){
@@ -97,8 +104,7 @@
       }else if(field.type==="select"){
         input=make("select","pantry-input");
         field.options.forEach(option=>input.add(new Option(option,option)));
-        if(d.frequency&&!field.options.includes(d.frequency))input.add(new Option(d.frequency,d.frequency));
-        input.value=d.frequency;
+        input.value=d[field.key];
       }else{
         input=make("input","pantry-input");
         input.type=field.type;
@@ -172,7 +178,7 @@
     }
   }
   $("pantryAddItem").addEventListener("click",()=>{
-    const d={id:++nextId,name:"",category:"Other",frequency:"As needed",standard:0,current:0,unit:"pcs",lastPurchase:"",purchaseQty:0,supplier:"",lastUpdated:"",cart:false,expanded:true};
+    const d={id:++nextId,name:"",category:"Other",frequency:"Monthly",standard:0,current:0,unit:"pcs",lastPurchase:"",purchaseQty:0,supplier:"",lastUpdated:"",cart:false,expanded:true};
     data.unshift(d);search.value="";categoryFilter.value="all";stockFilter.value="all";
     render(d.id,true);
   });
