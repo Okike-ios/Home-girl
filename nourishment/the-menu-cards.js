@@ -50,11 +50,37 @@
       dish.editedIngredients=Array.isArray(saved.ingredients)?saved.ingredients:null;
     }
   }
+  const deletedKey="hg-menu-demo-deleted-v1";
+  let deletedDishes=[];
+  try{
+    const stored=JSON.parse(localStorage.getItem(deletedKey)||"[]");
+    if(Array.isArray(stored))deletedDishes=stored.filter(name=>typeof name==="string");
+  }catch{deletedDishes=[];}
   const preview=$("menuDishPreview");
   const closePreview=$("menuPreviewClose");
   let previewTrigger=null;
   let activeDish=null;
   const editButton=$("menuPreviewEdit");
+  const deleteButton=$("menuPreviewDelete");
+  if(deleteButton){
+    deleteButton.addEventListener("click",()=>{
+      if(!activeDish)return;
+      const dish=activeDish;
+      if(!window.confirm('Delete "'+dish.name+'" from this demo Menu?\\n\\nThis removes only the placeholder dish in this browser.'))return;
+      const next=[...new Set([...deletedDishes,dish.originalName])];
+      try{
+        localStorage.setItem(deletedKey,JSON.stringify(next));
+      }catch{
+        alert("Could not save the deletion in this browser. No changes were made.");
+        return;
+      }
+      deletedDishes=next;
+      if(preview.open)preview.close();
+      activeDish=null;
+      previewTrigger=null;
+      draw();
+    });
+  }
   if(editButton){
     editButton.addEventListener("click",()=>{
       if(!activeDish)return;
@@ -107,6 +133,7 @@
     const query=input.value.trim().toLocaleLowerCase();
     const selected=category.value;
     const visible=samples.filter(d=>
+      !deletedDishes.includes(d.originalName)&&
       (selected==="all"||d.category===selected)&&
       (!query||(d.name+" "+d.category).toLocaleLowerCase().includes(query))
     );
