@@ -167,6 +167,76 @@ cancelButton.addEventListener("click", () => {
 });
 
 
+/* HG-MENU-004 — Preview-only dish edit mode.
+ * Changes are saved in this browser, never inserted into Supabase.
+ * The normal Add New Dish submission remains unchanged.
+ */
+const demoEditMode=new URLSearchParams(window.location.search).get("demoEdit")==="1";
+let demoEditPayload=null;
+if(demoEditMode){
+  try{demoEditPayload=JSON.parse(sessionStorage.getItem("hg-menu-demo-edit-payload")||"null");}
+  catch{demoEditPayload=null;}
+  if(demoEditPayload&&typeof demoEditPayload.key==="string"){
+    document.title="Edit Dish | Home Girl";
+    const heading=document.querySelector(".app-header .header-title");
+    if(heading)heading.textContent="Edit Dish";
+    const intro=document.querySelector(".form-intro h1");
+    if(intro)intro.textContent="Let's make some changes.";
+    const subtitle=document.querySelector(".form-intro p");
+    if(subtitle)subtitle.textContent="Update your dish details below.";
+    const submit=document.querySelector(".save-button");
+    if(submit)submit.textContent="Save Changes";
+    const note=document.querySelector(".save-section > p");
+    if(note)note.textContent="Demo only — changes to sample dishes stay in this browser.";
+
+    document.getElementById("dish-name").value=demoEditPayload.name||"";
+    document.getElementById("servings").value=demoEditPayload.serves||4;
+    document.getElementById("recipe").value=demoEditPayload.recipe||"";
+
+    function selectChoice(groupId,hiddenId,value){
+      if(!value)return;
+      const group=document.getElementById(groupId);
+      let button=[...group.querySelectorAll(".choice")].find(b=>b.dataset.value===value);
+      if(!button){
+        button=document.createElement("button");
+        button.type="button";
+        button.className="choice";
+        button.dataset.value=value;
+        button.textContent=value;
+        group.appendChild(button);
+        button.addEventListener("click",()=>{
+          group.querySelectorAll(".choice").forEach(b=>b.classList.remove("selected"));
+          button.classList.add("selected");
+          document.getElementById(hiddenId).value=value;
+        });
+      }
+      button.click();
+    }
+    selectChoice("category-group","category",demoEditPayload.category);
+    selectChoice("time-group","best-time",demoEditPayload.bestTime);
+
+    const existing=Array.isArray(demoEditPayload.ingredients)?demoEditPayload.ingredients:[];
+    if(existing.length){
+      ingredientsList.replaceChildren();
+      for(const ingredient of existing){
+        createIngredientRow();
+        const row=ingredientsList.lastElementChild;
+        row.querySelector(".ingredient-name").value=typeof ingredient==="string"?ingredient:(ingredient.name||"");
+        row.querySelector(".ingredient-quantity").value=typeof ingredient==="string"?"":(ingredient.quantity||"");
+        row.querySelector(".ingredient-unit").value=typeof ingredient==="string"?"":(ingredient.unit||"");
+      }
+    }
+  }else{
+    // Do not risk an accidental Supabase insert when edit context is missing.
+    const form=document.getElementById("dish-form");
+    form.addEventListener("submit",event=>{
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      alert("This sample dish could not be loaded. Return to The Menu and select Edit again.");
+    },true);
+  }
+}
+
 /* --------------------------------
    FORM SUBMISSION
 -------------------------------- */
@@ -196,6 +266,28 @@ dishForm.addEventListener("submit", async (event) => {
   const recipe =
     document.getElementById("recipe").value.trim();
 
+
+  if(demoEditMode){
+    if(!demoEditPayload)return;
+    if(!dishName){alert("Please enter a dish name.");return;}
+    if(!Number.isFinite(serves)||serves<1){alert("Please enter a valid serving count.");return;}
+    const ingredients=[...ingredientsList.querySelectorAll(".ingredient-row")].map(row=>({
+      name:row.querySelector(".ingredient-name")?.value.trim()||"",
+      quantity:row.querySelector(".ingredient-quantity")?.value.trim()||"",
+      unit:row.querySelector(".ingredient-unit")?.value.trim()||""
+    })).filter(item=>item.name);
+    let overrides={};
+    const key="hg-menu-demo-edits-v1";
+    try{overrides=JSON.parse(localStorage.getItem(key)||"{}")||{};}catch{overrides={};}
+    overrides[demoEditPayload.key]={
+      name:dishName,category,bestTime,serves,recipe,ingredients
+    };
+    try{localStorage.setItem(key,JSON.stringify(overrides));}
+    catch{alert("Could not save sample edits in this browser.");return;}
+    sessionStorage.removeItem("hg-menu-demo-edit-payload");
+    window.location.href="the-menu.html";
+    return;
+  }
 
   /* SAVE DISH TO SUPABASE */
 
