@@ -80,6 +80,34 @@
     }
   });
 
+  // Match Bulk Cooking: a deliberate right-swipe navigates back on phones.
+  // Do not intercept vertical scrolling or gestures inside editing controls.
+  let swipeStart = null;
+  document.addEventListener("touchstart", event => {
+    if (!phone.matches || event.touches.length !== 1) {
+      swipeStart = null;
+      return;
+    }
+    if (event.target.closest("input,textarea,select,button,a,[contenteditable],.week-date-popover,.week-phone-days")) {
+      swipeStart = null;
+      return;
+    }
+    const point = event.touches[0];
+    swipeStart = {x:point.clientX,y:point.clientY,time:Date.now()};
+  },{passive:true});
+  document.addEventListener("touchend", event => {
+    if (!swipeStart || !phone.matches || event.changedTouches.length !== 1) return;
+    const point = event.changedTouches[0];
+    const dx = point.clientX - swipeStart.x;
+    const dy = point.clientY - swipeStart.y;
+    const elapsed = Date.now() - swipeStart.time;
+    swipeStart = null;
+    if (dx > 95 && Math.abs(dy) < 55 && dx > Math.abs(dy)*1.7 && elapsed < 850) {
+      window.location.href = "nourishment-os.html";
+    }
+  },{passive:true});
+  document.addEventListener("touchcancel", () => {swipeStart = null;},{passive:true});
+
   arrangePhone();
   if (phone.addEventListener) phone.addEventListener("change", arrangePhone);
   else phone.addListener(arrangePhone);
