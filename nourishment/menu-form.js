@@ -2,38 +2,6 @@ console.log("NEW MENU FORM JS IS LOADING");
 console.log("Supabase connection loaded:", homeGirlSupabase);
 
 /* --------------------------------
-   IMAGE PREVIEW
--------------------------------- */
-
-const imageUpload = document.getElementById("image-upload");
-const imageInput = document.getElementById("dish-image");
-const imagePreview = document.getElementById("image-preview");
-const imagePlaceholder = document.getElementById("image-placeholder");
-
-
-imageUpload.addEventListener("click", () => {
-  imageInput.click();
-});
-
-
-imageInput.addEventListener("change", () => {
-
-  const file = imageInput.files[0];
-
-  if (!file) return;
-
-  const imageURL = URL.createObjectURL(file);
-
-  imagePreview.src = imageURL;
-
-  imagePreview.style.display = "block";
-
-  imagePlaceholder.style.display = "none";
-
-});
-
-
-/* --------------------------------
    CATEGORY SELECTION
 -------------------------------- */
 
