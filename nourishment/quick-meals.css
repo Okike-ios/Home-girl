@@ -443,3 +443,19 @@ body[data-hg-section="quick"] .quick-table tr.quick-is-cooked:nth-child(even) td
     align-self:center;
   }
 }
+
+/* HG-QUICK-007 — precise collapsed-card alignment to Bulk Cooking reference.
+   Reduce the arrow-to-name gap and visually centre the chevron between the
+   dish title and serving line; expanded form and desktop remain unchanged. */
+@media(max-width:759px){
+  body[data-hg-section="quick"] .quick-table tr.quick-dish-row:not(.quick-open) .quick-dish-toggle{
+    padding-left:31px;
+  }
+  body[data-hg-section="quick"] .quick-table tr.quick-dish-row:not(.quick-open) td.quick-servings{
+    padding-left:31px!important;
+  }
+  body[data-hg-section="quick"] .quick-table tr.quick-dish-row:not(.quick-open) .quick-arrow{
+    top:calc(50% - 10px);
+    transform:translateY(-50%);
+  }
+}
