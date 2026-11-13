@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#4d8580">
+<title>Pantry | Home Girl</title>
+<link rel="stylesheet" href="cook-ahead.css">
+<link rel="stylesheet" href="homegirl-integration.css?v=hg-nourishment-001">
+<link rel="stylesheet" href="hg-sidebar.css?v=hg-nour-006">
+<link rel="stylesheet" href="pantry.css?v=hg-pantry-001">
+<script src="pantry.js?v=hg-pantry-001" defer></script>
+<script src="hg-sidebar.js?v=hg-nour-002" defer></script>
+</head>
+<body data-hg-section="pantry">
+<svg class="svg-defs" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+<symbol id="i-home" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-6v-7h-4v7H4a1 1 0 0 1-1-1z"/></symbol>
+<symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></symbol>
+<symbol id="i-store" viewBox="0 0 24 24"><path d="M3 9h18l-2-5H5zM5 9v12h14V9M9 21v-7h6v7"/></symbol>
+<symbol id="i-list" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></symbol>
+<symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M7 3v4M17 3v4M3 10h18M7 14h2M12 14h2M7 18h2"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></symbol>
+<symbol id="i-alarm" viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M5 3 2 6M19 3l3 3M8 22l-2 2M16 22l2 2"/></symbol>
+<symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 8-3 8-3 10h18c0-2-3-2-3-10M10 21h4"/></symbol>
+<symbol id="i-settings" viewBox="0 0 24 24"><path d="M10 3h4l.6 2.3 1.8.8 2.1-1.2 2.8 2.8-1.2 2.1.8 1.8L23 12l-2.1.6-.8 1.8 1.2 2.1-2.8 2.8-2.1-1.2-1.8.8L14 21h-4l-.6-2.1-1.8-.8-2.1 1.2-2.8-2.8 1.2-2.1-.8-1.8L1 12l2.1-.6.8-1.8-1.2-2.1 2.8-2.8 2.1 1.2 1.8-.8z"/><circle cx="12" cy="12" r="3"/></symbol>
+<symbol id="i-chevron" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></symbol>
+<symbol id="i-chef" viewBox="0 0 24 24"><path d="M6 14a5 5 0 0 1-1-10 5 5 0 0 1 7-1 5 5 0 0 1 7 1 5 5 0 0 1-1 10v6H6zM6 16h12"/></symbol>
+<symbol id="i-heart" viewBox="0 0 24 24"><path d="M20 5a5 5 0 0 0-7 0l-1 1-1-1a5 5 0 0 0-7 7l8 9 8-9a5 5 0 0 0 0-7z"/></symbol>
+<symbol id="i-lotus" viewBox="0 0 24 24"><path d="M12 20c-3-3-5-6-5-9 0-3 2-6 5-8 3 2 5 5 5 8 0 3-2 6-5 9zM12 20c-5 0-9-3-10-9 4 0 7 2 10 9zM12 20c5 0 9-3 10-9-4 0-7 2-10 9z"/></symbol>
+<symbol id="i-tools" viewBox="0 0 24 24"><path d="m4 20 9-9M14 4a6 6 0 0 0 6 6l-5 5-6-6 5-5zM3 17l4 4M4 4l6 6"/></symbol>
+<symbol id="i-coins" viewBox="0 0 24 24"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v5c0 2 16 2 16 0V6M4 11v5c0 2 16 2 16 0v-5M4 16v3c0 3 16 3 16 0v-3"/></symbol>
+<symbol id="i-spark" viewBox="0 0 24 24"><path d="m12 2 2.5 7.5L22 12l-7.5 2.5L12 22l-2.5-7.5L2 12l7.5-2.5z"/></symbol>
+<symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2"/></symbol>
+<symbol id="i-arrow" viewBox="0 0 24 24"><path d="m5 12 14 0M13 6l6 6-6 6"/></symbol>
+<symbol id="i-back" viewBox="0 0 24 24"><path d="m15 5-7 7 7 7"/></symbol>
+</svg>
+<aside class="sidebar" id="desktop-sidebar" aria-label="Main navigation">
+ <button class="sidebar-edge-toggle" id="sidebar-edge-toggle" type="button" aria-label="Collapse sidebar" aria-controls="desktop-sidebar" aria-expanded="true" title="Collapse sidebar"><svg><use href="#i-chevron"/></svg></button>
+ <div class="sidebar-scroll">
+ <div class="sidebar-brand"><img src="../assets/home-girl-logo.png" alt="Home Girl logo"><span class="sidebar-brand-title">Home Girl</span></div>
+ <div class="sidebar-section-label">YOUR SPACE</div>
+ <nav class="side-links">
+  <a class="nav-item" href="../index.html"><svg><use href="#i-home"/></svg><span class="nav-text">Home</span></a>
+  <a class="nav-item" href="../index.html?view=dashboard"><svg><use href="#i-grid"/></svg><span class="nav-text">Dashboard</span></a>
+  <a class="nav-item" href="../index.html?view=shop"><svg><use href="#i-store"/></svg><span class="nav-text">Shop</span> <span class="soon nav-text">Soon</span></a>
+  <div class="sidebar-section-label secondary-label">DAILY LIFE</div>
+  <a class="nav-item" href="../index.html?view=shopping"><svg><use href="#i-list"/></svg><span class="nav-text">Shopping List</span></a>
+  <a class="nav-item" href="../index.html?view=calendar"><svg><use href="#i-calendar"/></svg><span class="nav-text">Calendar</span></a>
+  <a class="nav-item" href="../index.html?view=tasks"><svg><use href="#i-check"/></svg><span class="nav-text">My Tasks</span></a>
+  <a class="nav-item" href="../index.html?view=reminders"><svg><use href="#i-alarm"/></svg><span class="nav-text">Reminders</span></a>
+ </nav>
+ <div class="sidebar-foot"><div class="sidebar-section-label">PREFERENCES</div><a class="nav-item" href="../index.html?view=notifications"><svg><use href="#i-bell"/></svg><span class="nav-text">Notifications</span> <span class="tiny-dot"></span></a><a class="nav-item" href="../index.html?view=settings"><svg><use href="#i-settings"/></svg><span class="nav-text">Settings</span></a></div>
+ </div>
+</aside><header class="hg-mobile-shell" aria-label="Home Girl mobile header">
+  <a class="hg-mobile-brand" href="../index.html" aria-label="Home Girl Home"><img src="../assets/home-girl-logo.png" alt="Home Girl logo"></a>
+  <div class="hg-mobile-header-actions">
+    <a class="hg-mobile-action" href="../index.html?view=notifications" aria-label="Notifications"><svg aria-hidden="true"><use href="#i-bell"/></svg></a>
+    <a class="hg-mobile-action" href="../index.html?view=settings" aria-label="Settings"><svg aria-hidden="true"><use href="#i-settings"/></svg></a>
+  </div>
+</header>
+<p class="hg-mobile-system-kicker">NOURISHMENT OS</p>
+
+
+<header class="app-header">
+<nav class="header-side" aria-label="Pantry navigation">
+<a class="icon-button pantry-back" href="nourishment-os.html" aria-label="Back to Nourishment OS" title="Back"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5m6-6-6 6 6 6"/></svg></a>
+</nav>
+<h1 class="header-title">Pantry</h1>
+<nav class="header-side right" aria-label="Pantry actions">
+<button class="icon-button" id="pantryClear" type="button" aria-label="Clear pantry sample items" title="Clear pantry items"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v6M14 11v6"/></svg></button>
+</nav>
+</header>
+<main class="main-content">
+<section class="pantry-intro">
+<h2>What's in the pantry?</h2>
+<p>Keep track of what you have, what you need, and what to replenish.</p>
+</section>
+<section class="pantry-search" aria-label="Search and filter inventory">
+<label class="sr-only" for="pantrySearchInput">Search pantry items</label>
+<input id="pantrySearchInput" type="search" placeholder="Search inventory…" autocomplete="off">
+<button id="pantrySearchButton" class="pantry-square" type="button" aria-label="Focus pantry search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg></button>
+<button id="pantryFilterButton" class="pantry-square" type="button" aria-label="Filter pantry" aria-controls="pantryFilterPanel" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/><circle cx="9" cy="6" r="1.5"/><circle cx="15" cy="12" r="1.5"/><circle cx="11" cy="18" r="1.5"/></svg></button>
+<div class="pantry-filter-popover" id="pantryFilterPanel" hidden>
+<label for="pantryCategoryFilter">Category</label>
+<select id="pantryCategoryFilter"><option value="all">All categories</option></select>
+<label for="pantryStockFilter">Stock</label>
+<select id="pantryStockFilter"><option value="all">All items</option><option value="low">Needs replenishing</option><option value="in-stock">At or above standard</option><option value="cart">Marked for Cart</option></select>
+<button type="button" id="pantryClearFilters" class="pantry-text-button">Clear filters</button>
+</div>
+</section>
+<section class="pantry-workspace" aria-label="Master Food Inventory">
+<div class="pantry-toolbar">
+<button id="pantryAddItem" class="pantry-primary" type="button"><span aria-hidden="true">+</span> Add item</button>
+<label class="pantry-select-all"><input type="checkbox" id="pantrySelectAll"><span>Select all</span></label>
+</div>
+<div class="pantry-table-scroll" tabindex="0" aria-label="Scrollable pantry inventory table">
+<table class="pantry-table">
+<thead><tr>
+<th scope="col">Select</th><th scope="col">Item</th><th scope="col">Category</th><th scope="col">Purchase frequency</th><th scope="col">Standard stock</th><th scope="col">Current stock</th><th scope="col">Unit</th><th scope="col">Last purchase</th><th scope="col">Quantity needed</th><th scope="col">Purchase quantity</th><th scope="col">Supplier</th><th scope="col">Add to Cart</th><th scope="col">Last updated</th>
+</tr></thead>
+<tbody id="pantryRows"></tbody>
+</table>
+</div>
+<p class="pantry-status" id="pantryStatus" role="status" aria-live="polite"></p>
+</section>
+<p class="pantry-disclaimer">Interface prototype: sample inventory only. Updates, selection, and Cart indicators are not saved to your account or sent to Shopping List, Cart, or Pantry records.</p>
+</main>
+<nav class="hg-mobile-bottom-nav" aria-label="Primary navigation">
+  <a href="../index.html?view=dashboard"><svg aria-hidden="true"><use href="#i-grid"/></svg><span>Dashboard</span></a>
+  <a class="selected" href="../index.html"><svg aria-hidden="true"><use href="#i-home"/></svg><span>Home</span></a>
+  <a href="../index.html?view=shop"><svg aria-hidden="true"><use href="#i-store"/></svg><span>Shop</span></a>
+</nav>
+</body>
+</html>
