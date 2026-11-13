@@ -49,7 +49,18 @@
     {key:"lastUpdated",label:"Last updated",type:"readonlyDate"},
     {key:"cart",label:"Add to shopping list",type:"check"}
   ];
-  const today=()=>new Date().toLocaleDateString("en-CA");
+  const today=()=>{
+    const date=new Date();
+    const pad=n=>String(n).padStart(2,"0");
+    return date.getFullYear()+"-"+pad(date.getMonth()+1)+"-"+pad(date.getDate());
+  };
+  // Keep the stored ISO-style value, but display dates like the native
+  // Last Purchase date field: MM/DD/YYYY, without timezone conversion.
+  const displayDate=value=>{
+    if(!value)return "—";
+    const match=String(value).match(/^(\\d{4})-(\\d{2})-(\\d{2})$/);
+    return match?match[2]+"/"+match[3]+"/"+match[1]:value;
+  };
   const needed=d=>Math.max(0,(Number(d.standard)||0)-(Number(d.current)||0));
   const displayNum=x=>Number.isFinite(Number(x))?String(x):"0";
   const make=(tag,cls,text)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(text!=null)e.textContent=text;return e;};
@@ -94,7 +105,7 @@
       let input;
       if(field.type==="readonly"||field.type==="readonlyDate"){
         input=make("output","pantry-value");
-        input.textContent=field.key==="needed"?displayNum(needed(d)):d.lastUpdated||"—";
+        input.textContent=field.key==="needed"?displayNum(needed(d)):displayDate(d.lastUpdated);
       }else if(field.type==="check"){
         const label=make("label","pantry-check-label");
         input=make("input");
@@ -138,7 +149,7 @@
               neededMeta.textContent="Quantity needed: "+displayNum(needed(d))+" "+d.unit;
             }
             const updated=row.querySelector(".pantry-field-lastUpdated output");
-            if(updated)updated.textContent=d.lastUpdated;
+            if(updated)updated.textContent=displayDate(d.lastUpdated);
             if(field.key==="name"||field.key==="category")refreshCategories();
           });
         }
