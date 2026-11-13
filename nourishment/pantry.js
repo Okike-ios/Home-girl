@@ -1,8 +1,8 @@
 /* HG-PANTRY-001 — initial responsive Master Food Inventory prototype.
  * Sample data is in-memory only. No Supabase, Cart or Shopping List writes.
- * 13 fields: Select, Item, Category, Frequency, Standard Stock, Current Stock,
+ * 13 columns: Item, Category, Frequency, Standard Stock, Current Stock,
  * Unit, Last Purchase, Quantity Needed, Purchase Quantity, Supplier,
- * Add to Cart, Last Updated. Quantity Needed = max(standard-current,0).
+ * Last Updated, Add to Shopping List, Delete. Quantity Needed = max(standard-current,0).
  */
 (() => {
   "use strict";
@@ -10,7 +10,7 @@
   const tbody = $("pantryRows"), search = $("pantrySearchInput");
   const categoryFilter = $("pantryCategoryFilter"), stockFilter = $("pantryStockFilter");
   const panel = $("pantryFilterPanel"), filterButton = $("pantryFilterButton");
-  const master = $("pantrySelectAll"), status = $("pantryStatus");
+  const status = $("pantryStatus");
   const mobile = matchMedia("(max-width:759px)");
   if (!tbody) return;
   let nextId=0;
@@ -23,7 +23,7 @@
     {name:"Onions",category:"Vegetables",frequency:"Weekly",standard:3,current:1,unit:"kg",supplier:"Produce vendor"}
   ];
   const data=source.map(x=>({
-    id:++nextId,selected:false,cart:false,name:x.name,category:x.category,
+    id:++nextId,cart:false,name:x.name,category:x.category,
     frequency:x.frequency,standard:x.standard,current:x.current,unit:x.unit,
     lastPurchase:"",purchaseQty:Math.max(0,x.standard-x.current),
     supplier:x.supplier,lastUpdated:"",expanded:false
@@ -39,8 +39,8 @@
     {key:"needed",label:"Quantity needed",type:"readonly"},
     {key:"purchaseQty",label:"Purchase quantity",type:"number"},
     {key:"supplier",label:"Supplier",type:"text"},
-    {key:"cart",label:"Add to Cart",type:"check"},
-    {key:"lastUpdated",label:"Last updated",type:"readonlyDate"}
+    {key:"lastUpdated",label:"Last updated",type:"readonlyDate"},
+    {key:"cart",label:"Add to shopping list",type:"check"}
   ];
   const today=()=>new Date().toLocaleDateString("en-CA");
   const needed=d=>Math.max(0,(Number(d.standard)||0)-(Number(d.current)||0));
@@ -60,26 +60,10 @@
     [...new Set(data.map(d=>d.category).filter(Boolean))].sort().forEach(c=>categoryFilter.add(new Option(c,c)));
     categoryFilter.value=[...categoryFilter.options].some(x=>x.value===previous)?previous:"all";
   }
-  function masterState(){
-    const shown=data.filter(filterMatches);
-    const selected=shown.filter(d=>d.selected).length;
-    master.checked=shown.length>0&&selected===shown.length;
-    master.indeterminate=selected>0&&selected<shown.length;
-    master.disabled=shown.length===0;
-  }
   function createItem(d){
     const row=make("tr","pantry-item-row"+(d.expanded?" pantry-open":"")+(needed(d)>0?" pantry-low":""));
     row.dataset.id=String(d.id);
-    const selectCell=make("td","pantry-select-cell");
-    const selectLabel=make("label","pantry-select-label");
-    const selected=make("input");
-    selected.type="checkbox";selected.checked=d.selected;selected.setAttribute("aria-label","Select "+(d.name||"new item"));
-    selected.addEventListener("change",()=>{d.selected=selected.checked;masterState();});
-    selectLabel.append(selected);
-    selectCell.append(selectLabel);
-    row.append(selectCell);
-
-    const nameCell=make("td","pantry-item-name");
+    const nameCell=make("td","pantry-item-name pantry-sticky-item");
     const toggle=make("button","pantry-item-toggle");
     toggle.type="button";toggle.setAttribute("aria-expanded",String(d.expanded));
     toggle.setAttribute("aria-label",(d.expanded?"Collapse ":"Expand ")+(d.name||"new pantry item"));
@@ -96,7 +80,7 @@
 
     const fieldGroup=make("div","pantry-edit-fields");
     fields.forEach(field=>{
-      const cell=make("td","pantry-field pantry-field-"+field.key);
+      const cell=make("td","pantry-field pantry-field-"+field.key+(field.key==="cart"?" pantry-sticky-shopping":""));
       cell.dataset.label=field.label;
       let input;
       if(field.type==="readonly"||field.type==="readonlyDate"){
@@ -105,8 +89,8 @@
       }else if(field.type==="check"){
         const label=make("label","pantry-check-label");
         input=make("input");
-        input.type="checkbox";input.checked=d.cart;input.setAttribute("aria-label","Mark "+(d.name||"item")+" for Cart");
-        const caption=make("span",null,"Add to Cart");
+        input.type="checkbox";input.checked=d.cart;input.setAttribute("aria-label","Add "+(d.name||"item")+" to shopping list");
+        const caption=make("span",null,"Add to shopping list");
         label.append(input,caption);
         cell.append(label);
         input.addEventListener("change",()=>{d.cart=input.checked;});
@@ -147,7 +131,7 @@
       }
       fieldGroup.append(cell);
     });
-    // The editable item name belongs to column B and in the expanded mobile form.
+    // The editable item name belongs to the first column and expanded mobile form.
     const editName=make("input","pantry-input pantry-name-edit");
     editName.type="text";editName.placeholder="Item name";editName.maxLength=100;editName.value=d.name;
     editName.setAttribute("aria-label","Edit pantry item name");
@@ -163,8 +147,9 @@
     if(duplicateNameCell)duplicateNameCell.remove();
     while(fieldGroup.firstChild)row.append(fieldGroup.firstChild);
 
-    const actionCell=make("td","pantry-row-actions");
-    const remove=make("button","pantry-delete","Delete item");
+    const actionCell=make("td","pantry-row-actions pantry-sticky-delete");
+    const remove=make("button","pantry-delete");
+    remove.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v6M14 11v6"/></svg><span>Delete item</span>';
     remove.type="button";remove.setAttribute("aria-label","Delete "+(d.name||"this item"));
     remove.addEventListener("click",()=>{
       if(!confirm('Delete "'+(d.name||"this item")+'" from this sample inventory?'))return;
@@ -179,7 +164,6 @@
     const matches=data.filter(filterMatches);
     const built=matches.map(createItem);
     tbody.replaceChildren(...built.map(x=>x.row));
-    masterState();
     if(matches.length===0)status.textContent=data.length?"No pantry items match your search or filters.":"No items yet. Choose Add item to begin.";
     else status.textContent="";
     if(focusName&&focusId!=null){
@@ -188,14 +172,9 @@
     }
   }
   $("pantryAddItem").addEventListener("click",()=>{
-    const d={id:++nextId,name:"",category:"Other",frequency:"As needed",standard:0,current:0,unit:"pcs",lastPurchase:"",purchaseQty:0,supplier:"",lastUpdated:"",selected:false,cart:false,expanded:true};
+    const d={id:++nextId,name:"",category:"Other",frequency:"As needed",standard:0,current:0,unit:"pcs",lastPurchase:"",purchaseQty:0,supplier:"",lastUpdated:"",cart:false,expanded:true};
     data.unshift(d);search.value="";categoryFilter.value="all";stockFilter.value="all";
     render(d.id,true);
-  });
-  master.addEventListener("change",()=>{
-    const checked=master.checked;
-    data.filter(filterMatches).forEach(d=>d.selected=checked);
-    render();
   });
   $("pantryClear").addEventListener("click",()=>{
     if(!data.length)return;
