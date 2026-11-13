@@ -477,3 +477,115 @@ body[data-hg-section="pantry"] .pantry-field-frequency select.pantry-input{
 @media(min-width:760px){
   body[data-hg-section="pantry"] .pantry-needed-subtitle{display:none!important}
 }
+
+/* HG-PANTRY-005 — Compact, aligned expanded item form on phones.
+   Keep the 13-column laptop table and collapsed cards unchanged. */
+@media(max-width:759px){
+  body[data-hg-section="pantry"] .pantry-table tr.pantry-item-row.pantry-open{
+    display:grid!important;
+    grid-template-columns:repeat(6,minmax(0,1fr));
+    gap:15px 12px;
+    align-items:start;
+    padding:19px 15px 16px;
+  }
+  body[data-hg-section="pantry"] .pantry-table tr.pantry-open td.pantry-item-name{
+    position:relative;
+    grid-column:1/-1;
+    grid-row:auto;
+    order:0;
+    width:100%!important;
+    min-width:0;
+    padding:0 0 13px!important;
+    border-bottom:1px solid var(--pantry-line)!important;
+  }
+  body[data-hg-section="pantry"] .pantry-table tr.pantry-open td.pantry-item-name::before{
+    content:"ITEM";
+    display:block;
+    margin:0 0 8px;
+    color:var(--pantry-muted);
+    font:750 10px/1.3 Inter,ui-sans-serif,system-ui,sans-serif;
+    letter-spacing:.07em;
+  }
+  body[data-hg-section="pantry"] .pantry-table tr.pantry-open .pantry-item-toggle{
+    position:absolute!important;
+    top:-7px;
+    right:0;
+    width:36px;
+    min-height:32px;
+    height:32px;
+    padding:0!important;
+    margin:0!important;
+    display:grid;
+    place-items:center;
+  }
+  body[data-hg-section="pantry"] .pantry-table tr.pantry-open .pantry-item-toggle .pantry-chevron{
+    margin:0;
+    width:24px;
+    font-size:27px;
+  }
+  body[data-hg-section="pantry"] .pantry-table tr.pantry-open .pantry-item-name .pantry-name-edit{
+    display:block!important;
+    width:100%!important;
+    max-width:none!important;
+    box-sizing:border-box;
+    min-height:44px;
+    height:44px;
+    margin:0;
+    padding:9px 11px!important;
+  }
+  body[data-hg-section="pantry"] .pantry-table tr.pantry-open td.pantry-field{
+    min-width:0!important;
+    width:100%!important;
+    grid-column:span 6;
+    align-self:start;
+  }
+  /* Group related inventory controls for quicker editing. */
+  body[data-hg-section="pantry"] .pantry-table tr.pantry-open td.pantry-field-category,
+  body[data-hg-section="pantry"] .pantry-table tr.pantry-open td.pantry-field-frequency{
+    grid-column:span 3;
+  }
+  body[data-hg-section="pantry"] .pantry-table tr.pantry-open td.pantry-field-standard,
+  body[data-hg-section="pantry"] .pantry-table tr.pantry-open td.pantry-field-current,
+  body[data-hg-section="pantry"] .pantry-table tr.pantry-open td.pantry-field-unit{
+    grid-column:span 2;
+  }
+  body[data-hg-section="pantry"] .pantry-table tr.pantry-open td.pantry-field-lastPurchase,
+  body[data-hg-section="pantry"] .pantry-table tr.pantry-open td.pantry-field-needed,
+  body[data-hg-section="pantry"] .pantry-table tr.pantry-open td.pantry-field-purchaseQty,
+  body[data-hg-section="pantry"] .pantry-table tr.pantry-open td.pantry-field-supplier{
+    grid-column:span 3;
+  }
+  body[data-hg-section="pantry"] .pantry-table tr.pantry-open td.pantry-field::before{
+    min-height:26px;
+    margin-bottom:5px;
+    display:flex;
+    align-items:end;
+    font-size:10px;
+    overflow-wrap:anywhere;
+  }
+  body[data-hg-section="pantry"] .pantry-table tr.pantry-open .pantry-field .pantry-input,
+  body[data-hg-section="pantry"] .pantry-table tr.pantry-open .pantry-field output{
+    width:100%;
+    max-width:100%;
+    box-sizing:border-box;
+    min-width:0;
+    height:44px;
+    min-height:44px;
+    margin:0;
+  }
+  body[data-hg-section="pantry"] .pantry-table tr.pantry-open td.pantry-field-cart{
+    grid-column:1/-1;
+    order:13;
+    padding-top:8px!important;
+    border-top:1px solid var(--pantry-line)!important;
+  }
+  body[data-hg-section="pantry"] .pantry-table tr.pantry-open td.pantry-field-cart::before{
+    display:none!important;
+  }
+  body[data-hg-section="pantry"] .pantry-table tr.pantry-open td.pantry-row-actions{
+    grid-column:1/-1;
+    order:15;
+    justify-content:flex-end;
+    padding-top:0!important;
+  }
+}
