@@ -91,7 +91,11 @@
   // The original filter-popover handler remains intact; prevent the existing
   // document-level click-away handler closing it in the same click.
   filterButton.addEventListener("click", event => {
-    if (mobile.matches) event.stopPropagation();
+    if (!mobile.matches) return;
+    event.stopPropagation();
+    const bounds = filterButton.getBoundingClientRect();
+    filterPanel.style.top = Math.min(window.innerHeight - 90, bounds.bottom + 8) + "px";
+    filterPanel.style.right = Math.max(12, window.innerWidth - bounds.right) + "px";
   });
   calendarButton.addEventListener("click", event => {
     if (!mobile.matches) return;
