@@ -156,15 +156,25 @@
     }
     save();draw();
   });
-  const moreButton=document.getElementById("cartHeaderMore");
-  const morePanel=document.getElementById("cartMorePanel");
-  function setMore(open){
-    morePanel.hidden=!open;
-    moreButton.setAttribute("aria-expanded",String(open));
-  }
+  // Header actions follow Bulk Cooking's established archive/delete pattern.
+  // Archiving must not erase the Cart until a real History destination exists.
+  document.getElementById("cartArchiveReset").addEventListener("click",()=>{
+    window.alert("Archive & Reset is not available yet. Cart History has not been implemented, so your items have NOT been cleared.");
+  });
+  document.getElementById("cartDeleteAll").addEventListener("click",()=>{
+    if(!items.length)return;
+    if(!window.confirm("Delete all Cart items without archiving? This cannot be undone."))return;
+    items=[];
+    openCards.clear();
+    search.value="";
+    filter.value="all";
+    save();
+    draw();
+  });
   document.getElementById("cartSearchAction").addEventListener("click",()=>search.focus());
   document.getElementById("cartHeaderSearch").addEventListener("click",()=>{
-    setMore(false);search.focus();search.scrollIntoView({block:"nearest"});
+    search.focus();
+    search.scrollIntoView({block:"nearest"});
   });
   const filterButton=document.getElementById("cartFilterAction");
   const filterPanel=document.getElementById("cartFilterPanel");
@@ -172,40 +182,19 @@
     filterPanel.hidden=!open;
     filterButton.setAttribute("aria-expanded",String(open));
   }
-  function toggleFilter(){
-    setMore(false);
-    setFilter(filterPanel.hidden);
-    if(!filterPanel.hidden)filter.focus();
-  }
   filterButton.addEventListener("click",event=>{
     event.stopPropagation();
-    toggleFilter();
-  });
-  document.getElementById("cartHeaderFilter").addEventListener("click",event=>{
-    event.stopPropagation();
-    toggleFilter();
-    if(!filterPanel.hidden)filterButton.scrollIntoView({block:"nearest"});
+    setFilter(filterPanel.hidden);
+    if(!filterPanel.hidden)filter.focus();
   });
   filterPanel.addEventListener("click",event=>event.stopPropagation());
-  moreButton.addEventListener("click",event=>{
-    event.stopPropagation();setMore(morePanel.hidden);
-  });
-  morePanel.addEventListener("click",event=>event.stopPropagation());
-  document.getElementById("cartMoreAdd").addEventListener("click",()=>{
-    setMore(false);document.getElementById("cartAdd").click();
-  });
-  document.getElementById("cartClearFilters").addEventListener("click",()=>{
-    setMore(false);search.value="";filter.value="all";draw();
-  });
   document.addEventListener("click",event=>{
-    if(!morePanel.contains(event.target) && !moreButton.contains(event.target))setMore(false);
-    if(!filterPanel.contains(event.target) && !filterButton.contains(event.target) && !document.getElementById("cartHeaderFilter").contains(event.target))setFilter(false);
+    if(!filterPanel.contains(event.target) && !filterButton.contains(event.target))setFilter(false);
   });
   document.addEventListener("keydown",event=>{
     if(event.key==="Escape" && !filterPanel.hidden){
-      setFilter(false);filterButton.focus();
-    }else if(event.key==="Escape" && !morePanel.hidden){
-      setMore(false);moreButton.focus();
+      setFilter(false);
+      filterButton.focus();
     }
   });
   search.addEventListener("input",draw);
