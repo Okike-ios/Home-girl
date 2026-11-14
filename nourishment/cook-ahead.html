@@ -92,7 +92,7 @@
     <label for="dishFilter">Show</label>
     <select id="dishFilter">
       <option value="all">All dishes</option>
-      <option value="selected">Selected for shopping</option>
+      <option value="selected">Selected for cart</option>
       <option value="unselected">Not selected</option>
     </select>
   </div>
@@ -189,11 +189,11 @@
               <th class="cooked-column">Cooked on</th>
               <th class="shopping-column sticky-shopping">
                 <label class="master-label">
-                  <input id="masterShoppingCheck" type="checkbox" aria-label="Select all dishes for shopping list">
-                  <span class="shopping-heading-full">Add to <br>shopping list</span>
-                  <span class="shopping-heading-short" aria-hidden="true">ATS</span>
+                  <input id="masterShoppingCheck" type="checkbox" aria-label="Select all dishes for cart">
+                  <span class="shopping-heading-full">Add to<br>cart</span>
+                  <span class="shopping-heading-short" aria-hidden="true">ATC</span>
                 </label>
-                <span class="desktop-shopping-heading">Add to shopping list</span>
+                <span class="desktop-shopping-heading">Add to cart</span>
               </th>
               <th class="delete-column" scope="col" aria-label="Delete dish" title="Delete dish"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v6M14 11v6"/></svg></th>
             </tr>
@@ -207,7 +207,7 @@
               <td><input class="cell-input" type="number" min="0" value="2" aria-label="To cook"></td>
               <td><input class="cell-input" placeholder="—" aria-label="Last updated"></td>
               <td><input class="cell-input" type="date" aria-label="Cooked on"></td>
-              <td class="shopping-column sticky-shopping"><input class="shopping-check" type="checkbox" aria-label="Add Egusi Soup to shopping list"></td>
+              <td class="shopping-column sticky-shopping"><input class="shopping-check" type="checkbox" aria-label="Add Egusi Soup to cart"></td>
               <td class="delete-column"><button class="desktop-dish-delete" type="button" aria-label="Delete this dish" title="Delete dish"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v6M14 11v6"/></svg></button></td>
             </tr>
             <tr data-dish-row>
@@ -217,7 +217,7 @@
               <td><input class="cell-input" type="number" min="0" value="3" aria-label="To cook"></td>
               <td><input class="cell-input" placeholder="—" aria-label="Last updated"></td>
               <td><input class="cell-input" type="date" aria-label="Cooked on"></td>
-              <td class="shopping-column sticky-shopping"><input class="shopping-check" type="checkbox" aria-label="Add Tomato Stew to shopping list"></td>
+              <td class="shopping-column sticky-shopping"><input class="shopping-check" type="checkbox" aria-label="Add Tomato Stew to cart"></td>
               <td class="delete-column"><button class="desktop-dish-delete" type="button" aria-label="Delete this dish" title="Delete dish"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v6M14 11v6"/></svg></button></td>
             </tr>
             <tr data-dish-row>
@@ -227,7 +227,7 @@
               <td><input class="cell-input" type="number" min="0" value="4" aria-label="To cook"></td>
               <td><input class="cell-input" placeholder="—" aria-label="Last updated"></td>
               <td><input class="cell-input" type="date" aria-label="Cooked on"></td>
-              <td class="shopping-column sticky-shopping"><input class="shopping-check" type="checkbox" aria-label="Add Chicken Curry to shopping list"></td>
+              <td class="shopping-column sticky-shopping"><input class="shopping-check" type="checkbox" aria-label="Add Chicken Curry to cart"></td>
               <td class="delete-column"><button class="desktop-dish-delete" type="button" aria-label="Delete this dish" title="Delete dish"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v6M14 11v6"/></svg></button></td>
             </tr>
             <tr data-dish-row>
@@ -237,7 +237,7 @@
               <td><input class="cell-input" type="number" min="0" value="2" aria-label="To cook"></td>
               <td><input class="cell-input" placeholder="—" aria-label="Last updated"></td>
               <td><input class="cell-input" type="date" aria-label="Cooked on"></td>
-              <td class="shopping-column sticky-shopping"><input class="shopping-check" type="checkbox" aria-label="Add Jollof Rice to shopping list"></td>
+              <td class="shopping-column sticky-shopping"><input class="shopping-check" type="checkbox" aria-label="Add Jollof Rice to cart"></td>
               <td class="delete-column"><button class="desktop-dish-delete" type="button" aria-label="Delete this dish" title="Delete dish"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v6M14 11v6"/></svg></button></td>
             </tr>
             <tr data-dish-row>
@@ -247,7 +247,7 @@
               <td><input class="cell-input" type="number" min="0" value="4" aria-label="To cook"></td>
               <td><input class="cell-input" placeholder="—" aria-label="Last updated"></td>
               <td><input class="cell-input" type="date" aria-label="Cooked on"></td>
-              <td class="shopping-column sticky-shopping"><input class="shopping-check" type="checkbox" aria-label="Add Beans and Plantain to shopping list"></td>
+              <td class="shopping-column sticky-shopping"><input class="shopping-check" type="checkbox" aria-label="Add Beans and Plantain to cart"></td>
               <td class="delete-column"><button class="desktop-dish-delete" type="button" aria-label="Delete this dish" title="Delete dish"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v6M14 11v6"/></svg></button></td>
             </tr>
             <tr data-dish-row>
@@ -257,14 +257,14 @@
               <td><input class="cell-input" type="number" min="0" value="4" aria-label="To cook"></td>
               <td><input class="cell-input" placeholder="—" aria-label="Last updated"></td>
               <td><input class="cell-input" type="date" aria-label="Cooked on"></td>
-              <td class="shopping-column sticky-shopping"><input class="shopping-check" type="checkbox" aria-label="Add Moi Moi to shopping list"></td>
+              <td class="shopping-column sticky-shopping"><input class="shopping-check" type="checkbox" aria-label="Add Moi Moi to cart"></td>
               <td class="delete-column"><button class="desktop-dish-delete" type="button" aria-label="Delete this dish" title="Delete dish"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v6M14 11v6"/></svg></button></td>
             </tr>
           </tbody>
         </table>
       </div>
 
-      <p class="mobile-scroll-note">↔ Swipe sideways to see other columns. Dish and shopping selection stay visible.</p>
+      <p class="mobile-scroll-note">↔ Swipe sideways to see other columns. Dish and cart selection stay visible.</p>
       <p class="empty-message" id="emptyMessage" hidden>No dishes match your search or filter.</p>
     </section>
 
