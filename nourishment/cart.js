@@ -240,7 +240,9 @@
     if(!item)return;
     if(event.target.closest(".cart-delete")){
       if(!window.confirm('Delete "'+(item.name.trim()||"this item")+'" from Cart?'))return;
-      items=items.filter(x=>x.id!==item.id);openCards.delete(item.id);save();draw();return;
+      activeCart().items=activeCart().items.filter(x=>x.id!==item.id);
+      items=activeCart().items;
+      openCards.delete(item.id);save();draw();return;
     }
     if(event.target.closest(".cart-card-toggle")){
       if(openCards.has(item.id))openCards.delete(item.id);else openCards.add(item.id);
@@ -266,7 +268,17 @@
     tr.querySelector("[data-total]").textContent=money(total(item));
     tr.querySelector(".cart-card-name").textContent=item.name.trim()||"New item";
     tr.querySelector(".cart-card-summary").textContent=(item.quantity||"—")+" "+(item.unit||"")+" · "+money(total(item));
-    save();summaries();renderCards();
+    save();summaries();
+    // Do not recreate the open Cart while typing: that would detach a focused
+    // input and interrupt editing on both phone and desktop.
+    const cardHeader=cardsHost.querySelector('.cart-collection-card.is-expanded');
+    if(cardHeader){
+      const cart=activeCart();
+      const summary=cardHeader.querySelector('.cart-collection-details small');
+      const cost=cardHeader.querySelector('.cart-collection-cost');
+      if(summary)summary.textContent=cart.id+" · "+cart.items.length+" items · "+cart.items.filter(x=>x.purchased).length+" purchased";
+      if(cost)cost.textContent=money(cartEstimate(cart));
+    }
   });
   tbody.addEventListener("change",event=>{
     const el=event.target,field=el.dataset.field;
