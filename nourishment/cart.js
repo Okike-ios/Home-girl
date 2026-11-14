@@ -166,9 +166,27 @@
   document.getElementById("cartHeaderSearch").addEventListener("click",()=>{
     setMore(false);search.focus();search.scrollIntoView({block:"nearest"});
   });
-  document.getElementById("cartHeaderFilter").addEventListener("click",()=>{
-    setMore(false);filter.focus();filter.scrollIntoView({block:"nearest"});
+  const filterButton=document.getElementById("cartFilterAction");
+  const filterPanel=document.getElementById("cartFilterPanel");
+  function setFilter(open){
+    filterPanel.hidden=!open;
+    filterButton.setAttribute("aria-expanded",String(open));
+  }
+  function toggleFilter(){
+    setMore(false);
+    setFilter(filterPanel.hidden);
+    if(!filterPanel.hidden)filter.focus();
+  }
+  filterButton.addEventListener("click",event=>{
+    event.stopPropagation();
+    toggleFilter();
   });
+  document.getElementById("cartHeaderFilter").addEventListener("click",event=>{
+    event.stopPropagation();
+    toggleFilter();
+    if(!filterPanel.hidden)filterButton.scrollIntoView({block:"nearest"});
+  });
+  filterPanel.addEventListener("click",event=>event.stopPropagation());
   moreButton.addEventListener("click",event=>{
     event.stopPropagation();setMore(morePanel.hidden);
   });
@@ -181,9 +199,12 @@
   });
   document.addEventListener("click",event=>{
     if(!morePanel.contains(event.target) && !moreButton.contains(event.target))setMore(false);
+    if(!filterPanel.contains(event.target) && !filterButton.contains(event.target) && !document.getElementById("cartHeaderFilter").contains(event.target))setFilter(false);
   });
   document.addEventListener("keydown",event=>{
-    if(event.key==="Escape" && !morePanel.hidden){
+    if(event.key==="Escape" && !filterPanel.hidden){
+      setFilter(false);filterButton.focus();
+    }else if(event.key==="Escape" && !morePanel.hidden){
       setMore(false);moreButton.focus();
     }
   });
