@@ -123,9 +123,9 @@
     const checkbox = document.createElement("input");
     checkbox.type = "checkbox";
     checkbox.checked = d.selected;
-    checkbox.setAttribute("aria-label","Add " + (d.name || "new dish") + " to shopping list");
+    checkbox.setAttribute("aria-label","Add " + (d.name || "new dish") + " to cart");
     const labelText = document.createElement("span");
-    labelText.textContent = "Add to shopping list";
+    labelText.textContent = "Add to cart";
     checkbox.addEventListener("change",() => {
       d.selected = checkbox.checked;
       row.classList.toggle("quick-selected",d.selected);
