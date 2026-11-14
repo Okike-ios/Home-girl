@@ -467,3 +467,11 @@ body[data-hg-section="cart"] .cart-filter-action[aria-expanded="true"]{
   grid-column:auto;
  }
 }
+
+/* HG-CART-008: unified transparent header without a separator line. */
+body[data-hg-section="cart"] > .app-header{
+ border-bottom:0!important;
+ background:transparent!important;
+ box-shadow:none!important;
+ backdrop-filter:none!important;
+}
