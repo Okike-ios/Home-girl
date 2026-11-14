@@ -184,7 +184,7 @@
     checkbox.className = "shopping-check";
     checkbox.setAttribute(
       "aria-label",
-      `Add ${day} meals to shopping list`
+      `Add ${day} meals to cart`
     );
 
     shoppingLabel.appendChild(checkbox);
