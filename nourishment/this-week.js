@@ -436,7 +436,7 @@
 
   function resetWeek() {
     const confirmed = window.confirm(
-      "Reset this week? This clears the week name, dates, meal components, and shopping selections."
+      "Reset this week? This clears the week name, dates, meal components, and cart selections."
     );
 
     if (!confirmed) return;
