@@ -32,10 +32,26 @@
       return [];
     }
   }
+  // Demo rows are inserted only for a brand-new browser Cart.
+  // An existing saved array (even []) is never replaced or re-seeded.
+  const sampleItems = [
+    {id:"demo-rice",name:"Rice",quantity:"5",unit:"kg",unitPrice:"1800",purchasedQuantity:"5",purchasedPrice:"9200",supplier:"Local market",purchased:true,date:"2026-11-14"},
+    {id:"demo-tomatoes",name:"Tomatoes",quantity:"2",unit:"kg",unitPrice:"3500",purchasedQuantity:"",purchasedPrice:"",supplier:"Vegetable stall",purchased:false,date:""},
+    {id:"demo-chicken",name:"Chicken",quantity:"1",unit:"kg",unitPrice:"8000",purchasedQuantity:"1",purchasedPrice:"7800",supplier:"Butcher",purchased:true,date:"2026-11-14"},
+    {id:"demo-onions",name:"Onions",quantity:"1",unit:"kg",unitPrice:"2000",purchasedQuantity:"",purchasedPrice:"",supplier:"Local market",purchased:false,date:""}
+  ];
   let items = load();
+  let firstVisit = false;
+  try { firstVisit = localStorage.getItem(KEY) === null; }
+  catch(err) { console.warn("Cart storage unavailable",err); }
+
   function save() {
     try {localStorage.setItem(KEY,JSON.stringify(items));}
     catch(err) { document.getElementById("cartStatus").textContent="Changes could not be saved in this browser."; console.warn(err); }
+  }
+  if(firstVisit){
+    items=sampleItems.map(item=>({...defaults,...item}));
+    save();
   }
   function total(item) {return num(item.quantity)*num(item.unitPrice);}
   function summaries() {
@@ -139,6 +155,36 @@
       item[field]="0";
     }
     save();draw();
+  });
+  const moreButton=document.getElementById("cartHeaderMore");
+  const morePanel=document.getElementById("cartMorePanel");
+  function setMore(open){
+    morePanel.hidden=!open;
+    moreButton.setAttribute("aria-expanded",String(open));
+  }
+  document.getElementById("cartHeaderSearch").addEventListener("click",()=>{
+    setMore(false);search.focus();search.scrollIntoView({block:"nearest"});
+  });
+  document.getElementById("cartHeaderFilter").addEventListener("click",()=>{
+    setMore(false);filter.focus();filter.scrollIntoView({block:"nearest"});
+  });
+  moreButton.addEventListener("click",event=>{
+    event.stopPropagation();setMore(morePanel.hidden);
+  });
+  morePanel.addEventListener("click",event=>event.stopPropagation());
+  document.getElementById("cartMoreAdd").addEventListener("click",()=>{
+    setMore(false);document.getElementById("cartAdd").click();
+  });
+  document.getElementById("cartClearFilters").addEventListener("click",()=>{
+    setMore(false);search.value="";filter.value="all";draw();
+  });
+  document.addEventListener("click",event=>{
+    if(!morePanel.contains(event.target) && !moreButton.contains(event.target))setMore(false);
+  });
+  document.addEventListener("keydown",event=>{
+    if(event.key==="Escape" && !morePanel.hidden){
+      setMore(false);moreButton.focus();
+    }
   });
   search.addEventListener("input",draw);
   filter.addEventListener("change",draw);
