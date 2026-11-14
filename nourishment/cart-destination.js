@@ -32,7 +32,23 @@
  picker.addEventListener("close",()=>{pending=[];error.hidden=true;});
  function getCarts(){
    const raw=localStorage.getItem(KEY);
-   if(raw===null)throw Error("Open the Cart page once to initialize your Cart collection.");
+   if(raw===null){
+     // First add can originate outside Cart. Preserve a previously saved
+     // single-Cart array and initialize an empty My Cart when none exists.
+     const old=localStorage.getItem("hg-cart-items-v1");
+     let previous=[];
+     if(old!==null){
+       previous=JSON.parse(old);
+       if(!Array.isArray(previous))throw Error("Existing Cart data cannot be read safely.");
+     }
+     const initial=[{
+       id:"CART-DEMO-001",name:"My Cart",status:"active",
+       createdAt:new Date().toISOString(),updatedAt:new Date().toISOString(),
+       items:previous
+     }];
+     localStorage.setItem(KEY,JSON.stringify(initial));
+     return initial;
+   }
    const carts=JSON.parse(raw);
    if(!Array.isArray(carts)||carts.some(c=>!c||typeof c!=="object"||typeof c.id!=="string"||!Array.isArray(c.items)))
      throw Error("Saved Cart data is not recognized. No changes were made.");
