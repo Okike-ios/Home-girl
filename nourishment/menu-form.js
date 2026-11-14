@@ -187,7 +187,7 @@ if(demoEditMode){
     const submit=document.querySelector(".save-button");
     if(submit)submit.textContent="Save Changes";
     const note=document.querySelector(".save-section > p");
-    if(note)note.textContent="Demo only — changes to sample dishes stay in this browser.";
+    if(note)note.textContent="Changes are saved in this browser only.";
 
     document.getElementById("dish-name").value=demoEditPayload.name||"";
     document.getElementById("servings").value=demoEditPayload.serves||4;
@@ -227,12 +227,12 @@ if(demoEditMode){
       }
     }
   }else{
-    // Do not risk an accidental Supabase insert when edit context is missing.
+    // Do not convert an invalid edit link into an accidental new dish.
     const form=document.getElementById("dish-form");
     form.addEventListener("submit",event=>{
       event.preventDefault();
       event.stopImmediatePropagation();
-      alert("This sample dish could not be loaded. Return to The Menu and select Edit again.");
+      alert("This dish could not be loaded. Return to The Menu and select Edit again.");
     },true);
   }
 }
