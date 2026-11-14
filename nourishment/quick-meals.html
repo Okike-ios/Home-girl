@@ -80,14 +80,14 @@
 <button class="quick-square" id="quickSearchAction" type="button" title="Search dishes" aria-label="Search Menu dishes"><svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg></button>
 <button class="quick-square" id="quickFilterButton" type="button" aria-label="Filter dishes" aria-expanded="false" aria-controls="quickFilterPanel"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/><circle cx="9" cy="6" r="1.5"/><circle cx="15" cy="12" r="1.5"/><circle cx="11" cy="18" r="1.5"/></svg></button>
 <div class="quick-filter-panel" id="quickFilterPanel" hidden>
-<label for="quickCategory">Show</label><select id="quickCategory"><option value="all">All dishes</option><option value="selected">Selected for shopping</option><option value="unselected">Not selected</option></select>
+<label for="quickCategory">Show</label><select id="quickCategory"><option value="all">All dishes</option><option value="selected">Selected for cart</option><option value="unselected">Not selected</option></select>
 </div>
 </section>
 <section class="quick-workspace" aria-label="Quick meal selection">
-<div class="quick-toolbar"><button id="quickAddDish" class="quick-add" type="button"><span aria-hidden="true">+</span> Add dish</button><label class="quick-select-all"><input id="quickSelectAll" type="checkbox" aria-label="Select all dishes for shopping list"><span>Add to shopping list</span></label></div>
+<div class="quick-toolbar"><button id="quickAddDish" class="quick-add" type="button"><span aria-hidden="true">+</span> Add dish</button><label class="quick-select-all"><input id="quickSelectAll" type="checkbox" aria-label="Select all dishes for cart"><span>Add to cart</span></label></div>
 <div class="quick-list-scroll">
 <table class="quick-table">
-<thead><tr><th>Dish</th><th>Serving</th><th>Add to shopping list</th><th>Mark as Cooked</th><th aria-label="Delete dish"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v6M14 11v6"/></svg></th></tr></thead>
+<thead><tr><th>Dish</th><th>Serving</th><th>Add to cart</th><th>Mark as Cooked</th><th aria-label="Delete dish"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v6M14 11v6"/></svg></th></tr></thead>
 <tbody id="quickRows"></tbody></table>
 </div>
 <p class="quick-status" id="quickStatus" role="status" aria-live="polite">Sample dishes for interface testing. These are not saved to The Menu.</p>
