@@ -37,7 +37,13 @@
   const freshId = () => window.crypto && crypto.randomUUID
     ? crypto.randomUUID() : "cart-"+Date.now()+"-"+Math.random().toString(36).slice(2);
   const validItems = array => Array.isArray(array) ? array.filter(x=>x && typeof x==="object" && x.id).map(x=>({
-    ...defaults,...Object.fromEntries(fields.filter(field=>field in x).map(field=>[field,x[field]])),id:String(x.id)
+    ...defaults,...Object.fromEntries(fields.filter(field=>field in x).map(field=>[field,x[field]])),
+    id:String(x.id),
+    // Preserve provenance so choosing a destination Cart can safely update
+    // the same unpurchased source entry without losing its origin on reload.
+    ...(typeof x.sourceModule==="string"?{sourceModule:x.sourceModule}:{}),
+    ...(typeof x.sourceKey==="string"?{sourceKey:x.sourceKey}:{}),
+    ...(typeof x.sourceDishId==="string"?{sourceDishId:x.sourceDishId}:{})
   })) : [];
   const createCart = (name,id,items=[]) => ({
     id, name, status:"active", createdAt:new Date().toISOString(),updatedAt:new Date().toISOString(),
