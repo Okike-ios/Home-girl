@@ -1,7 +1,15 @@
 /* HG-CART-004. Local-only editable Cart interface; no cross-module imports yet. */
 (() => {
   "use strict";
-  const KEY = "hg-cart-items-v1";
+  const KEY = "hg-carts-v1";
+  const LEGACY_KEY = "hg-cart-items-v1";
+  const cardsHost = document.getElementById("cartCards");
+  const detail = document.getElementById("cartDetail");
+  const collectionCount = document.getElementById("cartCollectionCount");
+  const collectionEmpty = document.getElementById("cartCollectionsEmpty");
+  const createButton = document.getElementById("cartCreate");
+  const createForm = document.getElementById("cartCreateForm");
+  const nameInput = document.getElementById("cartNameInput");
   const tbody = document.getElementById("cartRows");
   const search = document.getElementById("cartSearch");
   const filter = document.getElementById("cartFilter");
@@ -19,47 +27,163 @@
     const n = Number(value);
     return value === "" || !Number.isFinite(n) || n < 0 ? 0 : n;
   };
-  function load() {
-    try {
-      const stored = JSON.parse(localStorage.getItem(KEY) || "[]");
-      if (!Array.isArray(stored)) return [];
-      return stored.filter(x=>x && typeof x==="object" && x.id).map(x=>({
-        ...defaults,...Object.fromEntries(fields.filter(f=>f in x).map(f=>[f,x[f]])),
-        id:String(x.id)
-      }));
-    } catch(err) {
-      console.warn("Cart storage unavailable",err);
-      return [];
-    }
-  }
-  // Demo rows are inserted only for a brand-new browser Cart.
-  // An existing saved array (even []) is never replaced or re-seeded.
   const sampleItems = [
     {id:"demo-rice",name:"Rice",quantity:"5",unit:"kg",unitPrice:"1800",purchasedQuantity:"5",purchasedPrice:"9200",supplier:"Local market",purchased:true,date:"2026-11-14"},
     {id:"demo-tomatoes",name:"Tomatoes",quantity:"2",unit:"kg",unitPrice:"3500",purchasedQuantity:"",purchasedPrice:"",supplier:"Vegetable stall",purchased:false,date:""},
     {id:"demo-chicken",name:"Chicken",quantity:"1",unit:"kg",unitPrice:"8000",purchasedQuantity:"1",purchasedPrice:"7800",supplier:"Butcher",purchased:true,date:"2026-11-14"},
     {id:"demo-onions",name:"Onions",quantity:"1",unit:"kg",unitPrice:"2000",purchasedQuantity:"",purchasedPrice:"",supplier:"Local market",purchased:false,date:""}
   ];
-  let items = load();
-  let firstVisit = false;
-  try { firstVisit = localStorage.getItem(KEY) === null; }
-  catch(err) { console.warn("Cart storage unavailable",err); }
-
-  function save() {
-    try {localStorage.setItem(KEY,JSON.stringify(items));}
-    catch(err) { document.getElementById("cartStatus").textContent="Changes could not be saved in this browser."; console.warn(err); }
+  const freshId = () => window.crypto && crypto.randomUUID
+    ? crypto.randomUUID() : "cart-"+Date.now()+"-"+Math.random().toString(36).slice(2);
+  const validItems = array => Array.isArray(array) ? array.filter(x=>x && typeof x==="object" && x.id).map(x=>({
+    ...defaults,...Object.fromEntries(fields.filter(field=>field in x).map(field=>[field,x[field]])),id:String(x.id)
+  })) : [];
+  const createCart = (name,id,items=[]) => ({
+    id, name, status:"active", createdAt:new Date().toISOString(),updatedAt:new Date().toISOString(),
+    items:validItems(items)
+  });
+  // Migration is non-destructive: never delete or overwrite the former
+  // single-Cart key. An existing empty legacy Cart also remains empty.
+  let canSave = true;
+  function initialCarts(){
+    try {
+      const current=localStorage.getItem(KEY);
+      if(current!==null){
+        const decoded=JSON.parse(current);
+        if(!Array.isArray(decoded))throw Error("Invalid saved carts");
+        if(decoded.some(c=>!c || typeof c!=="object" || !c.id || !Array.isArray(c.items)))throw Error("Unrecognized saved carts");
+        return decoded.map(c=>({
+          ...c,id:String(c.id),name:String(c.name || "Untitled cart"),
+          items:validItems(c.items)
+        }));
+      }
+      const old=localStorage.getItem(LEGACY_KEY);
+      let previous=null;
+      if(old!==null){
+        const parsed=JSON.parse(old);
+        if(!Array.isArray(parsed))throw Error("Unrecognized previous Cart");
+        previous=validItems(parsed);
+      }
+      const initial=[
+        createCart("My Cart","CART-DEMO-001",previous===null?sampleItems:previous),
+        createCart("Weekend shopping","CART-DEMO-002",[]),
+        createCart("Household essentials","CART-DEMO-003",[])
+      ];
+      localStorage.setItem(KEY,JSON.stringify(initial));
+      return initial;
+    }catch(err){
+      console.warn("Cart data could not be read safely",err);
+      canSave=false;
+      return [];
+    }
   }
-  if(firstVisit){
-    items=sampleItems.map(item=>({...defaults,...item}));
-    save();
+  let carts=initialCarts();
+  let selectedId=carts.length?carts[0].id:null;
+  const activeCart=()=>carts.find(c=>c.id===selectedId)||null;
+  const itemsFor=c=>c?.items||[];
+  let items=itemsFor(activeCart());
+  function save(){
+    if(!canSave)return;
+    try{
+      const now=new Date().toISOString();
+      const current=activeCart();
+      if(current)current.updatedAt=now;
+      localStorage.setItem(KEY,JSON.stringify(carts));
+    }catch(err){
+      canSave=false;
+      const status=document.getElementById("cartStatus");
+      status.textContent="Changes could not be saved in this browser. Do not close the page.";
+      console.warn(err);
+    }
+  }
+  function showStatus(message){
+    document.getElementById("cartStatus").textContent=message;
   }
   function total(item) {return num(item.quantity)*num(item.unitPrice);}
+  function cartEstimate(cart){return itemsFor(cart).reduce((n,item)=>n+total(item),0);}
+  function cartActual(cart){return itemsFor(cart).reduce((n,item)=>n+num(item.purchasedPrice),0);}
   function summaries() {
-    estimate.textContent=money(items.reduce((n,item)=>n+total(item),0));
-    actual.textContent=money(items.reduce((n,item)=>n+num(item.purchasedPrice),0));
+    const current=activeCart();
+    estimate.textContent=money(cartEstimate(current));
+    actual.textContent=money(cartActual(current));
     const bought=items.filter(x=>x.purchased).length;
     count.textContent=items.length+" item"+(items.length===1?"":"s")+" · "+bought+" purchased";
   }
+  function renderCards(){
+    cardsHost.replaceChildren();
+    collectionCount.textContent=carts.length+" cart"+(carts.length===1?"":"s");
+    collectionEmpty.hidden=carts.length!==0;
+    carts.forEach(cart=>{
+      const expanded=cart.id===selectedId;
+      const card=document.createElement("article");
+      card.className="cart-collection-card"+(expanded?" is-expanded":"");
+      card.dataset.cartId=cart.id;
+      const quantity=cart.items.length, bought=cart.items.filter(x=>x.purchased).length;
+      card.innerHTML='<div class="cart-collection-card-header">'+
+        '<button class="cart-collection-toggle" type="button" aria-expanded="'+expanded+'" aria-controls="cartDetail">'+
+        '<span class="cart-collection-chevron" aria-hidden="true">⌄</span>'+
+        '<span class="cart-collection-details"><strong>'+safe(cart.name)+'</strong>'+
+        '<small>'+safe(cart.id)+' · '+quantity+' items · '+bought+' purchased</small></span>'+
+        '<span class="cart-collection-cost">'+money(cartEstimate(cart))+'</span></button>'+
+        '<button class="cart-rename" type="button" aria-label="Rename '+safe(cart.name)+'" title="Rename cart">Rename</button></div>';
+      cardsHost.appendChild(card);
+      if(expanded){
+        card.appendChild(detail);
+        detail.hidden=false;
+      }
+    });
+    if(!activeCart()){
+      detail.hidden=true;
+      // Keep the same element available for reopening any card.
+      cardsHost.appendChild(detail);
+    }
+  }
+  function selectCart(id){
+    selectedId=selectedId===id?null:id;
+    items=itemsFor(activeCart());
+    openCards.clear();
+    search.value="";
+    filter.value="all";
+    draw();
+  }
+  cardsHost.addEventListener("click",event=>{
+    const card=event.target.closest(".cart-collection-card");
+    if(!card)return;
+    const cart=carts.find(c=>c.id===card.dataset.cartId);
+    if(!cart)return;
+    if(event.target.closest(".cart-rename")){
+      const updated=window.prompt("Rename this cart",cart.name);
+      if(updated===null)return;
+      const name=updated.trim();
+      if(!name){window.alert("Please enter a Cart name.");return;}
+      if(name.length>70){window.alert("Keep Cart names under 70 characters.");return;}
+      cart.name=name;
+      save();renderCards();return;
+    }
+    if(event.target.closest(".cart-collection-toggle"))selectCart(cart.id);
+  });
+  createButton.addEventListener("click",()=>{
+    createForm.hidden=!createForm.hidden;
+    if(!createForm.hidden)nameInput.focus();
+  });
+  document.getElementById("cartCancelCreate").addEventListener("click",()=>{
+    createForm.hidden=true;
+    nameInput.value="";
+  });
+  createForm.addEventListener("submit",event=>{
+    event.preventDefault();
+    if(!canSave){window.alert("Browser Cart storage is unavailable, so new Carts cannot be saved.");return;}
+    const name=nameInput.value.trim();
+    if(!name){nameInput.focus();return;}
+    const cart=createCart(name,freshId());
+    carts.unshift(cart);
+    selectedId=cart.id;
+    items=cart.items;
+    openCards.clear();
+    search.value="";filter.value="all";
+    save();draw();
+    createForm.hidden=true;nameInput.value="";
+  });
   function input(item,field,label,type="text") {
     const isNum=type==="number";
     const attrs=isNum?' min="0" step="any" inputmode="decimal"':"";
@@ -91,6 +215,7 @@
       [item.name,item.unit,item.supplier].some(v=>String(v).toLowerCase().includes(query)));
   }
   function draw() {
+    renderCards();
     tbody.replaceChildren();
     const visible=visibleItems();
     visible.forEach(item=>tbody.appendChild(row(item)));
@@ -141,7 +266,7 @@
     tr.querySelector("[data-total]").textContent=money(total(item));
     tr.querySelector(".cart-card-name").textContent=item.name.trim()||"New item";
     tr.querySelector(".cart-card-summary").textContent=(item.quantity||"—")+" "+(item.unit||"")+" · "+money(total(item));
-    save();summaries();
+    save();summaries();renderCards();
   });
   tbody.addEventListener("change",event=>{
     const el=event.target,field=el.dataset.field;
@@ -162,9 +287,10 @@
     window.alert("Archive & Reset is not available yet. Cart History has not been implemented, so your items have NOT been cleared.");
   });
   document.getElementById("cartDeleteAll").addEventListener("click",()=>{
-    if(!items.length)return;
-    if(!window.confirm("Delete all Cart items without archiving? This cannot be undone."))return;
-    items=[];
+    if(!activeCart() || !items.length)return;
+    if(!window.confirm('Delete all items from "'+activeCart().name+'" without archiving? This cannot be undone.'))return;
+    activeCart().items=[];
+    items=activeCart().items;
     openCards.clear();
     search.value="";
     filter.value="all";
