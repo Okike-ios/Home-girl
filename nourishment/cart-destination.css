@@ -1,0 +1,46 @@
+/* HG-CART-011: shared named Cart destination dialog (Nourishment OS). */
+.hg-cart-destination{
+ position:fixed;inset:0;margin:auto;
+ width:min(510px,calc(100vw - 28px));
+ max-width:calc(100vw - 28px);max-height:calc(100dvh - 30px);
+ overflow-y:auto;padding:0;
+ border:1px solid #e9c9bb;border-radius:23px;
+ background:#fffaf8;color:#593d33;
+ box-shadow:0 20px 70px #44202438;
+ font-family:Arial,sans-serif;
+}
+.hg-cart-destination::backdrop{background:#2c171da8}
+.hg-cart-destination *{box-sizing:border-box}
+.hg-cart-destination-panel{padding:23px}
+.hg-cart-destination header{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.hg-cart-destination h2{margin:0;color:#a7533c;font:400 28px Georgia,serif}
+.hg-cart-destination .hg-cart-destination-close{
+ display:grid;place-items:center;width:38px;height:38px;
+ padding:0;background:#fff3ec;color:#a7533c;
+ border:1px solid #eddbd2;border-radius:12px;
+ font:24px Arial,sans-serif;cursor:pointer
+}
+.hg-cart-destination-intro,.hg-cart-destination-preview,.hg-cart-destination-hint{
+ margin:12px 0;color:#896c60;font:13px/1.55 Arial,sans-serif;
+}
+.hg-cart-destination-preview{font-weight:700;color:#a7533c}
+.hg-cart-destination label{display:block;margin:16px 0 7px;color:#6e4537;font:700 12px Arial,sans-serif}
+.hg-cart-destination select,.hg-cart-destination input{
+ width:100%;min-width:0;min-height:45px;padding:10px 12px;
+ border:1px solid #eddbd2;border-radius:12px;
+ background:white;color:#593d33;font:14px Arial,sans-serif;
+}
+.hg-cart-destination select:focus-visible,.hg-cart-destination input:focus-visible,.hg-cart-destination button:focus-visible{
+ outline:2px solid #a7533c;outline-offset:2px
+}
+.hg-cart-destination-create{padding-top:4px}
+.hg-cart-destination-hint{padding:10px 12px;background:#fbece4;border-radius:10px}
+.hg-cart-destination-error{color:#922b31;font:12px/1.45 Arial,sans-serif}
+.hg-cart-destination footer{display:flex;justify-content:flex-end;flex-wrap:wrap;gap:9px;margin-top:17px}
+.hg-cart-destination footer button{min-height:43px;padding:10px 15px;border-radius:12px;cursor:pointer;font:700 13px Arial,sans-serif}
+.hg-cart-destination-cancel{background:#fff;border:1px solid #eddbd2;color:#a7533c}
+.hg-cart-destination-save{background:#a7533c;border:1px solid #a7533c;color:#fffaf8}
+@media(max-width:400px){
+ .hg-cart-destination-panel{padding:17px}
+ .hg-cart-destination footer button{flex:1}
+}
