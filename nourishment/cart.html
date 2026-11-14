@@ -7,7 +7,7 @@
 <title>Cart | Home Girl</title>
 <link rel="stylesheet" href="homegirl-integration.css?v=hg-nourishment-001">
 <link rel="stylesheet" href="hg-sidebar.css?v=hg-nour-006">
-<link rel="stylesheet" href="cart.css?v=hg-cart-004">
+<link rel="stylesheet" href="cart.css?v=hg-cart-005">
 </head>
 <body data-hg-section="cart" >
 <svg class="svg-defs" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -58,13 +58,20 @@
 <p class="hg-mobile-system-kicker">NOURISHMENT OS</p>
   <header class="app-header">
     <nav class="header-side" aria-label="Page navigation">
-      <a class="icon-button" href="nourishment-os.html" aria-label="Back to Nourishment OS" title="Back to Nourishment OS"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5m6-6-6 6 6 6"/></svg></a>
+      <a class="icon-button cart-back-button" href="nourishment-os.html" aria-label="Back to Nourishment OS" title="Back to Nourishment OS"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5m6-6-6 6 6 6"/></svg></a>
+      <button class="icon-button cart-header-search" id="cartHeaderSearch" type="button" aria-label="Search Cart" title="Search Cart"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg></button>
+      <span class="cart-mobile-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 5h2l2.3 11h11.5l2-8H6M10 20h.01M18 20h.01"/></svg></span>
     </nav>
     <div class="header-title">Cart</div>
-    <nav class="header-side right">
-      <a class="icon-button" href="pantry.html" aria-label="Open Pantry" title="Pantry"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v15H4zM7 5v15M11 9h6M11 13h6"/></svg></a>
+    <nav class="header-side right" aria-label="Page tools">
+      <button class="icon-button" id="cartHeaderFilter" type="button" aria-label="Filter Cart" title="Filter Cart"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/><circle cx="9" cy="6" r="1.5"/><circle cx="15" cy="12" r="1.5"/><circle cx="11" cy="18" r="1.5"/></svg></button>
+      <button class="icon-button" id="cartHeaderMore" type="button" aria-label="More Cart options" aria-expanded="false" aria-controls="cartMorePanel" title="More Cart options"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="19" r="1.5"/></svg></button>
     </nav>
   </header>
+  <div class="cart-more-panel" id="cartMorePanel" hidden>
+    <button type="button" id="cartMoreAdd">Add an item</button>
+    <button type="button" id="cartClearFilters">Clear search and filters</button>
+  </div>
   <main class="main-content">
     <section class="cart-intro" aria-label="Cart introduction">
       <div><h1>Your shopping cart</h1><p>Everything you need, all in one place.</p></div>
@@ -104,11 +111,12 @@
         </table>
       </div>
       <p id="cartEmpty" class="cart-empty">Your Cart is empty. Add an item to get started.</p>
+      <p class="cart-note"><strong>Sample items:</strong> On your first visit, example groceries are included so you can test the Cart. You can edit or delete them. Existing saved Cart items will never be replaced.</p>
       <p class="cart-note">Changes are stored in this browser only. This Cart is not yet linked to Bulk Cooking, This Week, Quick Meals, or Pantry; ingredient conversion and cross-module totals come next.</p>
       <p id="cartStatus" class="cart-note" role="status"></p>
     </section>
   </main>
-<script src="cart.js?v=hg-cart-004"></script>
+<script src="cart.js?v=hg-cart-005"></script>
 <script src="hg-sidebar.js?v=hg-nour-002" defer></script>
 <nav class="hg-mobile-bottom-nav" aria-label="Primary navigation">
   <a href="../index.html?view=dashboard"><svg aria-hidden="true"><use href="#i-grid"/></svg><span>Dashboard</span></a>
