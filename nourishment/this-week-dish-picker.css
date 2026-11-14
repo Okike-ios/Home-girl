@@ -1,0 +1,13 @@
+/* HG-NOUR-003 — center the Menu dish selector in This Week.
+   Scope this override to the weekly planner so the shared picker
+   retains its existing appearance in Bulk Cooking and Quick Meals. */
+body[data-hg-section="week"] dialog.hg-dish-picker[open] {
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  width: min(480px, calc(100vw - 32px));
+  max-width: calc(100vw - 32px);
+  max-height: calc(100dvh - 32px);
+  overflow-y: auto;
+  box-sizing: border-box;
+}
