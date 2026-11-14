@@ -16,16 +16,9 @@
   const mobile = window.matchMedia("(max-width:759px)");
   if (!rows || !search || !selectAll || !add) return;
 
-  const examples = [
-    {name:"Egusi Soup",servings:2},
-    {name:"Tomato Stew",servings:1},
-    {name:"Chicken Curry",servings:3},
-    {name:"Jollof Rice",servings:4},
-    {name:"Beans & Plantain",servings:2},
-    {name:"Moi Moi",servings:3}
-  ];
+  const examples = window.HomeGirlDishes.list();
   let nextId = 0;
-  const dishes = examples.map(d => ({id:++nextId,name:d.name,servings:d.servings,selected:false,cooked:false,expanded:false}));
+  const dishes = examples.map(d => ({id:++nextId,dishId:d.id,name:d.name,servings:d.serves,selected:false,cooked:false,expanded:false}));
   const selectedCount = () => dishes.filter(d => d.selected).length;
   function showStatus(message) {status.textContent = message || "";}
 
@@ -75,9 +68,11 @@
     nameField.placeholder = "Dish name";
     nameField.maxLength = 100;
     nameField.value = d.name;
+    if(d.dishId) nameField.dataset.dishId=d.dishId;
     nameField.setAttribute("aria-label","Dish name");
     nameField.addEventListener("input",() => {
       d.name = nameField.value;
+      d.dishId = nameField.dataset.dishId || null;
       title.textContent = d.name || "New dish";
       toggle.setAttribute("aria-label",(d.expanded?"Close ":"Edit ") + (d.name || "new dish") + " details");
     });
@@ -195,7 +190,7 @@
   }
 
   add.addEventListener("click",() => {
-    const d={id:++nextId,name:"",servings:1,selected:false,cooked:false,expanded:true};
+    const d={id:++nextId,dishId:null,name:"",servings:1,selected:false,cooked:false,expanded:true};
     dishes.unshift(d);
     search.value = "";
     filterSelect.value = "all";
