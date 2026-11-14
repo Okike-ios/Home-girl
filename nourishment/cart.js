@@ -121,11 +121,13 @@
       const quantity=cart.items.length, bought=cart.items.filter(x=>x.purchased).length;
       card.innerHTML='<div class="cart-collection-card-header">'+
         '<button class="cart-collection-toggle" type="button" aria-expanded="'+expanded+'" aria-controls="cartDetail">'+
-        '<span class="cart-collection-chevron" aria-hidden="true">⌄</span>'+
+        '<span class="cart-collection-chevron" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 5h2l2.3 11h11.5l2-8H6M10 20h.01M18 20h.01"/></svg></span>'+
         '<span class="cart-collection-details"><strong>'+safe(cart.name)+'</strong>'+
         '<small>'+safe(cart.id)+' · '+quantity+' items · '+bought+' purchased</small></span>'+
         '<span class="cart-collection-cost">'+money(cartEstimate(cart))+'</span></button>'+
-        '<button class="cart-rename" type="button" aria-label="Rename '+safe(cart.name)+'" title="Rename cart">Rename</button></div>';
+        '<div class="cart-collection-actions"><button class="cart-rename" type="button" aria-label="Rename '+safe(cart.name)+'" title="Rename cart">Rename</button>'+
+        '<button class="cart-collection-icon cart-archive-one" type="button" aria-label="Archive and reset '+safe(cart.name)+'" title="Archive and reset this cart"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h18v5H3zM5 9v11h14V9M10 13h4M7 16h3"/></svg></button>'+
+        '<button class="cart-collection-icon cart-delete-one" type="button" aria-label="Delete '+safe(cart.name)+'" title="Delete this cart"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v6M14 11v6"/></svg></button></div></div>';
       cardsHost.appendChild(card);
       if(expanded){
         card.appendChild(detail);
@@ -151,6 +153,23 @@
     if(!card)return;
     const cart=carts.find(c=>c.id===card.dataset.cartId);
     if(!cart)return;
+    if(event.target.closest(".cart-archive-one")){
+      window.alert('Archive & Reset is not available yet for "'+cart.name+'". Cart History has not been implemented, so its items have NOT been cleared.');
+      return;
+    }
+    if(event.target.closest(".cart-delete-one")){
+      if(!canSave){window.alert("Browser storage is unavailable; Cart deletion cannot be saved.");return;}
+      if(!window.confirm('Delete the entire cart "'+cart.name+'" and its '+cart.items.length+' items without archiving? This cannot be undone.'))return;
+      carts=carts.filter(c=>c.id!==cart.id);
+      if(selectedId===cart.id){
+        selectedId=null;
+        items=[];
+        openCards.clear();
+        search.value="";
+        filter.value="all";
+      }
+      save();draw();return;
+    }
     if(event.target.closest(".cart-rename")){
       const updated=window.prompt("Rename this cart",cart.name);
       if(updated===null)return;
@@ -296,13 +315,15 @@
   // Header actions follow Bulk Cooking's established archive/delete pattern.
   // Archiving must not erase the Cart until a real History destination exists.
   document.getElementById("cartArchiveReset").addEventListener("click",()=>{
-    window.alert("Archive & Reset is not available yet. Cart History has not been implemented, so your items have NOT been cleared.");
+    window.alert("Archive & Reset for all Carts is not available yet. Cart History has not been implemented, so no Carts or items have been cleared.");
   });
   document.getElementById("cartDeleteAll").addEventListener("click",()=>{
-    if(!activeCart() || !items.length)return;
-    if(!window.confirm('Delete all items from "'+activeCart().name+'" without archiving? This cannot be undone.'))return;
-    activeCart().items=[];
-    items=activeCart().items;
+    if(!carts.length)return;
+    if(!canSave){window.alert("Browser storage is unavailable; Cart deletion cannot be saved.");return;}
+    if(!window.confirm("Delete ALL "+carts.length+" carts and every item inside them, without archiving? This cannot be undone."))return;
+    carts=[];
+    selectedId=null;
+    items=[];
     openCards.clear();
     search.value="";
     filter.value="all";
@@ -310,7 +331,9 @@
     draw();
   });
   document.getElementById("cartSearchAction").addEventListener("click",()=>search.focus());
-  document.getElementById("cartHeaderSearch").addEventListener("click",()=>{
+  document.getElementById("cartCollectionSearch").addEventListener("click",()=>{
+    if(!activeCart() && carts.length)selectCart(carts[0].id);
+    if(!activeCart())return;
     search.focus();
     search.scrollIntoView({block:"nearest"});
   });
