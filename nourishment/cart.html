@@ -7,7 +7,7 @@
 <title>Cart | Home Girl</title>
 <link rel="stylesheet" href="homegirl-integration.css?v=hg-nourishment-001">
 <link rel="stylesheet" href="hg-sidebar.css?v=hg-nour-006">
-<link rel="stylesheet" href="cart.css?v=hg-cart-005">
+<link rel="stylesheet" href="cart.css?v=hg-cart-006">
 </head>
 <body data-hg-section="cart" >
 <svg class="svg-defs" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -81,18 +81,17 @@
       <div class="cart-total"><span>Estimated total</span><strong id="estimatedTotal" aria-live="polite">₦0.00</strong></div>
       <div class="cart-total"><span>Actual spending</span><strong id="actualTotal" aria-live="polite">₦0.00</strong></div>
     </section>
-    <div class="cart-toolbar">
-      <div class="cart-tools-left">
+    <div class="cart-search-row">
+      <input id="cartSearch" class="cart-search" type="search" placeholder="Search items or suppliers…" aria-label="Search Cart">
+      <button class="cart-search-action" type="button" id="cartSearchAction" aria-label="Focus search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg></button>
+      <select id="cartFilter" class="cart-filter" aria-label="Filter Cart"><option value="all">All items</option><option value="unpurchased">Not purchased</option><option value="purchased">Purchased</option></select>
+    </div>
+    <section class="cart-workspace" aria-label="Cart items">
+      <div class="cart-toolbar">
         <button id="cartAdd" class="cart-add" type="button"><span aria-hidden="true">＋</span> Add item</button>
-        <input id="cartSearch" class="cart-search" type="search" placeholder="Search items or suppliers" aria-label="Search Cart">
-      </div>
-      <div class="cart-tools-right">
-        <select id="cartFilter" class="cart-filter" aria-label="Filter Cart"><option value="all">All items</option><option value="unpurchased">Not purchased</option><option value="purchased">Purchased</option></select>
         <span id="cartCount" class="cart-count" aria-live="polite">0 items · 0 purchased</span>
       </div>
-    </div>
-    <section aria-label="Cart items">
-      <div class="cart-table-shell" role="region" aria-label="Shopping Cart table, horizontally scrollable on tablets" tabindex="0">
+      <div class="cart-table-shell" role="region" aria-label="Shopping Cart table, horizontally scrollable when needed" tabindex="0">
         <table class="cart-table">
           <thead><tr>
             <th scope="col">Item</th>
@@ -105,7 +104,7 @@
             <th scope="col">Supplier</th>
             <th scope="col">Purchased</th>
             <th scope="col">Date</th>
-            <th scope="col" aria-label="Item actions"></th>
+            <th scope="col" aria-label="Delete item"><svg class="cart-trash-head" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v6M14 11v6"/></svg></th>
           </tr></thead>
           <tbody id="cartRows"></tbody>
         </table>
@@ -116,7 +115,7 @@
       <p id="cartStatus" class="cart-note" role="status"></p>
     </section>
   </main>
-<script src="cart.js?v=hg-cart-005"></script>
+<script src="cart.js?v=hg-cart-006"></script>
 <script src="hg-sidebar.js?v=hg-nour-002" defer></script>
 <nav class="hg-mobile-bottom-nav" aria-label="Primary navigation">
   <a href="../index.html?view=dashboard"><svg aria-hidden="true"><use href="#i-grid"/></svg><span>Dashboard</span></a>
