@@ -7,7 +7,7 @@
 <title>Cart | Home Girl</title>
 <link rel="stylesheet" href="homegirl-integration.css?v=hg-nourishment-001">
 <link rel="stylesheet" href="hg-sidebar.css?v=hg-nour-006">
-<link rel="stylesheet" href="cart.css?v=hg-cart-008">
+<link rel="stylesheet" href="cart.css?v=hg-cart-009">
 </head>
 <body data-hg-section="cart" >
 <svg class="svg-defs" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -74,9 +74,25 @@
   </header>
   <main class="main-content">
     <section class="cart-intro" aria-label="Cart introduction">
-      <div><h1>Your shopping cart</h1><p>Everything you need, all in one place.</p></div>
+      <div><h1>Your shopping carts</h1><p>Keep each shopping plan in its own space.</p></div>
       <span class="cart-tag">SHOPPING CART</span>
     </section>
+    <section class="cart-collection" aria-label="Your carts">
+      <div class="cart-collection-toolbar">
+        <div class="cart-collection-caption"><strong>Your carts</strong><span id="cartCollectionCount">0 carts</span></div>
+        <button class="cart-add" type="button" id="cartCreate"><span aria-hidden="true">＋</span> Create new cart</button>
+      </div>
+      <form class="cart-create-form" id="cartCreateForm" hidden>
+        <label for="cartNameInput">Name your new cart</label>
+        <div><input id="cartNameInput" type="text" maxlength="70" placeholder="e.g. Weekend groceries" required>
+          <button class="cart-add" type="submit">Create cart</button>
+          <button class="cart-cancel" id="cartCancelCreate" type="button">Cancel</button>
+        </div>
+      </form>
+      <div class="cart-collection-list" id="cartCards"></div>
+      <p class="cart-collection-empty" id="cartCollectionsEmpty" hidden>Create a cart to start organizing your purchases.</p>
+    </section>
+    <section class="cart-detail" id="cartDetail" hidden aria-label="Selected Cart details">
     <section class="cart-totals" aria-label="Cart totals">
       <div class="cart-total"><span>Estimated total</span><strong id="estimatedTotal" aria-live="polite">₦0.00</strong></div>
       <div class="cart-total"><span>Actual spending</span><strong id="actualTotal" aria-live="polite">₦0.00</strong></div>
@@ -114,8 +130,9 @@
       <p class="cart-note">Changes are stored in this browser only. This Cart is not yet linked to Bulk Cooking, This Week, Quick Meals, or Pantry; ingredient conversion and cross-module totals come next.</p>
       <p id="cartStatus" class="cart-note" role="status"></p>
     </section>
+    </section>
   </main>
-<script src="cart.js?v=hg-cart-008"></script>
+<script src="cart.js?v=hg-cart-009"></script>
 <script src="hg-sidebar.js?v=hg-nour-002" defer></script>
 <nav class="hg-mobile-bottom-nav" aria-label="Primary navigation">
   <a href="../index.html?view=dashboard"><svg aria-hidden="true"><use href="#i-grid"/></svg><span>Dashboard</span></a>
