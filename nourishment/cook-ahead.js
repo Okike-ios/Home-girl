@@ -87,7 +87,7 @@
       dishLabel.textContent = name;
       servingLabel.textContent = servingInput.value === "" ? "—" : servingInput.value;
       button.setAttribute("aria-label", `Edit ${name} details`);
-      shopInput.setAttribute("aria-label", `Add ${name} to shopping list`);
+      shopInput.setAttribute("aria-label", `Add ${name} to cart`);
     }
     dishInput.addEventListener("input", updateSummary);
     servingInput.addEventListener("input", updateSummary);
@@ -195,7 +195,7 @@
     });
     const td = document.createElement("td"); td.className = "shopping-column sticky-shopping";
     const checkbox = document.createElement("input"); checkbox.type = "checkbox"; checkbox.className = "shopping-check";
-    checkbox.setAttribute("aria-label", "Add dish to shopping list"); td.appendChild(checkbox); row.appendChild(td);
+    checkbox.setAttribute("aria-label", "Add dish to cart"); td.appendChild(checkbox); row.appendChild(td);
     const deleteCell = document.createElement("td");
     deleteCell.className = "delete-column";
     const desktopDelete = document.createElement("button");
