@@ -163,7 +163,7 @@
     border-top:1px solid #efe0e6!important;
   }
   body[data-hg-section="cook"] #cookTableBody td:nth-child(7)::before{
-    content:"Add to shopping list";
+    content:"Add to cart";
     margin:0;
     color:var(--bulk-plum);
     font-size:11px;
