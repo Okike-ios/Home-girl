@@ -1,5 +1,5 @@
 console.log("NEW MENU FORM JS IS LOADING");
-console.log("Supabase connection loaded:", homeGirlSupabase);
+// Browser-only prototype: Supabase is intentionally not loaded.
 
 /* --------------------------------
    CATEGORY SELECTION
@@ -169,7 +169,7 @@ cancelButton.addEventListener("click", () => {
 
 /* HG-MENU-004 — Preview-only dish edit mode.
  * Changes are saved in this browser, never inserted into Supabase.
- * The normal Add New Dish submission remains unchanged.
+ * New dishes and edits both save to the same browser catalogue.
  */
 const demoEditMode=new URLSearchParams(window.location.search).get("demoEdit")==="1";
 let demoEditPayload=null;
@@ -276,53 +276,32 @@ dishForm.addEventListener("submit", async (event) => {
       quantity:row.querySelector(".ingredient-quantity")?.value.trim()||"",
       unit:row.querySelector(".ingredient-unit")?.value.trim()||""
     })).filter(item=>item.name);
-    let overrides={};
-    const key="hg-menu-demo-edits-v1";
-    try{overrides=JSON.parse(localStorage.getItem(key)||"{}")||{};}catch{overrides={};}
-    overrides[demoEditPayload.key]={
-      name:dishName,category,bestTime,serves,recipe,ingredients
-    };
-    try{localStorage.setItem(key,JSON.stringify(overrides));}
-    catch{alert("Could not save sample edits in this browser.");return;}
+    try{
+      const existing=window.HomeGirlDishes.get(demoEditPayload.key);
+      if(!existing)throw Error("Dish no longer exists");
+      window.HomeGirlDishes.save({...existing,name:dishName,category,bestTime,serves,recipe,ingredients});
+    }catch(error){console.error(error);alert("Could not save dish changes in this browser.");return;}
     sessionStorage.removeItem("hg-menu-demo-edit-payload");
     window.location.href="the-menu.html";
     return;
   }
 
-  /* SAVE DISH TO SUPABASE */
+  /* SAVE DISH LOCALLY — NO SUPABASE REQUESTS */
 
-  const { data, error } =
-    await homeGirlSupabase
-      .from("dishes")
-      .insert([
-        {
-          dish_name: dishName,
-          category: category,
-          best_time: bestTime,
-          serves: serves,
-          recipe: recipe
-        }
-      ])
-      .select()
-      .single();
-
-
-  /* HANDLE ERROR */
-
-  if (error) {
-
-    console.error("Could not save dish:", error);
-
-    alert("Something went wrong while saving the dish.");
-
+  if(!dishName){alert("Please enter a dish name.");return;}
+  if(!Number.isFinite(serves)||serves<1){alert("Please enter a valid serving count.");return;}
+  const ingredients=[...ingredientsList.querySelectorAll(".ingredient-row")].map(row=>({
+    name:row.querySelector(".ingredient-name")?.value.trim()||"",
+    quantity:row.querySelector(".ingredient-quantity")?.value.trim()||"",
+    unit:row.querySelector(".ingredient-unit")?.value.trim()||""
+  })).filter(item=>item.name);
+  try{
+    window.HomeGirlDishes.save({name:dishName,category,bestTime,serves,recipe,ingredients});
+  }catch(error){
+    console.error(error);
+    alert("Could not save this dish in this browser. Please check local storage availability.");
     return;
   }
-
-
-  /* SUCCESS */
-
-  console.log("Dish saved successfully:", data);
-
-  alert("Dish added to your menu!");
+  window.location.href="the-menu.html";
 
 });
