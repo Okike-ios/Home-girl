@@ -232,7 +232,8 @@
 .meal-card-toggle,.meal-card-serving{display:none}
 @media(max-width:759px){
   body[data-hg-section="cook"] #cookTableBody{
-    max-width:480px;
+    width:100%;
+    max-width:100%;
     margin-inline:auto;
     gap:11px;
   }
@@ -406,7 +407,8 @@
   }
   /* 3: Keep current serving below the name; no coloured number box. */
   body[data-hg-section="cook"] #cookTableBody{
-    max-width:430px;
+    width:100%;
+    max-width:100%;
     margin-inline:auto;
   }
   body[data-hg-section="cook"] #cookTableBody tr[data-dish-row]:not(.meal-card-open){
