@@ -82,7 +82,7 @@
       '<td data-label="Supplier">'+input(item,"supplier","Supplier")+'</td>'+
       '<td data-label="Purchased"><input type="checkbox" class="cart-checkbox" data-field="purchased" aria-label="Purchased '+safe(title)+'" '+(item.purchased?"checked":"")+'></td>'+
       '<td data-label="Date">'+input(item,"date","Purchase date","date")+'</td>'+
-      '<td data-label="Actions"><button type="button" class="cart-delete" aria-label="Delete '+safe(title)+'" title="Delete item">Delete</button></td>';
+      '<td data-label="Actions"><button type="button" class="cart-delete" aria-label="Delete '+safe(title)+'" title="Delete item"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v6M14 11v6"/></svg></button></td>';
     return tr;
   }
   function visibleItems() {
@@ -162,6 +162,7 @@
     morePanel.hidden=!open;
     moreButton.setAttribute("aria-expanded",String(open));
   }
+  document.getElementById("cartSearchAction").addEventListener("click",()=>search.focus());
   document.getElementById("cartHeaderSearch").addEventListener("click",()=>{
     setMore(false);search.focus();search.scrollIntoView({block:"nearest"});
   });
