@@ -7,7 +7,7 @@
 <title>Cart | Home Girl</title>
 <link rel="stylesheet" href="homegirl-integration.css?v=hg-nourishment-001">
 <link rel="stylesheet" href="hg-sidebar.css?v=hg-nour-006">
-<link rel="stylesheet" href="cart.css?v=hg-cart-006">
+<link rel="stylesheet" href="cart.css?v=hg-cart-007">
 </head>
 <body data-hg-section="cart" >
 <svg class="svg-defs" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -84,7 +84,7 @@
     <div class="cart-search-row">
       <input id="cartSearch" class="cart-search" type="search" placeholder="Search items or suppliers…" aria-label="Search Cart">
       <button class="cart-search-action" type="button" id="cartSearchAction" aria-label="Focus search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg></button>
-      <select id="cartFilter" class="cart-filter" aria-label="Filter Cart"><option value="all">All items</option><option value="unpurchased">Not purchased</option><option value="purchased">Purchased</option></select>
+      <button class="cart-search-action cart-filter-action" type="button" id="cartFilterAction" aria-label="Filter items" aria-expanded="false" aria-controls="cartFilterPanel" title="Filter items"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/><circle cx="9" cy="6" r="1.5"/><circle cx="15" cy="12" r="1.5"/><circle cx="11" cy="18" r="1.5"/></svg></button><div class="cart-filter-panel" id="cartFilterPanel" hidden><label for="cartFilter">Show items</label><select id="cartFilter" class="cart-filter" aria-label="Filter Cart"><option value="all">All items</option><option value="unpurchased">Not purchased</option><option value="purchased">Purchased</option></select></div>
     </div>
     <section class="cart-workspace" aria-label="Cart items">
       <div class="cart-toolbar">
@@ -115,7 +115,7 @@
       <p id="cartStatus" class="cart-note" role="status"></p>
     </section>
   </main>
-<script src="cart.js?v=hg-cart-006"></script>
+<script src="cart.js?v=hg-cart-007"></script>
 <script src="hg-sidebar.js?v=hg-nour-002" defer></script>
 <nav class="hg-mobile-bottom-nav" aria-label="Primary navigation">
   <a href="../index.html?view=dashboard"><svg aria-hidden="true"><use href="#i-grid"/></svg><span>Dashboard</span></a>
