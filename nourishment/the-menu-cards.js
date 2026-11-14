@@ -91,8 +91,10 @@
   }
   function draw(){
     samples=catalog.list();
+    const retainedCategory=category.value;
     category.replaceChildren(new Option("All categories","all"));
     for(const name of [...new Set(samples.map(d=>d.category).filter(Boolean))].sort())category.add(new Option(name,name));
+    if([...category.options].some(option=>option.value===retainedCategory))category.value=retainedCategory;
     const query=input.value.trim().toLocaleLowerCase();
     const selected=category.value;
     const visible=samples.filter(d=>
