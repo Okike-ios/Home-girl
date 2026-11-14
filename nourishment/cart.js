@@ -7,6 +7,7 @@
   const detail = document.getElementById("cartDetail");
   const collectionCount = document.getElementById("cartCollectionCount");
   const collectionEmpty = document.getElementById("cartCollectionsEmpty");
+  const listSearch = document.getElementById("cartListSearch");
   const createButton = document.getElementById("cartCreate");
   const createForm = document.getElementById("cartCreateForm");
   const nameInput = document.getElementById("cartNameInput");
@@ -113,7 +114,11 @@
     cardsHost.replaceChildren();
     collectionCount.textContent=carts.length+" cart"+(carts.length===1?"":"s");
     collectionEmpty.hidden=carts.length!==0;
-    carts.forEach(cart=>{
+    const q=listSearch.value.trim().toLowerCase();
+    const visibleCarts=carts.filter(cart=>!q || cart.name.toLowerCase().includes(q) || cart.id.toLowerCase().includes(q));
+    collectionEmpty.hidden=visibleCarts.length!==0;
+    collectionEmpty.textContent=carts.length?"No carts match your search.":"Create a cart to start organizing your purchases.";
+    visibleCarts.forEach(cart=>{
       const expanded=cart.id===selectedId;
       const card=document.createElement("article");
       card.className="cart-collection-card"+(expanded?" is-expanded":"");
@@ -331,12 +336,7 @@
     draw();
   });
   document.getElementById("cartSearchAction").addEventListener("click",()=>search.focus());
-  document.getElementById("cartCollectionSearch").addEventListener("click",()=>{
-    if(!activeCart() && carts.length)selectCart(carts[0].id);
-    if(!activeCart())return;
-    search.focus();
-    search.scrollIntoView({block:"nearest"});
-  });
+  listSearch.addEventListener("input",renderCards);
   const filterButton=document.getElementById("cartFilterAction");
   const filterPanel=document.getElementById("cartFilterPanel");
   function setFilter(open){
