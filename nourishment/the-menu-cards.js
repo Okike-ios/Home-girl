@@ -9,18 +9,9 @@
   const category=$("menuCategoryFilter"), panel=$("menuFilterPanel");
   const filterButton=$("menuFilterButton");
   if(!list||!input||!category||!filterButton)return;
-  const samples=[
-    {name:"Egusi Soup",category:"Soups & Stews",serves:4},
-    {name:"Jollof Rice",category:"Rice Dishes",serves:4},
-    {name:"Tomato Stew",category:"Soups & Stews",serves:6},
-    {name:"Chicken Curry",category:"Main Dishes",serves:3},
-    {name:"Beans & Plantain",category:"Main Dishes",serves:2},
-    {name:"Moi Moi",category:"Sides & Snacks",serves:4},
-    {name:"Yam & Egg Sauce",category:"Breakfast",serves:2},
-    {name:"Pepper Soup",category:"Soups & Stews",serves:3},
-    {name:"Fried Rice",category:"Rice Dishes",serves:4},
-    {name:"Akara",category:"Breakfast",serves:3}
-  ];
+  const catalog=window.HomeGirlDishes;
+  // Dishes now come from a single browser-only catalogue.
+  let samples=catalog.list();
   // Demonstration-only ingredients and descriptions, not user records.
   const previewDetails={
     "Egusi Soup":{time:"Lunch or Dinner",ingredients:["Ground egusi","Leafy vegetables","Palm oil","Stock or water","Seasoning"],preparation:"Prepare a seasoned stock, stir in egusi and simmer gently, then add vegetables near the end."},
@@ -34,28 +25,6 @@
     "Fried Rice":{time:"Lunch or Dinner",ingredients:["Rice","Mixed vegetables","Stock","Curry seasoning","Oil"],preparation:"Part-cook rice in seasoned stock, then stir-fry with vegetables and aromatics."},
     "Akara":{time:"Breakfast or Snack",ingredients:["Peeled beans","Onion","Pepper","Salt","Frying oil"],preparation:"Blend beans with aromatics into a thick batter and fry spoonfuls until golden."}
   };
-  const editsKey="hg-menu-demo-edits-v1";
-  let savedEdits={};
-  try{savedEdits=JSON.parse(localStorage.getItem(editsKey)||"{}")||{};}catch{savedEdits={};}
-  for(const dish of samples){
-    const originalName=dish.name;
-    dish.originalName=originalName;
-    const saved=savedEdits[originalName];
-    if(saved&&typeof saved.name==="string"){
-      dish.name=saved.name;
-      dish.category=saved.category||dish.category;
-      dish.serves=Number(saved.serves)||dish.serves;
-      dish.editedTime=saved.bestTime||"";
-      dish.editedRecipe=saved.recipe||"";
-      dish.editedIngredients=Array.isArray(saved.ingredients)?saved.ingredients:null;
-    }
-  }
-  const deletedKey="hg-menu-demo-deleted-v1";
-  let deletedDishes=[];
-  try{
-    const stored=JSON.parse(localStorage.getItem(deletedKey)||"[]");
-    if(Array.isArray(stored))deletedDishes=stored.filter(name=>typeof name==="string");
-  }catch{deletedDishes=[];}
   const preview=$("menuDishPreview");
   const closePreview=$("menuPreviewClose");
   let previewTrigger=null;
@@ -65,34 +34,25 @@
   if(deleteButton){
     deleteButton.addEventListener("click",()=>{
       if(!activeDish)return;
-      const dish=activeDish;
-      if(!window.confirm('Delete "'+dish.name+'" from this demo Menu?\n\nThis removes only the placeholder dish in this browser.'))return;
-      const next=[...new Set([...deletedDishes,dish.originalName])];
-      try{
-        localStorage.setItem(deletedKey,JSON.stringify(next));
-      }catch{
-        alert("Could not save the deletion in this browser. No changes were made.");
-        return;
-      }
-      deletedDishes=next;
+      if(!window.confirm('Delete "'+activeDish.name+'" from The Menu?'))return;
+      try{catalog.remove(activeDish.id);}
+      catch(error){console.error(error);alert("Could not delete this dish from browser storage.");return;}
       if(preview.open)preview.close();
-      activeDish=null;
-      previewTrigger=null;
-      draw();
+      activeDish=null;previewTrigger=null;samples=catalog.list();draw();
     });
   }
   if(editButton){
     editButton.addEventListener("click",()=>{
       if(!activeDish)return;
-      const base=previewDetails[activeDish.originalName];
+      const base=previewDetails[activeDish.originalName]||{};
       const payload={
-        key:activeDish.originalName,
+        key:activeDish.id,
         name:activeDish.name,
         category:activeDish.category,
-        bestTime:activeDish.editedTime||base.time,
+        bestTime:activeDish.bestTime||base?.time||"",
         serves:activeDish.serves,
-        recipe:activeDish.editedRecipe||base.preparation,
-        ingredients:activeDish.editedIngredients||base.ingredients.map(name=>({name,quantity:"",unit:""}))
+        recipe:activeDish.recipe||base?.preparation||"",
+        ingredients:(activeDish.ingredients?.length?activeDish.ingredients:(base?.ingredients||[]).map(name=>({name,quantity:"",unit:""})))
       };
       sessionStorage.setItem("hg-menu-demo-edit-payload",JSON.stringify(payload));
       window.location.href="menu-form.html?demoEdit=1";
@@ -102,15 +62,15 @@
     if(!preview)return;
     previewTrigger=trigger;
     activeDish=dish;
-    const detail=previewDetails[dish.originalName];
+    const detail=previewDetails[dish.originalName]||{time:"",ingredients:[],preparation:""};
     $("menuPreviewTitle").textContent=dish.name;
-    $("menuPreviewMeta").textContent=dish.category+" · Serves "+dish.serves+" · "+(dish.editedTime||detail.time);
+    $("menuPreviewMeta").textContent=dish.category+" · Serves "+dish.serves+" · "+(dish.bestTime||detail.time);
     const ingredients=$("menuPreviewIngredients");
-    const ingredientNames=dish.editedIngredients?dish.editedIngredients.map(item=>item.name).filter(Boolean):detail.ingredients;
+    const ingredientNames=dish.ingredients?.length?dish.ingredients.map(item=>typeof item==="string"?item:item.name).filter(Boolean):detail.ingredients;
     ingredients.replaceChildren(...ingredientNames.map(name=>{
       const item=document.createElement("li");item.textContent=name;return item;
     }));
-    $("menuPreviewPreparation").textContent=dish.editedRecipe||detail.preparation;
+    $("menuPreviewPreparation").textContent=dish.recipe||detail.preparation;
     if(typeof preview.showModal==="function")preview.showModal();
     else preview.setAttribute("open","");
     closePreview?.focus();
@@ -130,10 +90,12 @@
     category.add(new Option(name,name));
   }
   function draw(){
+    samples=catalog.list();
+    category.replaceChildren(new Option("All categories","all"));
+    for(const name of [...new Set(samples.map(d=>d.category).filter(Boolean))].sort())category.add(new Option(name,name));
     const query=input.value.trim().toLocaleLowerCase();
     const selected=category.value;
     const visible=samples.filter(d=>
-      !deletedDishes.includes(d.originalName)&&
       (selected==="all"||d.category===selected)&&
       (!query||(d.name+" "+d.category).toLocaleLowerCase().includes(query))
     );
@@ -200,5 +162,6 @@
     const p=event.changedTouches[0],dx=p.clientX-swipe.x,dy=p.clientY-swipe.y,dt=Date.now()-swipe.t;swipe=null;
     if(dx>95&&Math.abs(dy)<55&&dx>Math.abs(dy)*1.7&&dt<850)location.href="nourishment-os.html";
   },{passive:true});
+  window.addEventListener("hg:dishes-changed",draw);
   draw();
 })();
