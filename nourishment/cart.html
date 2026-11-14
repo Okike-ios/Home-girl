@@ -7,7 +7,7 @@
 <title>Cart | Home Girl</title>
 <link rel="stylesheet" href="homegirl-integration.css?v=hg-nourishment-001">
 <link rel="stylesheet" href="hg-sidebar.css?v=hg-nour-006">
-<link rel="stylesheet" href="cart.css?v=hg-cart-009">
+<link rel="stylesheet" href="cart.css?v=hg-cart-010">
 </head>
 <body data-hg-section="cart" >
 <svg class="svg-defs" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -59,15 +59,15 @@
   <header class="app-header">
     <nav class="header-side" aria-label="Page navigation">
       <a class="icon-button cart-back-button" href="nourishment-os.html" aria-label="Back to Nourishment OS" title="Back to Nourishment OS"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5m6-6-6 6 6 6"/></svg></a>
-      <button class="icon-button cart-header-search" id="cartHeaderSearch" type="button" aria-label="Search Cart" title="Search Cart"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg></button>
+      
       <span class="cart-mobile-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 5h2l2.3 11h11.5l2-8H6M10 20h.01M18 20h.01"/></svg></span>
     </nav>
     <div class="header-title">Cart</div>
     <nav class="header-side right" aria-label="Page tools">
-      <button class="icon-button" id="cartArchiveReset" type="button" aria-label="Archive and reset open Cart" title="Archive and reset open Cart">
+      <button class="icon-button" id="cartArchiveReset" type="button" aria-label="Archive and reset all Carts" title="Archive and reset all Carts">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h18v5H3zM5 9v11h14V9M10 13h4M7 16h3"/></svg>
       </button>
-      <button class="icon-button" id="cartDeleteAll" type="button" aria-label="Delete all items in open Cart" title="Delete all items in open Cart">
+      <button class="icon-button" id="cartDeleteAll" type="button" aria-label="Delete all Carts" title="Delete all Carts">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v6M14 11v6"/></svg>
       </button>
     </nav>
@@ -75,11 +75,11 @@
   <main class="main-content">
     <section class="cart-intro" aria-label="Cart introduction">
       <div><h1>Your shopping carts</h1><p>Keep each shopping plan in its own space.</p></div>
-      <span class="cart-tag">MY CARTS</span>
+      <span class="cart-tag" id="cartCollectionCount" aria-live="polite">0 carts</span>
     </section>
     <section class="cart-collection" aria-label="Your carts">
       <div class="cart-collection-toolbar">
-        <div class="cart-collection-caption"><strong>Your carts</strong><span id="cartCollectionCount">0 carts</span></div>
+        <div class="cart-collection-caption"><button class="cart-search-action cart-collection-search" type="button" id="cartCollectionSearch" aria-label="Search cart items" title="Search cart items"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg></button></div>
         <button class="cart-add" type="button" id="cartCreate"><span aria-hidden="true">＋</span> Create new cart</button>
       </div>
       <form class="cart-create-form" id="cartCreateForm" hidden>
@@ -132,7 +132,7 @@
     </section>
     </section>
   </main>
-<script src="cart.js?v=hg-cart-009"></script>
+<script src="cart.js?v=hg-cart-010"></script>
 <script src="hg-sidebar.js?v=hg-nour-002" defer></script>
 <nav class="hg-mobile-bottom-nav" aria-label="Primary navigation">
   <a href="../index.html?view=dashboard"><svg aria-hidden="true"><use href="#i-grid"/></svg><span>Dashboard</span></a>
