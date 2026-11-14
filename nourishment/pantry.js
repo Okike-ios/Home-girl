@@ -2,7 +2,7 @@
  * Sample data is in-memory only. No Supabase, Cart or Shopping List writes.
  * 13 columns: Item, Category, Frequency, Standard Stock, Current Stock,
  * Unit, Last Purchase, Quantity Needed, Purchase Quantity, Supplier,
- * Last Updated, Add to Shopping List, Delete. Quantity Needed = max(standard-current,0).
+ * Last Updated, Add to cart, Delete. Quantity Needed = max(standard-current,0).
  */
 (() => {
   "use strict";
@@ -47,7 +47,7 @@
     {key:"purchaseQty",label:"Purchase quantity",type:"number"},
     {key:"supplier",label:"Supplier",type:"text"},
     {key:"lastUpdated",label:"Last updated",type:"readonlyDate"},
-    {key:"cart",label:"Add to shopping list",type:"check"}
+    {key:"cart",label:"Add to cart",type:"check"}
   ];
   const today=()=>{
     const date=new Date();
@@ -109,8 +109,8 @@
       }else if(field.type==="check"){
         const label=make("label","pantry-check-label");
         input=make("input");
-        input.type="checkbox";input.checked=d.cart;input.setAttribute("aria-label","Add "+(d.name||"item")+" to shopping list");
-        const caption=make("span",null,"Add to shopping list");
+        input.type="checkbox";input.checked=d.cart;input.setAttribute("aria-label","Add "+(d.name||"item")+" to cart");
+        const caption=make("span",null,"Add to cart");
         label.append(input,caption);
         cell.append(label);
         input.addEventListener("change",()=>{
