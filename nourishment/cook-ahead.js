@@ -133,7 +133,14 @@
       return;
     }
     if (!mobileCards.matches) return;
-    // Checkboxes and all form controls work without expanding/collapsing the card.
+    // The dish heading is an actual button. Handle it before excluding other
+    // buttons and form controls; otherwise tapping its arrow/name does nothing.
+    if (event.target.closest(".meal-card-toggle")) {
+      toggleMobileCard(row);
+      return;
+    }
+    // Keep existing card-background toggling without stealing checkbox,
+    // selection, delete, or editable-field interactions.
     if (event.target.closest(".shopping-check, input, select, textarea, label, button")) return;
     toggleMobileCard(row);
   });
