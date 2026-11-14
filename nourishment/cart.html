@@ -7,7 +7,7 @@
 <title>Cart | Home Girl</title>
 <link rel="stylesheet" href="homegirl-integration.css?v=hg-nourishment-001">
 <link rel="stylesheet" href="hg-sidebar.css?v=hg-nour-006">
-<link rel="stylesheet" href="cart.css?v=hg-cart-010">
+<link rel="stylesheet" href="cart.css?v=hg-cart-011">
 </head>
 <body data-hg-section="cart" >
 <svg class="svg-defs" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -79,7 +79,7 @@
     </section>
     <section class="cart-collection" aria-label="Your carts">
       <div class="cart-collection-toolbar">
-        <div class="cart-collection-caption"><button class="cart-search-action cart-collection-search" type="button" id="cartCollectionSearch" aria-label="Search cart items" title="Search cart items"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg></button></div>
+        <div class="cart-collection-caption"><input type="search" class="cart-search cart-list-search" id="cartListSearch" placeholder="Search carts by name or ID…" aria-label="Search carts"></div>
         <button class="cart-add" type="button" id="cartCreate"><span aria-hidden="true">＋</span> Create new cart</button>
       </div>
       <form class="cart-create-form" id="cartCreateForm" hidden>
@@ -132,7 +132,7 @@
     </section>
     </section>
   </main>
-<script src="cart.js?v=hg-cart-010"></script>
+<script src="cart.js?v=hg-cart-011"></script>
 <script src="hg-sidebar.js?v=hg-nour-002" defer></script>
 <nav class="hg-mobile-bottom-nav" aria-label="Primary navigation">
   <a href="../index.html?view=dashboard"><svg aria-hidden="true"><use href="#i-grid"/></svg><span>Dashboard</span></a>
